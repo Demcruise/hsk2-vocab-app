@@ -47,4 +47,4 @@ Buka `index.html` dengan Chrome/Safari/Edge — langsung jalan, bisa offline, ti
 
 - Progres disimpan di `localStorage` browser. Kalau membuka dari path/domain berbeda (mis. pindah dari `file://` ke GitHub Pages), gunakan **Simpan/Muat Progres ke File** untuk memindahkannya.
 - Audio bergantung pada voice Mandarin (`zh-CN`) yang tersedia di perangkat. Jika belum ada, instal paket suara Mandarin di pengaturan sistem.
-- Setelah mengubah `index.html`, versi terbaru otomatis terambil saat online (navigasi bersifat network-first). Bila mengubah daftar aset di `sw.js`, naikkan `VERSION` di dalamnya.
+- Setelah mengubah `index.html`, versi terbaru otomatis terambil saat online (navigasi bersifat *network-first*). Tapi agar versi **offline** juga ikut ter-perbarui, naikkan `VERSION` di `sw.js` (buka lalu tutup sekali dengan koneksi internet).
