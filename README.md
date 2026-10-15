@@ -1,6 +1,6 @@
-# HSK 2 Vocabulary App (Kunkwan HSK 2 V3)
+# Kunkwan HSK 2 — Kosakata
 
-Aplikasi belajar kosakata **HSK 2 (HSK 3.0 Level 2)** dalam **satu file HTML** — bisa dibuka langsung dari HP tanpa server, tanpa install.
+Aplikasi belajar kosakata **HSK 2 (HSK 3.0 Level 2)** — 770 kata, satu file HTML, bisa dipakai di HP sebagai aplikasi (PWA) atau langsung dibuka dari file.
 
 ## Fitur
 
@@ -12,12 +12,21 @@ Aplikasi belajar kosakata **HSK 2 (HSK 3.0 Level 2)** dalam **satu file HTML** �
 - **Flashcard** dengan mode Belajar / Baru / Diulang / Hafal, penilaian kartu, dan progres.
 - **Kuis** (hanzi→arti, arti→hanzi, pinyin→hanzi) + pencapaian (achievement) & XP.
 - **Simpan progres otomatis** di browser, plus **Simpan/Muat ke File** (JSON) untuk backup atau pindah perangkat.
+- **Bisa di-install sebagai aplikasi (PWA)** dan **jalan offline** setelah pertama kali dibuka.
 
 ## Cara Pakai
 
-1. Unduh `index.html`.
-2. Buka dengan browser (Chrome/Safari/Edge) — langsung jalan, bisa offline.
-3. Di HP: buka file, lalu "Add to Home Screen" agar seperti aplikasi.
+### Di browser (paling cepat)
+Buka `index.html` dengan Chrome/Safari/Edge — langsung jalan, bisa offline, tidak perlu server.
+
+### Install di HP Android (disarankan)
+1. Buka **https://demcruise.github.io/hsk2-vocab-app/** di **Chrome Android**.
+2. Tunggu sebentar sampai halaman termuat penuh.
+3. Ketuk menu **⋮** (kanan atas) → **"Tambahkan ke Layar utama"** / *Add to Home screen*.
+4. Konfirmasi → ikon **HSK 2 V3** muncul di layar utama.
+5. Buka dari ikon itu: tampil tanpa address bar (mode aplikasi), dan tetap bisa dibuka **tanpa internet**.
+
+> Catatan: fitur install hanya tersedia lewat **https** (GitHub Pages), bukan saat file dibuka dari `file://`. Aplikasi tetap berfungsi normal di `file://`, hanya tanpa tombol install.
 
 ## Struktur
 
@@ -25,13 +34,17 @@ Aplikasi belajar kosakata **HSK 2 (HSK 3.0 Level 2)** dalam **satu file HTML** �
 |---|---|
 | `index.html` | Aplikasi lengkap (HTML + CSS + JS + semua data tertanam) |
 | `vocab_data.json` | Sumber data: 770 kata + 149 radikal |
-| `full_generator.js` | Generator data |
-| `generate_sentences.mjs` | Skrip pembantu pembuatan kalimat |
+| `manifest.webmanifest` | Manifest PWA (nama, ikon, warna tema) |
+| `sw.js` | Service worker — caching offline |
+| `icons/` | Ikon aplikasi (192/512, versi maskable, apple-touch, favicon) |
+| `tools/make-icons.mjs` | Generator ikon (Node murni, tanpa dependency) |
+| `full_generator.js`, `generate_sentences.mjs` | Generator data |
 | `HSK2_v3_vocabulary_list_EN.pdf` | Daftar kosakata HSK 2 (EN) |
 | `New-HSK-Vocabulary-Level-2.pdf` | Daftar kosakata HSK (level 2) |
 | `HSK2-Vocabulary-3.0.pdf` | Rujukan kosakata HSK 3.0 |
 
 ## Catatan
 
-- Progres disimpan di `localStorage` browser ini. Kalau membuka file dari path/domain berbeda, gunakan **Simpan/Muat Progres ke File** untuk memindahkan.
-- Audio bergantung pada voice Mandarin (`zh-CN`) yang tersedia di perangkat. Jika belum ada, instal paket suara Mandarin di sistem.
+- Progres disimpan di `localStorage` browser. Kalau membuka dari path/domain berbeda (mis. pindah dari `file://` ke GitHub Pages), gunakan **Simpan/Muat Progres ke File** untuk memindahkannya.
+- Audio bergantung pada voice Mandarin (`zh-CN`) yang tersedia di perangkat. Jika belum ada, instal paket suara Mandarin di pengaturan sistem.
+- Setelah mengubah `index.html`, versi terbaru otomatis terambil saat online (navigasi bersifat network-first). Bila mengubah daftar aset di `sw.js`, naikkan `VERSION` di dalamnya.

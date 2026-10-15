@@ -6,6 +6,14 @@
 <meta name="theme-color" content="#58CC02">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Kunkwan HSK 2 V3</title>
+<meta name="description" content="Belajar 770 kosakata HSK 2 (HSK 3.0 Level 2): 3 kalimat contoh per kata, audio normal & lambat, tooltip hanzi, dan 149 radikal.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="HSK 2 V3">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--green:#58CC02;--blue:#1cb0f6;--red:#ff4b4b;--orange:#f7770e;--gold:#ffc800;--bg:#f7f7f7;--card:#fff;--text:#3c3c3c;--text-light:#a0a0a0;--border:#e5e5e5;--radius:16px}
@@ -404,6 +412,17 @@ function switchScreen(s){document.querySelectorAll('.screen').forEach(x=>x.class
 function resetProgress(){if(window.confirm('Yakin reset semua progress?')){localStorage.removeItem('khsk2');S.prog={};S.streak=0;S.xp=0;S.quizzes=0;S.ach={};S.last=new Date().toDateString();S.streak=1;saveState();renderStats();renderAch();applyMode();showCard(0);renderVocab();toast('Reset!');refreshSaveInfo();}}
 function toast(m){let e=document.getElementById('toast');e.textContent=m;e.className='toast show';setTimeout(()=>e.className='toast',2200);}
 initData();
+</script>
+<script>
+/* PWA: register the service worker so the app can be installed and used offline.
+   Only runs over http(s) - silently does nothing on file:// where SWs are unavailable. */
+(function () {
+  if (!('serviceWorker' in navigator)) return;
+  if (location.protocol !== 'http:' && location.protocol !== 'https:') return;
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  });
+})();
 </script>
 </body>
 </html>
