@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#58CC02">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Kunkwan HSK 2 V3</title>
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--green:#58CC02;--blue:#1cb0f6;--red:#ff4b4b;--orange:#f7770e;--gold:#ffc800;--bg:#f7f7f7;--card:#fff;--text:#3c3c3c;--text-light:#a0a0a0;--border:#e5e5e5;--radius:16px}
+:root{--green:#58CC02;--blue:#1cb0f6;--blue-text:#147BA8;--red:#ff4b4b;--orange:#f7770e;--gold:#ffc800;--bg:#f7f7f7;--card:#fff;--text:#3c3c3c;--text-light:#6E6E6E;--border:#e5e5e5;--radius:16px}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;user-select:none}
 .header{background:var(--green);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.08)}
 .header-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -53,7 +53,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .flashcard:active{box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .fc-number{font-size:12px;color:var(--text-light);margin-bottom:4px}
 .fc-hanzi{font-size:46px;font-weight:700;margin:4px 0;line-height:1.3}
-.fc-pinyin{font-size:20px;color:var(--blue);margin:4px 0}
+.fc-pinyin{font-size:20px;color:var(--blue-text);margin:4px 0}
 .fc-meaning{font-size:16px;color:var(--text);margin:12px 0;padding:12px 0;border-top:1px solid var(--border);width:100%}
 .fc-radical{font-size:13px;color:var(--text-light);margin:4px 0}
 .fc-hint{font-size:13px;color:var(--text-light);margin-top:12px;font-style:italic}
@@ -74,7 +74,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 /* QUIZ */
 .quiz-question{font-size:16px;font-weight:600;margin-bottom:16px;text-align:center}
 .quiz-hanzi{font-size:44px;text-align:center;margin:8px 0;font-weight:700}
-.quiz-pinyin{font-size:20px;color:var(--blue);text-align:center;margin:6px 0}
+.quiz-pinyin{font-size:20px;color:var(--blue-text);text-align:center;margin:6px 0}
 .quiz-options{display:flex;flex-direction:column;gap:8px}
 .quiz-option{padding:14px 18px;background:var(--card);border:2px solid var(--border);border-radius:12px;font-size:16px;text-align:center;cursor:pointer;font-weight:500;transition:all .1s}
 .quiz-option:active{transform:scale(.97)}
@@ -96,7 +96,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .radical-card{background:var(--card);border-radius:10px;padding:12px;text-align:center;cursor:pointer;border:1px solid var(--border)}
 .radical-card:active{transform:scale(.96)}
 .radical-card .rad{font-size:32px;margin-bottom:2px}
-.radical-card .rad-pinyin{font-size:12px;color:var(--blue)}
+.radical-card .rad-pinyin{font-size:12px;color:var(--blue-text)}
 .radical-card .rad-meaning{font-size:11px;color:var(--text-light)}
 .radical-detail{display:none;background:var(--card);border-radius:12px;padding:16px;margin-top:10px}
 .radical-detail.show{display:block}
@@ -164,7 +164,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .sent-num{font-size:11px;color:var(--text-light);width:16px;flex-shrink:0}
 .sent-content{flex:1}
 .sent-hanzi{font-size:16px;font-weight:500;line-height:1.4}
-.sent-pinyin{font-size:12px;color:var(--blue);line-height:1.3}
+.sent-pinyin{font-size:12px;color:var(--blue-text);line-height:1.3}
 .sent-arti{font-size:12px;color:var(--text-light);line-height:1.3}
 /* HANZI TOOLTIP */
 .hz{cursor:help;border-bottom:1px dotted rgba(127,127,127,.5)}
@@ -183,7 +183,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .speed-toggle span{padding:2px 10px;border:1px solid var(--border);border-radius:6px;font-size:11px;cursor:pointer;background:var(--card)}
 .speed-toggle span.active{background:var(--green);color:#fff;border-color:var(--green)}
 .fc-audio{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:4px;margin-bottom:4px}
-.sent-play{font-size:14px;cursor:pointer;color:var(--blue);margin-left:2px;background:none;border:none;padding:0 4px}
+.sent-play{font-size:14px;cursor:pointer;color:var(--blue-text);margin-left:2px;background:none;border:none;padding:0 4px}
 .sent-play:active{color:var(--green)}
 </style>
 </head>
@@ -211,7 +211,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   <button data-screen="progress"><span class="icon">📊</span>Progres</button>
 </div>
 
-<div class="content">
+<main class="content">
 
 <div class="screen active" id="screenLearn">
   <div class="fc-mode-select" id="fcModeSelect">
@@ -321,7 +321,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
   </div>
 </div>
 
-</div>
+</main>
 
 <div class="bottom-nav">
   <button class="active" data-screen="learn"><span class="nav-icon">📚</span>Belajar</button>
@@ -370,7 +370,7 @@ function applyMode(){cv=[];let m=S.mode;vocab.forEach((v,i)=>{let l=wordLevel(v.
 
 function showCard(n){if(!cv.length)return;hzHide();S.idx=Math.max(0,Math.min(n,cv.length-1));S.showSentences=false;let v=vocab[cv[S.idx]];document.getElementById('fcNumber').textContent=(S.idx+1)+'/'+cv.length+' | #'+v.id;document.getElementById('fcHanzi').textContent=v.hanzi;document.getElementById('fcPinyin').textContent=v.pinyin;document.getElementById('fcMeaning').className='fc-meaning hidden';document.getElementById('fcMeaning').textContent=v.meaning;document.getElementById('fcRadical').className='fc-radical hidden';document.getElementById('fcHint').className='fc-hint';document.getElementById('fcHint').textContent='Tap untuk lihat kalimat';document.getElementById('fcControls').className='fc-controls hidden';document.getElementById('fcSentences').className='fc-sentences hidden';document.getElementById('playBtn').className='audio-btn';document.getElementById('playBtn').textContent='🔊';let h='',step=Math.max(1,Math.floor(cv.length/50));for(let i=0;i<cv.length;i+=step){let l=wordLevel(vocab[cv[i]].id);let c=i===S.idx?'active':(l>=3?'mastered':'');h+='<span class="'+c+'"></span>';}document.getElementById('fcProgress').innerHTML=h;updateHUD();}
 
-function flipCard(){if(!cv.length)return;let v=vocab[cv[S.idx]];if(!S.showSentences){S.showSentences=true;document.getElementById('fcMeaning').className='fc-meaning';document.getElementById('fcHint').className='fc-hint hidden';document.getElementById('fcControls').className='fc-controls';let r=document.getElementById('fcRadical');let mr=radicals.find(x=>v.hanzi.includes(x.radical)&&x.radical.length===1);if(mr){r.textContent='Radical: '+mr.radical+' ('+mr.pinyin+') - '+mr.meaning;r.className='fc-radical';}if(v.sentences&&v.sentences.length>0){let h='<div class="sent-label">Contoh Kalimat <span style="font-size:11px;color:#999">(🔊 untuk dengar)</span>:</div>';v.sentences.forEach((s,i)=>{h+='<div class="sent-item"><div class="sent-num">'+(i+1)+'.</div><div class="sent-content">'+'<div class="sent-hanzi">'+hzWrap(s[0])+' <button class="sent-play" onclick="playSentence(\''+s[0].replace(/'/g,"\\'")+'\')">🔊</button></div>'+'<div class="sent-pinyin">'+s[1]+'</div><div class="sent-arti">'+s[2]+'</div></div></div>';});document.getElementById('fcSentences').innerHTML=h;document.getElementById('fcSentences').className='fc-sentences';}}else{S.showSentences=false;document.getElementById('fcMeaning').className='fc-meaning hidden';document.getElementById('fcHint').className='fc-hint';document.getElementById('fcControls').className='fc-controls hidden';document.getElementById('fcSentences').className='fc-sentences hidden';}}
+function flipCard(){if(!cv.length)return;let v=vocab[cv[S.idx]];if(!S.showSentences){S.showSentences=true;document.getElementById('fcMeaning').className='fc-meaning';document.getElementById('fcHint').className='fc-hint hidden';document.getElementById('fcControls').className='fc-controls';let r=document.getElementById('fcRadical');let mr=radicals.find(x=>v.hanzi.includes(x.radical)&&x.radical.length===1);if(mr){r.textContent='Radical: '+mr.radical+' ('+mr.pinyin+') - '+mr.meaning;r.className='fc-radical';}if(v.sentences&&v.sentences.length>0){let h='<div class="sent-label">Contoh Kalimat <span style="font-size:11px">(🔊 untuk dengar)</span>:</div>';v.sentences.forEach((s,i)=>{h+='<div class="sent-item"><div class="sent-num">'+(i+1)+'.</div><div class="sent-content">'+'<div class="sent-hanzi">'+hzWrap(s[0])+' <button class="sent-play" onclick="playSentence(\''+s[0].replace(/'/g,"\\'")+'\')">🔊</button></div>'+'<div class="sent-pinyin">'+s[1]+'</div><div class="sent-arti">'+s[2]+'</div></div></div>';});document.getElementById('fcSentences').innerHTML=h;document.getElementById('fcSentences').className='fc-sentences';}}else{S.showSentences=false;document.getElementById('fcMeaning').className='fc-meaning hidden';document.getElementById('fcHint').className='fc-hint';document.getElementById('fcControls').className='fc-controls hidden';document.getElementById('fcSentences').className='fc-sentences hidden';}}
 
 function prevCard(){if(cv.length)showCard(S.idx-1);}
 function nextCard(){if(cv.length)showCard((S.idx+1)%cv.length);}
