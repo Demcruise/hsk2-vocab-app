@@ -14,6 +14,7 @@ Aplikasi belajar kosakata **HSK 2 (HSK 3.0 Level 2)** — 770 kata, satu file HT
 - **Kuis** (hanzi→arti, arti→hanzi, pinyin→hanzi) + pencapaian (achievement) & XP.
 - **Simpan progres otomatis** di browser (termasuk layar terakhir, mode, dan posisi kartu — saat dibuka lagi langsung kembali ke tempat terakhir), plus **Simpan/Muat ke File** (JSON) untuk backup atau pindah perangkat.
 - **Bisa di-install sebagai aplikasi (PWA)** dan **jalan offline** setelah pertama kali dibuka.
+- **Pembaruan aplikasi** — halaman **Progres** menampilkan **versi aplikasi** dan tombol **🔄 Perbarui Aplikasi** (memeriksa service worker lalu memuat ulang) supaya versi terbaru langsung terpasang di HP Android.
 
 ## Cara Pakai
 
@@ -48,4 +49,4 @@ Buka `index.html` dengan Chrome/Safari/Edge — langsung jalan, bisa offline, ti
 
 - Progres disimpan di `localStorage` browser. Kalau membuka dari path/domain berbeda (mis. pindah dari `file://` ke GitHub Pages), gunakan **Simpan/Muat Progres ke File** untuk memindahkannya.
 - Audio bergantung pada voice Mandarin (`zh-CN`) yang tersedia di perangkat. Jika belum ada, instal paket suara Mandarin di pengaturan sistem.
-- Setelah mengubah `index.html`, versi terbaru otomatis terambil saat online (navigasi bersifat *network-first*). Tapi agar versi **offline** juga ikut ter-perbarui, naikkan `VERSION` di `sw.js` (buka lalu tutup sekali dengan koneksi internet).
+- Setelah mengubah `index.html`, versi terbaru otomatis terambil saat online (navigasi bersifat *network-first*). Tapi agar versi **offline** juga ikut ter-perbarui, naikkan `VERSION` di `sw.js` (buka lalu tutup sekali dengan koneksi internet). Di HP, ketuk **Progres → 🔄 Perbarui Aplikasi** kalau versi belum berubah.
