@@ -9,9 +9,10 @@ Aplikasi belajar kosakata **HSK 2 (HSK 3.0 Level 2)** — 770 kata, satu file HT
 - **Audio TTS** untuk kata dan tiap kalimat, dua kecepatan (normal / lambat) memakai `speechSynthesis` bawaan browser.
 - **Tooltip per hanzi** — sentuh/hover karakter mana pun di kalimat contoh untuk melihat pinyin, arti, dan radikalnya.
 - **149 radikal** dengan penjelasan (Indonesia), daftar karakter, dan kata yang memakainya.
-- **Flashcard** dengan mode Belajar / Baru / Diulang / Hafal, penilaian kartu, dan progres.
+- **Flashcard** dengan mode Belum Hafal / Belajar / Baru / Review / Dikuasai, penilaian kartu, dan progres.
+- **Halaman "Hafal"** — daftar hanzi yang sudah hafal dipisahkan dari yang belum. Ada tombol untuk menandai/batalkan hafal per kata, plus filter **Belum hafal / Sudah hafal** di halaman Vocab.
 - **Kuis** (hanzi→arti, arti→hanzi, pinyin→hanzi) + pencapaian (achievement) & XP.
-- **Simpan progres otomatis** di browser, plus **Simpan/Muat ke File** (JSON) untuk backup atau pindah perangkat.
+- **Simpan progres otomatis** di browser (termasuk layar terakhir, mode, dan posisi kartu — saat dibuka lagi langsung kembali ke tempat terakhir), plus **Simpan/Muat ke File** (JSON) untuk backup atau pindah perangkat.
 - **Bisa di-install sebagai aplikasi (PWA)** dan **jalan offline** setelah pertama kali dibuka.
 
 ## Cara Pakai
