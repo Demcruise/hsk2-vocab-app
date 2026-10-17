@@ -10,7 +10,8 @@ Aplikasi belajar kosakata **HSK 2 (HSK 3.0 Level 2)** — 770 kata, satu file HT
 - **Tooltip per hanzi** — sentuh/hover karakter mana pun di kalimat contoh untuk melihat pinyin, arti, dan radikalnya.
 - **149 radikal** dengan penjelasan (Indonesia), daftar karakter, dan kata yang memakainya.
 - **Flashcard** dengan mode Belum Hafal / Belajar / Baru / Review / Dikuasai, penilaian kartu, dan progres.
-- **Halaman "Hafal"** — daftar hanzi yang sudah hafal dipisahkan dari yang belum, **dikelompokkan per huruf awal pinyin (A–Z)**. Ada tombol **"sudah hafal"** untuk menandai satu kata, satu kelompok sekaligus, atau semua; plus filter **Belum hafal / Sudah hafal** di halaman Vocab.
+- **Halaman "Hafal"** — daftar hanzi yang sudah hafal dipisahkan dari yang belum, **dikelompokkan per huruf awal pinyin (A–Z)**. Ada tombol **"sudah hafal"** untuk menandai satu kata, satu kelompok sekaligus, atau semua; plus filter **Belum hafal / Sudah hafal**.
+- **Halaman "Vocab"** — daftar semua kata juga **dikelompokkan per huruf awal pinyin (A–Z)**, dengan tombol **✅ Hafal** per kelompok (menandai/atau membatalkan seluruh kelompok sekaligus), filter **Belum hafal / Sudah hafal / Semua**, dan pencarian yang cocok dengan **hanzi, pinyin (berton maupun tanpa tone, mis. `hao`), atau arti**.
 - **Kuis tiga arah**: **hanzi + pinyin → arti**, **arti → hanzi + pinyin**, dan **pinyin → hanzi**, plus pencapaian (achievement) & XP.
 - **Simpan progres otomatis** di browser (termasuk layar terakhir, mode, dan posisi kartu — saat dibuka lagi langsung kembali ke tempat terakhir), plus **Simpan/Muat ke File** (JSON) untuk backup atau pindah perangkat.
 - **Bisa di-install sebagai aplikasi (PWA)** dan **jalan offline** setelah pertama kali dibuka.
