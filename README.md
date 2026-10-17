@@ -5,13 +5,13 @@ Aplikasi belajar kosakata **HSK 2 (HSK 3.0 Level 2)** — 770 kata, satu file HT
 ## Fitur
 
 - **770 kata** HSK 2 dengan hanzi, pinyin (berton), dan arti.
-- **3 kalimat contoh per kata** (2.310 kalimat) yang ditulis pada level HSK 2 (hanya kosakata HSK 3.0 Level 1 + Level 2), berisi hanzi + pinyin + terjemahan Indonesia.
+- **10 kalimat contoh per kata** (7.700 kalimat) bertema pemakaian sehari-hari nyata (belanja, transportasi, makan, rumah, kerja, chat, kesehatan, sekolah, rencana, cuaca, sosial/hobi, perasaan, HP/internet, keuangan), berisi hanzi + pinyin + terjemahan Indonesia. Ditulis pada level HSK 2 (mayoritas kosakata HSK 3.0 Level 1–2).
 - **Audio TTS** untuk kata dan tiap kalimat, dua kecepatan (normal / lambat) memakai `speechSynthesis` bawaan browser.
 - **Tooltip per hanzi** — sentuh/hover karakter mana pun di kalimat contoh untuk melihat pinyin, arti, dan radikalnya.
 - **149 radikal** dengan penjelasan (Indonesia), daftar karakter, dan kata yang memakainya.
 - **Flashcard** dengan mode Belum Hafal / Belajar / Baru / Review / Dikuasai, penilaian kartu, dan progres.
-- **Halaman "Hafal"** — daftar hanzi yang sudah hafal dipisahkan dari yang belum. Ada tombol untuk menandai/batalkan hafal per kata, plus filter **Belum hafal / Sudah hafal** di halaman Vocab.
-- **Kuis** (hanzi→arti, arti→hanzi, pinyin→hanzi) + pencapaian (achievement) & XP.
+- **Halaman "Hafal"** — daftar hanzi yang sudah hafal dipisahkan dari yang belum, **dikelompokkan per huruf awal pinyin (A–Z)**. Ada tombol **"sudah hafal"** untuk menandai satu kata, satu kelompok sekaligus, atau semua; plus filter **Belum hafal / Sudah hafal** di halaman Vocab.
+- **Kuis tiga arah**: **hanzi + pinyin → arti**, **arti → hanzi + pinyin**, dan **pinyin → hanzi**, plus pencapaian (achievement) & XP.
 - **Simpan progres otomatis** di browser (termasuk layar terakhir, mode, dan posisi kartu — saat dibuka lagi langsung kembali ke tempat terakhir), plus **Simpan/Muat ke File** (JSON) untuk backup atau pindah perangkat.
 - **Bisa di-install sebagai aplikasi (PWA)** dan **jalan offline** setelah pertama kali dibuka.
 - **Pembaruan aplikasi** — halaman **Progres** menampilkan **versi aplikasi** dan tombol **🔄 Perbarui Aplikasi** (memeriksa service worker lalu memuat ulang) supaya versi terbaru langsung terpasang di HP Android.
