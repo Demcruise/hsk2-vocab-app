@@ -8,7 +8,7 @@
  * re-precached; normal `index.html` edits are picked up by the network-first
  * navigation handler.
  */
-const VERSION = 'v6';
+const VERSION = 'v13';
 const CACHE = `khsk2-${VERSION}`;
 
 const APP_SHELL = [
@@ -21,6 +21,24 @@ const APP_SHELL = [
   './icons/icon-maskable-512.png',
   './icons/apple-touch-icon.png',
   './icons/favicon-32.png',
+  './assets/mascot.svg',
+  './assets/mascot_sad.svg',
+  './assets/learn.svg',
+  './assets/leaderboard.svg',
+  './assets/quests.svg',
+  './assets/points.svg',
+  './assets/heart.svg',
+  './assets/finish.svg',
+  './assets/cn.svg',
+  './assets/correct.wav',
+  './assets/incorrect.wav',
+  './assets/finish.mp3',
+  './assets/fonts/nunito-latin-var.woff2',
+  './assets/fonts/nunito-latin-ext-var.woff2',
+  './assets/hanzi-writer.min.js',
+  './assets/hw.json',
+  './assets/data/stories_hsk1.json',
+  './assets/data/stories_hsk2.json',
 ];
 
 self.addEventListener('install', (event) => {

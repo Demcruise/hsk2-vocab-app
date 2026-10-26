@@ -11,3 +11,23 @@ desktop.ini
 
 # Logs
 *.log
+
+# Flutter build outputs (web build is deployed via app/)
+mobile/build/
+mobile/.dart_tool/
+mobile/.flutter-plugins*
+mobile/android/.gradle/
+mobile/ios/Pods/
+
+# Debug / temp artifacts
+tools/_*
+*/nul
+NUL
+nul
+_test.html
+.agents/
+.claude/
+agent/
+skills-lock.json
+*.symbols
+tools/shots/

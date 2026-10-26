@@ -1,0 +1,394 @@
+{
+  "hsk1-dasar": {
+    "title": "A First Greeting",
+    "narrate": [
+      "A bright morning in the park. Xiao Mei spots a new face: Da Lin!",
+      "Da Lin is in a hurry... and CRASH! He bumps into Xiao Mei."
+    ],
+    "check": [
+      "Da Lin bumps into Xiao Mei and apologizes right away.",
+      "Xiao Mei refuses to forgive Da Lin."
+    ],
+    "pick_q": [
+      "Tap the word that means 'name'!"
+    ]
+  },
+  "hsk1-waktu": {
+    "title": "What Time Is It?",
+    "narrate": [
+      "Xiao Mei and Da Lin plan to meet tomorrow. But at what time?",
+      "The next day... Da Lin only shows up at ten! Xiao Mei has been waiting for an hour."
+    ],
+    "check": [
+      "They planned to meet at nine in the morning.",
+      "Today Da Lin arrives on time."
+    ],
+    "pick_q": [
+      "Tap the word that means 'now'!"
+    ]
+  },
+  "hsk1-orang": {
+    "title": "A Family Photo",
+    "narrate": [
+      "Xiao Mei shows Da Lin her family photo.",
+      "Da Lin gazes at the photo. What a big, warm family!"
+    ],
+    "check": [
+      "Xiao Mei's father is a doctor.",
+      "There are five people in Xiao Mei's family."
+    ],
+    "pick_q": [
+      "Tap the word that means 'older brother'!"
+    ]
+  },
+  "hsk1-tubuh": {
+    "title": "Sick, Sick!",
+    "narrate": [
+      "Da Lin can't play today. His face is pale — he's sick!",
+      "The doctor examines Da Lin. It's not serious — he just needs rest."
+    ],
+    "check": [
+      "Da Lin really wants to go to the hospital.",
+      "After resting, Da Lin is still sick."
+    ],
+    "pick_q": [
+      "Tap the word that means 'hospital'!"
+    ]
+  },
+  "hsk1-makan": {
+    "title": "At the Restaurant",
+    "narrate": [
+      "Lunchtime! Xiao Mei and Da Lin sit down in a small restaurant.",
+      "The noodles turn out to be tasty too! Da Lin eats heartily."
+    ],
+    "check": [
+      "Da Lin ends up eating dumplings today.",
+      "Da Lin really enjoys his meal."
+    ],
+    "pick_q": [
+      "Tap the word that means 'dumplings'!"
+    ]
+  },
+  "hsk1-rumah": {
+    "title": "Xiao Mei's Home",
+    "narrate": [
+      "Da Lin visits Xiao Mei's home for the first time.",
+      "Suddenly Da Lin panics. His phone is gone!"
+    ],
+    "check": [
+      "Da Lin's phone is on the table.",
+      "Xiao Mei's room is messy and dirty."
+    ],
+    "pick_q": [
+      "Tap the word that means 'computer'!"
+    ]
+  },
+  "hsk1-sekolah": {
+    "title": "A School Day",
+    "narrate": [
+      "Early morning at school. Xiao Mei and Da Lin are in the same class.",
+      "Da Lin tries writing... whoa, his characters look really strange!"
+    ],
+    "check": [
+      "Da Lin can write Chinese characters right away.",
+      "By the end of class, Da Lin still can't write."
+    ],
+    "pick_q": [
+      "Tap the word that means 'Chinese characters'!"
+    ]
+  },
+  "hsk1-jalan": {
+    "title": "Riding the Train",
+    "narrate": [
+      "Xiao Mei and Da Lin are going on vacation to China. Exciting!",
+      "On the train, Da Lin falls fast asleep. Zzz..."
+    ],
+    "check": [
+      "They take a plane to China.",
+      "Their trip is very boring."
+    ],
+    "pick_q": [
+      "Tap the word that means 'train'!"
+    ]
+  },
+  "hsk1-belanja": {
+    "title": "A Cheap Book",
+    "narrate": [
+      "Today Xiao Mei and Da Lin go shopping. Xiao Mei is looking for a book.",
+      "Xiao Mei is overjoyed. She buys the cheap book."
+    ],
+    "check": [
+      "The first book costs ten yuan.",
+      "Xiao Mei buys an expensive book."
+    ],
+    "pick_q": [
+      "Tap the word that means 'cheap'!"
+    ]
+  },
+  "hsk1-hobi": {
+    "title": "Movie Night",
+    "narrate": [
+      "Saturday night! Xiao Mei and Da Lin can't decide what to do.",
+      "Da Lin sings very... loudly. Xiao Mei covers her ears."
+    ],
+    "check": [
+      "Da Lin's voice is beautiful.",
+      "In the end, Da Lin likes the movie."
+    ],
+    "pick_q": [
+      "Tap the word that means 'movie theater'!"
+    ]
+  },
+  "hsk1-alam": {
+    "title": "Falling Rain",
+    "narrate": [
+      "Xiao Mei and Da Lin want to play in the park.",
+      "They take the cat home. The rain gets heavier!"
+    ],
+    "check": [
+      "It rains today.",
+      "The cat is left alone in the rain."
+    ],
+    "pick_q": [
+      "Tap the word that means 'rain'!"
+    ]
+  },
+  "hsk1-sifat": {
+    "title": "New Clothes",
+    "narrate": [
+      "Xiao Mei just bought new clothes. She shows them off to Da Lin.",
+      "Da Lin puts on his old clothes that are too small. So funny!"
+    ],
+    "check": [
+      "Da Lin's clothes are too big.",
+      "Da Lin buys clothes that are too small again."
+    ],
+    "pick_q": [
+      "Tap the word that means 'new'!"
+    ]
+  },
+  "hsk1-umum": {
+    "title": "New Friends",
+    "narrate": [
+      "Da Lin just moved to this town. Xiao Mei invites him to a small party.",
+      "At the party, Xiao Mei starts introducing Da Lin."
+    ],
+    "check": [
+      "Da Lin already knows all the guests from the start.",
+      "By the end of the party, Da Lin has many new friends."
+    ],
+    "pick_q": [
+      "Tap the word that means 'to know'!"
+    ]
+  },
+  "hsk1-fungsi": {
+    "title": "The Lost Cup",
+    "narrate": [
+      "Da Lin wants to drink tea. But oh no — his cup is gone!",
+      "They search everywhere. Da Lin starts to feel dizzy."
+    ],
+    "check": [
+      "Da Lin's cup is under the table.",
+      "Da Lin's cup is never found."
+    ],
+    "pick_q": [
+      "Tap the word that means 'where'!"
+    ]
+  },
+  "hsk2-dasar": {
+    "title": "See You!",
+    "narrate": [
+      "Da Lin is leaving for Beijing tomorrow. This afternoon, Xiao Mei stops by his house to see him off.",
+      "They relax over warm tea and chat about tomorrow's trip."
+    ],
+    "check": [
+      "Da Lin will leave for Beijing tomorrow morning.",
+      "Da Lin is angry because Xiao Mei wants to go home."
+    ],
+    "pick_q": [
+      "Tap the word that means 'welcome'!"
+    ]
+  },
+  "hsk2-waktu": {
+    "title": "When Do We Play?",
+    "narrate": [
+      "Xiao Mei and Da Lin meet again in the park. They chat about time — before, now, and later.",
+      "The chat gets more exciting. They start making plans for the weekend."
+    ],
+    "check": [
+      "Da Lin was napping in the park earlier.",
+      "They have plenty of time before the movie starts."
+    ],
+    "pick_q": [
+      "Tap the word that means 'earlier / just now'!"
+    ]
+  },
+  "hsk2-orang": {
+    "title": "A Big Family",
+    "narrate": [
+      "Da Lin's house is buzzing tonight. The whole family is gathered, and Xiao Mei is invited to eat with them!",
+      "The evening is warm and lively. Xiao Mei goes home with a happy heart."
+    ],
+    "check": [
+      "Da Lin's father is a doctor.",
+      "Da Lin's mother works at a school."
+    ],
+    "pick_q": [
+      "Tap the word that means 'guest'!"
+    ]
+  },
+  "hsk2-tubuh": {
+    "title": "Get Well Soon!",
+    "narrate": [
+      "Da Lin doesn't come to school today. Xiao Mei is worried, so she stops by to visit him after school.",
+      "The next morning, Da Lin wakes up feeling fresh."
+    ],
+    "check": [
+      "Da Lin feels very healthy today.",
+      "Da Lin is still very sick the next day."
+    ],
+    "pick_q": [
+      "Tap the word that means 'medicine'!"
+    ]
+  },
+  "hsk2-makan": {
+    "title": "My Treat!",
+    "narrate": [
+      "Da Lin invites Xiao Mei to dinner at a small restaurant near home. He says the dumplings there are the best!",
+      "They eat heartily until their bellies are full."
+    ],
+    "check": [
+      "They eat at a restaurant.",
+      "Xiao Mei is still hungry after eating twenty dumplings."
+    ],
+    "pick_q": [
+      "Tap the word that means 'chopsticks'!"
+    ]
+  },
+  "hsk2-rumah": {
+    "title": "A New Home",
+    "narrate": [
+      "Da Lin just moved house. Xiao Mei comes to visit with a small gift.",
+      "They walk around looking at the rooms and the backyard."
+    ],
+    "check": [
+      "Xiao Mei brings a gift for Da Lin.",
+      "Da Lin's new home is on the tenth floor."
+    ],
+    "pick_q": [
+      "Tap the word that means 'gift'!"
+    ]
+  },
+  "hsk2-sekolah": {
+    "title": "Studying Together",
+    "narrate": [
+      "There's a Chinese test tomorrow! After school, Xiao Mei and Da Lin study together.",
+      "They study until late afternoon. Now they're ready for the test!"
+    ],
+    "check": [
+      "Da Lin is ready for tomorrow's test.",
+      "They study together for the test."
+    ],
+    "pick_q": [
+      "Tap the word that means 'homework'!"
+    ]
+  },
+  "hsk2-jalan": {
+    "title": "Let's Go to the Park!",
+    "narrate": [
+      "Xiao Mei and Da Lin want to have a picnic in the park. The problem is... they don't know the way!",
+      "They finally arrive! The park is beautiful — this little trip becomes a fun adventure."
+    ],
+    "check": [
+      "They end up taking a taxi to the park.",
+      "The train station is across from the supermarket."
+    ],
+    "pick_q": [
+      "Tap the word that means 'bicycle'!"
+    ]
+  },
+  "hsk2-belanja": {
+    "title": "Bargain Shopping",
+    "narrate": [
+      "There's a party at Xiao Mei's house this weekend! She and Da Lin go to the supermarket to shop.",
+      "All the items go into the basket. Time to pay and head home!"
+    ],
+    "check": [
+      "The fruit at that supermarket is very expensive.",
+      "They go home without buying anything."
+    ],
+    "pick_q": [
+      "Tap the word that means 'cheap'!"
+    ]
+  },
+  "hsk2-hobi": {
+    "title": "A Fun Saturday",
+    "narrate": [
+      "It's Saturday, no school! Xiao Mei and Da Lin chat about hobbies on their morning walk.",
+      "What a fun day! They can't wait for next weekend."
+    ],
+    "check": [
+      "Da Lin likes sports.",
+      "Xiao Mei doesn't like taking photos."
+    ],
+    "pick_q": [
+      "Tap the word that means 'photo'!"
+    ]
+  },
+  "hsk2-alam": {
+    "title": "A Lakeside Picnic",
+    "narrate": [
+      "Early in the morning Xiao Mei opens the window. Today they're having a picnic by the lake!",
+      "The clouds grow thicker. They hurry home before the rain."
+    ],
+    "check": [
+      "It snows today.",
+      "They get caught in the rain before reaching home."
+    ],
+    "pick_q": [
+      "Tap the word that means 'moon'!"
+    ]
+  },
+  "hsk2-sifat": {
+    "title": "A Gift for Mom",
+    "narrate": [
+      "Da Lin's mother's birthday is tomorrow. He and Xiao Mei go looking for the perfect gift.",
+      "The next day, Mom opens her gift. Her face lights up with joy!"
+    ],
+    "check": [
+      "Da Lin's mother likes the color blue.",
+      "Mom doesn't like her gift."
+    ],
+    "pick_q": [
+      "Tap the word that means 'beautiful'!"
+    ]
+  },
+  "hsk2-umum": {
+    "title": "A Surprise Party",
+    "narrate": [
+      "Their classmate Xiao Hua's birthday is coming soon. Xiao Mei and Da Lin have a secret plan!",
+      "The party is lively! Xiao Hua laughs happily all night."
+    ],
+    "check": [
+      "They plan a party for Xiao Hua.",
+      "Da Lin wants Xiao Hua to cook by herself at her party."
+    ],
+    "pick_q": [
+      "Tap the word that means 'to help'!"
+    ]
+  },
+  "hsk2-fungsi": {
+    "title": "Falling Rain",
+    "narrate": [
+      "Xiao Mei and Da Lin want to go play in the park. But look — the sky is getting dark!",
+      "The sun comes out again. They happily run straight to the park."
+    ],
+    "check": [
+      "They still go to the park while it's raining.",
+      "Xiao Mei has just bought a new book."
+    ],
+    "pick_q": [
+      "Tap the word that means 'can / may'!"
+    ]
+  }
+}

@@ -1,53 +1,61 @@
-# Kunkwan HSK 2 — Kosakata
+# Kunkwan HSK — Vocabulary (HSK 1 & HSK 2)
 
-Aplikasi belajar kosakata **HSK 2 (HSK 3.0 Level 2)** — 770 kata, satu file HTML, bisa dipakai di HP sebagai aplikasi (PWA) atau langsung dibuka dari file.
+An **HSK 3.0** vocabulary-learning app — **HSK 1 (300 words)** and **HSK 2 (770 words)** in one app, each **fully separate**: learning path, progress, XP, streak, achievements, and storage each have their own bucket (`khsk1` / `khsk2`). A single HTML file — usable on a phone as an installable app (PWA) or opened directly in a browser.
 
-## Fitur
+## Features
 
-- **770 kata** HSK 2 dengan hanzi, pinyin (berton), dan arti.
-- **10 kalimat contoh per kata** (7.700 kalimat) bertema pemakaian sehari-hari nyata (belanja, transportasi, makan, rumah, kerja, chat, kesehatan, sekolah, rencana, cuaca, sosial/hobi, perasaan, HP/internet, keuangan), berisi hanzi + pinyin + terjemahan Indonesia. Ditulis pada level HSK 2 (mayoritas kosakata HSK 3.0 Level 1–2).
-- **Audio TTS** untuk kata dan tiap kalimat, dua kecepatan (normal / lambat) memakai `speechSynthesis` bawaan browser.
-- **Tooltip per hanzi** — sentuh/hover karakter mana pun di kalimat contoh untuk melihat pinyin, arti, dan radikalnya.
-- **149 radikal** dengan penjelasan (Indonesia), daftar karakter, dan kata yang memakainya.
-- **Flashcard** dengan mode Belum Hafal / Belajar / Baru / Review / Dikuasai, penilaian kartu, dan progres.
-- **Halaman "Hafal"** — daftar hanzi yang sudah hafal dipisahkan dari yang belum, **dikelompokkan per huruf awal pinyin (A–Z)**. Ada tombol **"sudah hafal"** untuk menandai satu kata, satu kelompok sekaligus, atau semua; plus filter **Belum hafal / Sudah hafal**.
-- **Halaman "Vocab"** — daftar semua kata juga **dikelompokkan per huruf awal pinyin (A–Z)**, dengan tombol **✅ Hafal** per kelompok (menandai/atau membatalkan seluruh kelompok sekaligus), filter **Belum hafal / Sudah hafal / Semua**, dan pencarian yang cocok dengan **hanzi, pinyin (berton maupun tanpa tone, mis. `hao`), atau arti**.
-- **Kuis tiga arah**: **hanzi + pinyin → arti**, **arti → hanzi + pinyin**, dan **pinyin → hanzi**, plus pencapaian (achievement) & XP.
-- **Simpan progres otomatis** di browser (termasuk layar terakhir, mode, dan posisi kartu — saat dibuka lagi langsung kembali ke tempat terakhir), plus **Simpan/Muat ke File** (JSON) untuk backup atau pindah perangkat.
-- **Bisa di-install sebagai aplikasi (PWA)** dan **jalan offline** setelah pertama kali dibuka.
-- **Pembaruan aplikasi** — halaman **Progres** menampilkan **versi aplikasi** dan tombol **🔄 Perbarui Aplikasi** (memeriksa service worker lalu memuat ulang) supaya versi terbaru langsung terpasang di HP Android.
+- **Level picker** — HSK 1 🐣 / HSK 2 🚀 buttons on the Learn screen (plus a header pill). Switching levels swaps all content & progress — never mixed.
+- **300 HSK 1 words** & **770 HSK 2 words** with hanzi, tone-marked pinyin, traditional forms, and meanings.
+- **10 example sentences per word** (3,000 HSK 1 + 7,700 HSK 2 sentences) with hanzi + pinyin + English translation.
+- **TTS audio** for words and every sentence, two speeds (normal / slow) via the browser's `speechSynthesis`.
+- **Per-hanzi tooltips** — tap/hover any character in an example sentence for pinyin, meaning, radical, stroke count, and related words.
+- **Radicals** — 149 explained entries for HSK 2; the HSK 1 radical list is derived automatically from the hanzi map.
+- **Duolingo-style learning path** — words grouped into **thematic units** (Greetings, Numbers & Time, Family, Health, Food, Home, School & Work, Transport, Shopping, Hobbies, Nature, Adjectives, etc.), each unit a winding path of lesson nodes (~10 words/node). Finished nodes show ✓, the active node has a progress ring.
+- **Flashcards** with Not Memorized / Learning / New / Review / Mastered modes — full-screen lesson sessions with instant **✅ Memorized** marking.
+- **"Memorized" & "Vocab" pages** — words **grouped by pinyin initial (A–Z)**, per-word/per-letter mark buttons, filters, and hanzi/pinyin/meaning search.
+- **Progressive quiz exercises** — recognition first (choose the pinyin / hanzi / meaning), then word-bank sentence translation, listening, speaking (ASR zh-CN with self-check fallback), and writing (stroke-by-stroke tracing with validation). 拼音 toggle, ✦ NEW WORD / ⚑ HARD EXERCISE badges, gold "N IN A ROW" progress bar, ⚡∞, PERFECT overlay, correct/wrong band + CONTINUE, wrong questions re-queued, confetti + SFX.
+- **Practice Hub** — targeted practice for weak skills: listening, speaking, writing, and all mistaken words.
+- **Storybook** — 28 interactive stories (14 per level, one per unit topic): narration, dialog bubbles with audio + pinyin, and comprehension checks (+20 XP).
+- **Lesson-complete celebrations** — finishing a lesson shows a "Lesson complete!" overlay; the node is permanently marked done (`ld`).
+- **Two layouts**: desktop ≥1024px gets a left sidebar + right rail; mobile gets a green topbar + bottom navigation.
+- **Dark mode** following the system plus a manual toggle (🌙).
+- **Auto-saved progress** per level in the browser, plus **Save/Load to File** (JSON). Backup files record their level (`hsk1-...json` / `hsk2-...json`) — importing another level's file is rejected with instructions to switch first.
+- **Installable PWA** and **works offline**.
 
-## Cara Pakai
+## Usage
 
-### Di browser (paling cepat)
-Buka `index.html` dengan Chrome/Safari/Edge — langsung jalan, bisa offline, tidak perlu server.
+### In a browser (fastest)
+Open `index.html` with Chrome/Safari/Edge — it just works, offline-capable, no server needed.
 
-### Install di HP Android (disarankan)
-1. Buka **https://demcruise.github.io/hsk2-vocab-app/** di **Chrome Android**.
-2. Tunggu sebentar sampai halaman termuat penuh.
-3. Ketuk menu **⋮** (kanan atas) → **"Tambahkan ke Layar utama"** / *Add to Home screen*.
-4. Konfirmasi → ikon **HSK 2 V3** muncul di layar utama.
-5. Buka dari ikon itu: tampil tanpa address bar (mode aplikasi), dan tetap bisa dibuka **tanpa internet**.
+### Install on Android (recommended)
+1. Open **https://demcruise.github.io/hsk2-vocab-app/** in **Chrome on Android**.
+2. Wait for the page to fully load.
+3. Tap the **⋮** menu (top right) → **"Add to Home screen"**.
+4. Confirm — the **Kunkwan HSK** icon appears on your home screen.
+5. Launch it from the icon: no address bar (app mode), and it still works **offline**.
 
-> Catatan: fitur install hanya tersedia lewat **https** (GitHub Pages), bukan saat file dibuka dari `file://`. Aplikasi tetap berfungsi normal di `file://`, hanya tanpa tombol install.
+> Note: install requires **https** (GitHub Pages) — it isn't available when the file is opened via `file://`.
 
-## Struktur
+## Structure
 
-| File | Keterangan |
+| File | Description |
 |---|---|
-| `index.html` | Aplikasi lengkap (HTML + CSS + JS + semua data tertanam) |
-| `vocab_data.json` | Sumber data: 770 kata + 149 radikal |
-| `manifest.webmanifest` | Manifest PWA (nama, ikon, warna tema) |
-| `sw.js` | Service worker — caching offline |
-| `icons/` | Ikon aplikasi (192/512, versi maskable, apple-touch, favicon) |
-| `tools/make-icons.mjs` | Generator ikon (Node murni, tanpa dependency) |
-| `full_generator.js`, `generate_sentences.mjs` | Generator data |
-| `HSK2_v3_vocabulary_list_EN.pdf` | Daftar kosakata HSK 2 (EN) |
-| `New-HSK-Vocabulary-Level-2.pdf` | Daftar kosakata HSK (level 2) |
-| `HSK2-Vocabulary-3.0.pdf` | Rujukan kosakata HSK 3.0 |
+| `index.html` | The complete app (HTML + CSS + JS + all embedded data, including HSK 1) |
+| `vocab_data.json` | HSK 2 data source: 770 words + 149 radicals |
+| `hsk1_data.json` | HSK 1 data source: 300 words (PDF extraction + generated sentences) |
+| `assets/data/` | Stories (14 per level), hanzi map, stroke-order data (`hw.json`) |
+| `manifest.webmanifest` | PWA manifest (name, icons, theme colors) |
+| `sw.js` | Service worker — offline caching |
+| `icons/` | App icons |
+| `assets/` | UI assets (SVG, feedback audio, Nunito font) — precached for offline |
+| `mobile/` | **Flutter** version (Android/iOS/Web), see `mobile/README.md` |
+| `tools/apply_en.mjs` | Merges `tools/en_out/` translations into all data files + app copies |
+| `tools/en_chunks/` `tools/en_out/` | Sentence-translation pipeline (chunked, validated) |
+| `tools/assign_topics*.mjs` | Thematic-unit classification for both levels |
+| `tools/extract_hsk1.py` | Extracts the 300 HSK 1 words from the PDF |
 
-## Catatan
+## Notes
 
-- Progres disimpan di `localStorage` browser. Kalau membuka dari path/domain berbeda (mis. pindah dari `file://` ke GitHub Pages), gunakan **Simpan/Muat Progres ke File** untuk memindahkannya.
-- Audio bergantung pada voice Mandarin (`zh-CN`) yang tersedia di perangkat. Jika belum ada, instal paket suara Mandarin di pengaturan sistem.
-- Setelah mengubah `index.html`, versi terbaru otomatis terambil saat online (navigasi bersifat *network-first*). Tapi agar versi **offline** juga ikut ter-perbarui, naikkan `VERSION` di `sw.js` (buka lalu tutup sekali dengan koneksi internet). Di HP, ketuk **Progres → 🔄 Perbarui Aplikasi** kalau versi belum berubah.
+- Progress is stored in browser `localStorage`, **per level** (`khsk1` / `khsk2`) — the last selected level is remembered (`khsk-level`).
+- Audio depends on a Mandarin voice (`zh-CN`) being available on the device.
+- After changing `index.html`, the new version is picked up automatically while online. To refresh the **offline** copy too, bump `VERSION` in `sw.js`. On mobile: **Progress → 🔄 Update App**.
