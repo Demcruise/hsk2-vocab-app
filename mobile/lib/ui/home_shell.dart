@@ -76,7 +76,7 @@ class _HomeShellState extends State<HomeShell> {
     ];
 
     final feed = AnimatedSwitcher(
-      duration: const Duration(milliseconds: 150),
+      duration: (MediaQuery.maybeDisableAnimationsOf(context) ?? false) ? Duration.zero : const Duration(milliseconds: 150),
       child: KeyedSubtree(key: ValueKey(S.screen), child: screens[_idx]),
     );
 

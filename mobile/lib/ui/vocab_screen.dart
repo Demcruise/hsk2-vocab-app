@@ -3,6 +3,7 @@ import '../data/app_state.dart';
 import '../data/content.dart';
 import '../data/models.dart';
 import 'duo.dart';
+import 'fi_sticker.dart';
 import 'widgets.dart';
 
 /// Vocab list & Hafal list — A–Z groups, search, per-word & per-group mark.
@@ -102,13 +103,48 @@ class _VocabScreenState extends State<VocabScreen> {
             ]),
           ),
           Expanded(
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(16, 10, 16, 24),
-              children: [for (final g in groups) _group(context, g)],
-            ),
+            child: filtered.isEmpty
+                ? _emptyState()
+                : ListView(
+                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 24),
+                    children: [for (final g in groups) _group(context, g)],
+                  ),
           ),
         ]);
       },
+    );
+  }
+
+  Widget _emptyState() {
+    final searching = _search.text.isNotEmpty;
+    final String title;
+    final String sub;
+    final Widget sticker;
+    if (searching) {
+      title = 'No words match';
+      sub = 'Try a different search or clear the filter.';
+      sticker = const FiSticker.loupe();
+    } else if (widget.knownTab) {
+      title = 'Nothing here yet';
+      sub = 'Mark words as known and they will show up here.';
+      sticker = const FiSticker.sprout();
+    } else {
+      title = 'No words in this filter';
+      sub = 'Try another filter or search.';
+      sticker = const FiSticker.loupe();
+    }
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          sticker,
+          const SizedBox(height: 10),
+          Text(title, style: duoFont(size: 17, weight: FontWeight.w900)),
+          const SizedBox(height: 4),
+          Text(sub, textAlign: TextAlign.center,
+              style: duoFont(size: 13, weight: FontWeight.w600, color: Duo.textLight)),
+        ]),
+      ),
     );
   }
 

@@ -29,6 +29,7 @@ flutter:
     - assets/data/
     - assets/audio/
     - assets/svg/
+    - assets/stickers/
   fonts:
     - family: Nunito
       fonts:

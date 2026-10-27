@@ -6,6 +6,7 @@ import '../data/content.dart';
 import '../data/models.dart';
 import '../data/services.dart';
 import 'duo.dart';
+import 'fi_sticker.dart';
 import 'speak_practice.dart';
 import 'widgets.dart';
 import 'writing.dart';
@@ -714,7 +715,7 @@ class QuizScreenState extends State<QuizScreen> {
       DuoCard(
         padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 16),
         child: Column(children: [
-          SvgPicture.asset(win ? 'assets/svg/finish.svg' : 'assets/svg/mascot_sad.svg', width: 120, height: 120),
+          win ? const FiSticker.medal() : SvgPicture.asset('assets/svg/mascot_sad.svg', width: 120, height: 120),
           const SizedBox(height: 14),
           Text(win ? 'Practice complete!' : 'Don\u2019t give up!', style: duoFont(size: 22, weight: FontWeight.w900)),
           const SizedBox(height: 4),
@@ -793,7 +794,7 @@ class _PerfectOverlay extends StatelessWidget {
       child: Center(
         child: TweenAnimationBuilder<double>(
           tween: Tween(begin: .2, end: 1),
-          duration: const Duration(milliseconds: 400),
+          duration: (MediaQuery.maybeDisableAnimationsOf(context) ?? false) ? Duration.zero : const Duration(milliseconds: 400),
           curve: Curves.elasticOut,
           builder: (_, v, child) => Transform.scale(scale: v, child: child),
           child: Stack(alignment: Alignment.center, children: [

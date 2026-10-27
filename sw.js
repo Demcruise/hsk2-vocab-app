@@ -8,7 +8,7 @@
  * re-precached; normal `index.html` edits are picked up by the network-first
  * navigation handler.
  */
-const VERSION = 'v13';
+const VERSION = 'v18';
 const CACHE = `khsk2-${VERSION}`;
 
 const APP_SHELL = [
@@ -36,6 +36,7 @@ const APP_SHELL = [
   './assets/fonts/nunito-latin-var.woff2',
   './assets/fonts/nunito-latin-ext-var.woff2',
   './assets/hanzi-writer.min.js',
+  './stickers/stickers.js',
   './assets/hw.json',
   './assets/data/stories_hsk1.json',
   './assets/data/stories_hsk2.json',

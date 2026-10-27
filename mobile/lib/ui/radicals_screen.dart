@@ -3,6 +3,7 @@ import '../data/app_state.dart';
 import '../data/content.dart';
 import '../data/models.dart';
 import 'duo.dart';
+import 'fi_sticker.dart';
 
 /// Radicals tab: search + 149-card grid + expandable detail card on top.
 class RadicalsScreen extends StatefulWidget {
@@ -75,6 +76,21 @@ class _RadicalsScreenState extends State<RadicalsScreen> {
                   style: duoFont(size: 12, weight: FontWeight.w700, color: Duo.textLight)),
             ),
           ),
+          if (list.isEmpty)
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  const FiSticker.tile(),
+                  const SizedBox(height: 10),
+                  Text('No radicals match', style: duoFont(size: 17, weight: FontWeight.w900)),
+                  const SizedBox(height: 4),
+                  Text('Try a different search.',
+                      style: duoFont(size: 13, weight: FontWeight.w600, color: Duo.textLight)),
+                ]),
+              ),
+            )
+          else
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),

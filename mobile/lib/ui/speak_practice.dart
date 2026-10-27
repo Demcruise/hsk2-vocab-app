@@ -63,7 +63,7 @@ class _SpeakPanelState extends State<SpeakPanel> {
       GestureDetector(
         onTap: _listen,
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 120),
+          duration: (MediaQuery.maybeDisableAnimationsOf(context) ?? false) ? Duration.zero : const Duration(milliseconds: 120),
           width: 84, height: 84,
           decoration: BoxDecoration(
             shape: BoxShape.circle,

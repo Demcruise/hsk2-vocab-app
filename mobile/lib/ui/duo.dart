@@ -97,12 +97,13 @@ class _DuoButtonState extends State<DuoButton> {
   Widget build(BuildContext context) {
     final active = !widget.disabled && widget.onTap != null;
     final borderW = _down ? 2.0 : _press;
+    final reduceMotion = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
     return GestureDetector(
       onTapDown: active ? (_) => setState(() => _down = true) : null,
       onTapUp: active ? (_) { setState(() => _down = false); widget.onTap!(); } : null,
       onTapCancel: active ? () => setState(() => _down = false) : null,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 60),
+        duration: reduceMotion ? Duration.zero : const Duration(milliseconds: 60),
         transform: Matrix4.translationValues(0, _down ? _press - 2 : 0, 0),
         width: widget.wide ? double.infinity : null,
         padding: EdgeInsets.symmetric(
@@ -189,7 +190,7 @@ class DuoBar extends StatelessWidget {
         child: Align(
           alignment: Alignment.centerLeft,
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
+            duration: (MediaQuery.maybeDisableAnimationsOf(context) ?? false) ? Duration.zero : const Duration(milliseconds: 300),
             width: double.infinity,
             height: height,
             child: FractionallySizedBox(

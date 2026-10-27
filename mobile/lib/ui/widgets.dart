@@ -182,7 +182,12 @@ class _ConfettiOverlayState extends State<ConfettiOverlay> with SingleTickerProv
   @override
   void initState() {
     super.initState();
-    _c = AnimationController(vsync: this, duration: const Duration(milliseconds: 3200))..forward();
+    _c = AnimationController(vsync: this, duration: const Duration(milliseconds: 3200));
+    if (WidgetsBinding.instance.platformDispatcher.accessibilityFeatures.disableAnimations) {
+      _c.value = .35;
+    } else {
+      _c.forward();
+    }
     final rnd = math.Random();
     _ps = List.generate(140, (i) => _P(
           x: rnd.nextDouble(),

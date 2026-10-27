@@ -406,8 +406,16 @@ class _StartBubble extends StatefulWidget {
 }
 
 class _StartBubbleState extends State<_StartBubble> with SingleTickerProviderStateMixin {
-  late final AnimationController _c =
-      AnimationController(vsync: this, duration: const Duration(milliseconds: 1200))..repeat(reverse: true);
+  late final AnimationController _c;
+
+  @override
+  void initState() {
+    super.initState();
+    _c = AnimationController(vsync: this, duration: const Duration(milliseconds: 1200));
+    if (!WidgetsBinding.instance.platformDispatcher.accessibilityFeatures.disableAnimations) {
+      _c.repeat(reverse: true);
+    }
+  }
 
   @override
   void dispose() {
@@ -488,7 +496,7 @@ class _PressableNodeState extends State<_PressableNode> {
       onTapCancel: () => setState(() => _down = false),
       onLongPress: widget.onLongPress == null ? null : () { setState(() => _down = false); widget.onLongPress!(); },
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 80),
+        duration: (MediaQuery.maybeDisableAnimationsOf(context) ?? false) ? Duration.zero : const Duration(milliseconds: 80),
         transform: Matrix4.translationValues(0, _down ? 6 : 0, 0),
         width: 70,
         height: 70,
