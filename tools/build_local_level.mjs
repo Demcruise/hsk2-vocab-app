@@ -17,7 +17,10 @@ const LEVEL = process.argv[2] || '2';
 const DIR = join(ROOT, 'local-content');
 const SRC = join(DIR, 'hsk2025.json');
 const OUT = join(DIR, `level-hsk${LEVEL}-2025.json`);
-const MAX_SENT = 10, MIN_SENT = 3;
+// Minimum example sentences per word: 3 for levels 1-4, 2 from level 5 up (owner
+// decision 2026-11-11, to keep the hand-written volume manageable). MIN_SENT env overrides.
+const MAX_SENT = 10;
+const MIN_SENT = Number(process.env.MIN_SENT) || (parseInt(LEVEL, 10) >= 5 ? 2 : 3);
 
 if (!existsSync(SRC)) { console.error('Missing ' + SRC + ' — run tools/extract_local_hsk.mjs first.'); process.exit(1); }
 const words = JSON.parse(readFileSync(SRC, 'utf8')).words.filter((w) => w.level === LEVEL);
@@ -37,16 +40,25 @@ for (const v of app) if ([...v.hanzi].length > 1 && v.pinyin && !wordPinyin.has(
 // Erhua words whose source pinyin dropped the final r (差点儿 "chàdiǎn" -> "chàdiǎnr").
 for (const [hz, py] of wordPinyin) if (hz.endsWith('儿') && !/r$/.test(py) && !/ér$/.test(py)) wordPinyin.set(hz, py + 'r');
 // A few proper nouns used in authored sentences.
-for (const [hz, py] of Object.entries({ 上海: 'Shànghǎi', 杭州: 'Hángzhōu', 海淀区: 'Hǎidiàn Qū', 英国: 'Yīngguó', 西安: "Xī'ān" })) wordPinyin.set(hz, py);
+for (const [hz, py] of Object.entries({ 上海: 'Shànghǎi', 杭州: 'Hángzhōu', 海淀区: 'Hǎidiàn Qū', 英国: 'Yīngguó', 西安: "Xī'ān", 长得: 'zhǎngde' })) wordPinyin.set(hz, py);
 const MAX_WORD = Math.max(...[...wordPinyin.keys()].map((k) => k.length));
 const PUNCT = { '。': '.', '，': ',', '？': '?', '！': '!', '、': ',', '：': ':', '；': ';', '“': '"', '”': '"' };
+// Adjectives (from the source part-of-speech data) — an adjective or a reduplicated
+// AA word followed by 地 makes 地 the adverbial particle "de" (高兴地, 慢慢地).
+const adjWords = new Set(allWords.filter((w) => (w.pos || []).includes('adj')).map((w) => w.hanzi));
 // target: the vocabulary word the sentence illustrates; it is always kept as one
 // segment so greedy matching can't swallow it (要好好 must be 要 + 好好, not 要好 + 好).
 function sentencePinyin(hz, target) {
   const out = [];
   const tPy = target && [...target].length > 1 ? wordPinyin.get(target) : null;
+  const charPy = pinyinPro(hz, { type: 'array' });
+  let lastSeg = '';
   for (let i = 0; i < hz.length;) {
-    if (tPy && hz.startsWith(target, i)) { out.push(tPy); i += target.length; continue; }
+    if (tPy && hz.startsWith(target, i)) { out.push(tPy); lastSeg = target; i += target.length; continue; }
+    const ch = hz[i];
+    // Particles the lexicon/pinyin-pro get wrong as standalone characters.
+    if (ch === '地' && lastSeg && (adjWords.has(lastSeg) || /^(.)\1$/.test(lastSeg))) { out.push('de'); lastSeg = ch; i++; continue; }
+    if (ch === '们' && out.length) { out[out.length - 1] += 'men'; lastSeg += ch; i++; continue; }
     let hit = null;
     for (let n = Math.min(MAX_WORD, hz.length - i); n > 1; n--) {
       const w = hz.slice(i, i + n);
@@ -54,11 +66,14 @@ function sentencePinyin(hz, target) {
       if (tPy && target !== w && hz.indexOf(target, i) > i && hz.indexOf(target, i) < i + n) continue;
       if (wordPinyin.has(w)) { hit = w; break; }
     }
-    if (hit) { out.push(wordPinyin.get(hit)); i += hit.length; continue; }
-    const ch = hz[i];
-    if (PUNCT[ch]) { if (out.length) out[out.length - 1] += PUNCT[ch]; i++; continue; }
-    if (/\p{Script=Han}/u.test(ch)) out.push(pinyinPro(hz, { type: 'array' })[i]);
+    if (hit) { out.push(wordPinyin.get(hit)); lastSeg = hit; i += hit.length; continue; }
+    if (PUNCT[ch]) { if (out.length) out[out.length - 1] += PUNCT[ch]; lastSeg = ''; i++; continue; }
+    // A lone 得 in a sentence is almost always the complement particle (写得很好).
+    // ...except right after a subject or 还/就/也/都, where it is modal "must" (我们得走了 → děi).
+    if (ch === '得') out.push(/^(我|你|他|她|我们|你们|他们|她们|大家|咱们|还|就|也|都)$/.test(lastSeg) ? 'děi' : 'de');
+    else if (/\p{Script=Han}/u.test(ch)) out.push(charPy[i]);
     else out.push(ch);
+    lastSeg = ch;
     i++;
   }
   const s = out.join(' ').replace(/\s+([.,?!:;])/g, '$1');

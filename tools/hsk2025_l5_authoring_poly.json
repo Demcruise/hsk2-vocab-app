@@ -1,0 +1,43 @@
+{
+  "_note": "Original sentences and topics for HSK 3.0 (2025) Level 5 polyphone entries (keyed hanzi|pinyin, pinyin hand-written) plus a few gap fills.",
+  "topics": {
+    "处|chǔ": "umum", "处|chù": "jalan", "调|diào": "umum", "调|tiáo": "umum",
+    "行|háng": "sekolah", "系|jì": "umum", "系|xì": "sekolah", "批|pī": "umum"
+  },
+  "sentences": {
+    "传|chuán": [
+      ["请把球传给我。", "Qǐng bǎ qiú chuán gěi wǒ.", "Please pass the ball to me."],
+      ["这个消息很快就传开了。", "Zhège xiāoxi hěn kuài jiù chuánkāi le.", "This news spread quickly."]
+    ],
+    "调|diào": [
+      ["他被调到北京工作了。", "Tā bèi diào dào Běijīng gōngzuò le.", "He was transferred to work in Beijing."],
+      ["这首歌的调子很好听。", "Zhè shǒu gē de diàozi hěn hǎotīng.", "This song has a lovely tune."]
+    ],
+    "调|tiáo": [
+      ["请把空调调到二十六度。", "Qǐng bǎ kōngtiáo tiáo dào èrshíliù dù.", "Please set the air conditioner to twenty-six degrees."],
+      ["我来调一下电视的声音。", "Wǒ lái tiáo yíxià diànshì de shēngyīn.", "Let me adjust the TV volume."]
+    ],
+    "行|háng": [
+      ["他在银行工作。", "Tā zài yínháng gōngzuò.", "He works at a bank."],
+      ["请排成两行。", "Qǐng pái chéng liǎng háng.", "Please line up in two rows."]
+    ],
+    "系|jì": [
+      ["请系好安全带。", "Qǐng jìhǎo ānquándài.", "Please fasten your seat belt."],
+      ["他在系鞋带。", "Tā zài jì xiédài.", "He is tying his shoelaces."]
+    ],
+    "系|xì": [
+      ["她是中文系的学生。", "Tā shì Zhōngwén xì de xuésheng.", "She is a student in the Chinese department."],
+      ["我们系有三百个学生。", "Wǒmen xì yǒu sānbǎi ge xuésheng.", "Our department has three hundred students."]
+    ],
+    "刺激": [
+      ["坐过山车很刺激。", "Zuò guòshānchē hěn cìjī.", "Riding a roller coaster is thrilling."],
+      ["辣的东西会刺激胃。", "Là de dōngxi huì cìjī wèi.", "Spicy food can irritate the stomach."]
+    ],
+    "改正": [
+      ["他很快改正了缺点。", "Tā hěn kuài gǎizhèng le quēdiǎn.", "He quickly corrected his shortcomings."]
+    ],
+    "贵姓": [
+      ["请问，您贵姓？", "Qǐngwèn, nín guìxìng?", "Excuse me, what is your surname?"]
+    ]
+  }
+}

@@ -83,3 +83,14 @@ node tools/build_local_level.mjs 4
 - Guard: the build fails if an authored sentence doesn't contain its word (it caught 打…招呼, 举…例子, 打…针, which were rewritten).
 - Polyphones: old app data is reused only when hanzi **and** reading match (重 chóng no longer borrows 重 zhòng's sentences). Polyphones skip corpus sentences and use hand-written sentences with hand-written pinyin, keyed `hanzi|pinyin` in the `hsk2025_l<N>_authoring_poly.json` files (L2 地 de, 着 zhe; L3 得 děi, 地 dì, 还 huán, 行 xíng; L4 重 chóng/zhòng, 落 luò, 熟 shú, 着 zháo, 空 kōng/kòng).
 - Known: some older corpus sentences (from the original app generator) start lowercase or join words oddly in pinyin; unchanged here.
+
+## Local level: HSK 5 (2025)
+
+```bash
+node tools/build_local_level.mjs 5
+```
+
+- Owner decision (2026-11-11): minimum **2** example sentences per word from level 5 up (3 for levels 1–4). Override with `MIN_SENT=3`.
+- 1,600 words: 70 reuse old app data, 318 use corpus sentences, 1,212 use original sentences (`tools/hsk2025_l5_authoring_s1..s7.json`, ≈2,150 sentences; topics in `hsk2025_l5_authoring_topics.json`; polyphones 传 chuán, 调 diào/tiáo, 行 háng, 系 jì/xì in `hsk2025_l5_authoring_poly.json`).
+- Pinyin generator rules added after reviewing output: standalone 得 → "de" (complement), or "děi" right after a subject or 还/就/也/都; 地 after an adjective (source POS data) or a reduplicated word → "de" (also stops 乐观地面对 being read as 地面); 们 attaches to the previous word (孩子们 → háizimen); 长得 → zhǎngde.
+- Known: greedy word matching can still put a space in the wrong place when two words overlap (这本书写得 → "shūxiě de"); syllables and tones are correct.
