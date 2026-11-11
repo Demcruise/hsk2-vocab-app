@@ -1,0 +1,10 @@
+{
+  "name": "kunkwan-tools",
+  "private": true,
+  "description": "Dev/test tooling for Kunkwan HSK (not shipped).",
+  "type": "commonjs",
+  "devDependencies": {
+    "pdfjs-dist": "4.10.38",
+    "puppeteer-core": "*"
+  }
+}

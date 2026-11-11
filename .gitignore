@@ -31,3 +31,8 @@ agent/
 skills-lock.json
 *.symbols
 tools/shots/
+
+# Local-only licensed content (personal use; never commit or deploy)
+all hsk level/
+local-content/
+Reverse/
