@@ -137,7 +137,10 @@ words.forEach((w, i) => {
   if (own && own.sentences && own.sentences.length) { sents = own.sentences.slice(0, MAX_SENT); report.ownSentences++; }
   else {
     const authored = pick(authoring.sentences) || [];
-    const fromCorpus = polyphone ? [] : corpus
+    // A hand-keyed "hanzi|pinyin" entry also means "readings differ" (tone-only polyphones
+    // like 冲 chōng/chòng or 吐 tǔ/tù that the toneless check can't see): no corpus then.
+    const keyed = !!authoring.sentences[w.hanzi + '|' + compact];
+    const fromCorpus = polyphone || keyed ? [] : corpus
       .filter((s) => containsWord(s[0], w.hanzi) && !authored.some((a) => a[0] === s[0]))
       .sort((a, b) => Math.abs(tokens(a) - 6) - Math.abs(tokens(b) - 6));
     sents = [...authored, ...fromCorpus].slice(0, MAX_SENT);
