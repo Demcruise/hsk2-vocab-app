@@ -696,6 +696,19 @@ html[data-theme="dark"] .ex-chip.in-ans{color:var(--green)}
 .ub-quiz{border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.15);color:#fff;border-radius:10px;padding:6px 10px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;min-height:40px}
 .ub-quiz:active{transform:scale(.95)}
 .node-wrap.book{transform:none!important}
+.node-wrap.cp{transform:none!important;margin-top:6px}
+.lesson-node.cp{width:78px;height:78px}
+.lesson-node.cp svg{width:38px;height:38px;fill:#AFAFAF}
+.lesson-node.cp.passed{background:#FFC800;box-shadow:0 8px 0 #E5A500}
+.lesson-node.cp.passed svg{fill:#fff}
+.jump-btn{position:absolute;top:6px;left:50%;transform:translateX(-50%);z-index:2;background:var(--card);border:2px solid var(--border);border-bottom-width:4px;border-radius:999px;padding:6px 14px;font:800 13px Nunito,sans-serif;color:var(--blue,#1CB0F6);cursor:pointer;white-space:nowrap}
+.jump-btn:active{border-bottom-width:2px;transform:translateX(-50%) translateY(2px)}
+.ex-hearts{font-weight:900;font-size:15px;color:#FF4B4B;white-space:nowrap}
+.ex-hearts.hidden{display:none}
+#examIntro{z-index:85}
+.ei-ic{font-size:56px;line-height:1;margin-bottom:8px}
+.ei-meta{display:flex;justify-content:center;gap:8px;margin:0 0 14px;flex-wrap:wrap}
+.ei-meta span{font-size:12px;font-weight:800;border:2px solid var(--border);border-radius:999px;padding:3px 10px}
 .lesson-node.book{background:var(--purple,#CE82FF);box-shadow:0 8px 0 #a560e8}
 .lesson-node.book svg path{fill:#fff}
 
@@ -828,7 +841,7 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
       <div class="quiz-top">
         <button class="icon-btn" onclick="quitQuiz()" title="Exit" aria-label="Exit quiz"><svg viewBox="0 0 24 24"><path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6z"/></svg></button>
         <div class="quiz-bar" id="quizBar"><i id="quizBarFill" style="width:0%"></i><span class="ex-row-label" id="rowLabel"></span></div>
-        <div class="ex-energy" title="Energy" role="img" aria-label="Unlimited energy"><svg viewBox="0 0 24 24" class="ex-bolt"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg><b>∞</b></div>
+        <div class="ex-energy" id="exEnergy" title="Energy" role="img" aria-label="Unlimited energy"><svg viewBox="0 0 24 24" class="ex-bolt"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg><b>∞</b></div><div class="ex-hearts hidden" id="exHearts" role="img"></div>
       </div>
       <div class="quiz-body ex-body">
         <div class="ex-topline">
@@ -871,7 +884,7 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
         <div class="qd-card red"><div class="qd-h">Lives</div><div class="qd-v" id="qdHearts">5</div></div>
       </div>
       <div class="qd-quests" id="qdQuests"></div>
-      <button class="btn pri wide" onclick="startQuiz(S.qTopic)">🔄 Retry Quiz</button>
+      <button class="btn pri wide" onclick="retryQuiz()">🔄 Retry Quiz</button>
       <button class="btn wide mt-8" onclick="reviewWrong()">📝 Review Mistakes</button>
     </div></div>
   </div>
@@ -1062,14 +1075,14 @@ function setSpeed(s){S.speed=s;document.getElementById('speedNorm').className=s=
 
 function initData(){let L=curLevel();vocab=L.vocab;WORD_TOPIC=L.topics;radicals=RADICALS_DATA;renderLevelUI();buildUnits();loadState();badgeBaseline();initTTS();cv=vocab.map((_,i)=>i);applyMode();renderVocab();renderStats();renderAch();renderLearnPath();renderRail();setupUI();setupHanzi();refreshSaveInfo();loadHW();if(S.screen==='quiz')renderQuizPicker();reappliedSession();}
 
-function saveState(){S.savedAt=new Date().toLocaleString();try{localStorage.setItem(storeKey(),JSON.stringify({p:S.prog,s:S.streak,l:S.last,x:S.xp,q:S.quizzes,a:S.ach,k:S.known,sc:S.screen,md:S.mode,vf:S.vf,kf:S.kf,wid:S.wid,sa:S.savedAt,st:S.st,ld:S.ld,pf:S.pf||0}));}catch(e){}updateHUD();refreshSaveInfo();}
-function loadState(){try{let s=localStorage.getItem(storeKey());if(s){let p=JSON.parse(s);S.prog=p.p||{};S.streak=p.s||0;S.last=p.l||'';S.xp=p.x||0;S.quizzes=p.q||0;S.ach=p.a||{};S.known=(p.k&&typeof p.k==='object')?p.k:null;S.screen=p.sc||'learn';S.mode=p.md||S.mode;S.vf=p.vf||'belum';S.kf=p.kf||'belum';S.wid=(p.wid===undefined?null:p.wid);S.savedAt=p.sa||'';S.st=p.st||{};S.ld=p.ld||{};S.pf=p.pf||0;}else if(curLevel().local)seedFromOtherLevels();}catch(e){}if(!S.known)S.known=seedKnown();S.streak=streakNow();updateHUD();}
+function saveState(){S.savedAt=new Date().toLocaleString();try{localStorage.setItem(storeKey(),JSON.stringify({p:S.prog,s:S.streak,l:S.last,x:S.xp,q:S.quizzes,a:S.ach,k:S.known,sc:S.screen,md:S.mode,vf:S.vf,kf:S.kf,wid:S.wid,sa:S.savedAt,st:S.st,ld:S.ld,pf:S.pf||0,cp:S.cp||{}}));}catch(e){}updateHUD();refreshSaveInfo();}
+function loadState(){try{let s=localStorage.getItem(storeKey());if(s){let p=JSON.parse(s);S.prog=p.p||{};S.streak=p.s||0;S.last=p.l||'';S.xp=p.x||0;S.quizzes=p.q||0;S.ach=p.a||{};S.known=(p.k&&typeof p.k==='object')?p.k:null;S.screen=p.sc||'learn';S.mode=p.md||S.mode;S.vf=p.vf||'belum';S.kf=p.kf||'belum';S.wid=(p.wid===undefined?null:p.wid);S.savedAt=p.sa||'';S.st=p.st||{};S.ld=p.ld||{};S.pf=p.pf||0;S.cp=p.cp||{};}else if(curLevel().local)seedFromOtherLevels();}catch(e){}if(!S.known)S.known=seedKnown();S.streak=streakNow();updateHUD();}
 
 // SAVE / BACKUP
-function progressPayload(){return {v:2,app:storeKey(),at:new Date().toISOString(),p:S.prog,s:S.streak,l:S.last,x:S.xp,q:S.quizzes,a:S.ach,k:S.known,sc:S.screen,md:S.mode,vf:S.vf,kf:S.kf,wid:S.wid,st:S.st,ld:S.ld,pf:S.pf||0};}
+function progressPayload(){return {v:2,app:storeKey(),at:new Date().toISOString(),p:S.prog,s:S.streak,l:S.last,x:S.xp,q:S.quizzes,a:S.ach,k:S.known,sc:S.screen,md:S.mode,vf:S.vf,kf:S.kf,wid:S.wid,st:S.st,ld:S.ld,pf:S.pf||0,cp:S.cp||{}};}
 function exportProgress(){saveState();let data=JSON.stringify(progressPayload());let name=LEVEL+'-progress-'+new Date().toISOString().slice(0,10)+'.json';try{let blob=new Blob([data],{type:'application/json'});let url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1500);toast('Progress saved!');}catch(e){toast('Failed to save file');}refreshSaveInfo();}
 function reappliedSession(){let _ri=S.wid==null?-1:cv.findIndex(function(k){return vocab[k].id===S.wid;});showCard(_ri>=0?_ri:0);document.querySelectorAll('#fcModeSelect button').forEach(function(b){b.className=b.dataset.mode===S.mode?'active':'';});document.querySelectorAll('#vocabFilter button').forEach(function(b){b.className=b.dataset.vf===S.vf?'active':'';});document.querySelectorAll('#knownFilter button').forEach(function(b){b.className=b.dataset.kf===S.kf?'active':'';});renderKnown();if(S.screen&&S.screen!=='learn')switchScreen(S.screen);}
-function applyPayload(p){if(!p||typeof p!=='object')return false;S.prog=p.p||{};S.streak=p.s||0;S.last=p.l||S.last;S.xp=p.x||0;S.quizzes=p.q||0;S.ach=p.a||{};S.known=(p.k&&typeof p.k==='object')?p.k:seedKnown();if(p.sc)S.screen=p.sc;if(p.md)S.mode=p.md;if(p.vf)S.vf=p.vf;if(p.kf)S.kf=p.kf;if(p.wid!==undefined)S.wid=(p.wid===null?null:p.wid);if(p.st)S.st=p.st;if(p.ld)S.ld=p.ld;S.pf=p.pf||0;S.savedAt=new Date().toLocaleString();saveState();renderStats();renderAch();applyMode();renderVocab();reappliedSession();refreshSaveInfo();return true;}
+function applyPayload(p){if(!p||typeof p!=='object')return false;S.prog=p.p||{};S.streak=p.s||0;S.last=p.l||S.last;S.xp=p.x||0;S.quizzes=p.q||0;S.ach=p.a||{};S.known=(p.k&&typeof p.k==='object')?p.k:seedKnown();if(p.sc)S.screen=p.sc;if(p.md)S.mode=p.md;if(p.vf)S.vf=p.vf;if(p.kf)S.kf=p.kf;if(p.wid!==undefined)S.wid=(p.wid===null?null:p.wid);if(p.st)S.st=p.st;if(p.ld)S.ld=p.ld;S.pf=p.pf||0;S.cp=p.cp||{};S.savedAt=new Date().toLocaleString();saveState();renderStats();renderAch();applyMode();renderVocab();reappliedSession();refreshSaveInfo();return true;}
 function forceAppUpdate(){toast('Checking for updates...');let go=function(){setTimeout(function(){location.reload();},400);};try{if('serviceWorker' in navigator){navigator.serviceWorker.getRegistration().then(function(reg){if(!reg){go();return;}reg.update().then(function(){go();},function(){go();});}).catch(function(){go();});}else{go();}}catch(e){go();}}
 function importProgress(input){let f=input.files&&input.files[0];if(!f)return;let r=new FileReader();r.onload=function(){try{let p=JSON.parse(r.result);if(p&&p.app&&p.app!==storeKey()){toast('This file is for '+String(p.app).replace('khsk','HSK ').toUpperCase()+' — switch levels first');input.value='';return;}if(applyPayload(p))toast('Progress loaded!');else toast('Invalid file');}catch(e){toast('Couldn’t read file');}input.value='';};r.onerror=function(){toast('Failed to read file');input.value='';};r.readAsText(f);}
 function copyProgress(){let t=document.getElementById('saveBox');if(!t)return;t.focus();t.select();try{t.setSelectionRange(0,999999);}catch(e){}let ok=false;try{ok=document.execCommand('copy');}catch(e){}if(ok){toast('Backup copied!');}else if(navigator.clipboard){navigator.clipboard.writeText(t.value).then(function(){toast('Backup copied!');},function(){toast('Copy failed');});}else{toast('Press Ctrl+C to copy');}}
@@ -1222,7 +1235,7 @@ function perfectOverlay(){
 
 function nextQuizQ(){if(S.qHearts<=0){finishQ();return;}S.qIdx++;showQ();}
 
-function finishQ(){let bf=document.getElementById('quizBarFill');if(bf)bf.style.width='100%';document.getElementById('quizArea').className='hidden';document.getElementById('quizComplete').className='';document.getElementById('finalRight').textContent=S.qRight;document.getElementById('finalTotal').textContent=S.qList.length;let p=S.qList.length?Math.round(S.qRight/S.qList.length*100):0;document.getElementById('finalMsg').textContent=p>=90?'Outstanding! Almost perfect.':(p>=70?'Great! Keep it up.':(p>=50?'Not bad — keep practicing.':'Practice more — you can do it.'));document.getElementById('qdXP').textContent='+'+(p>=80?20:(p>=60?10:5));document.getElementById('qdHearts').textContent=S.qHearts;let qdI=document.getElementById('qdImg'),qdF=document.getElementById('qdFi');qdI.src=p>=50?'assets/finish.svg':'assets/mascot_sad.svg';if(p>=50&&window.FI){qdI.style.display='none';qdF.style.display='block';FI.mount(qdF.parentNode)}else{qdI.style.display='block';qdF.style.display='none'}document.getElementById('qdTitle').textContent=p>=50?'Practice complete!':'Don’t give up!';S.quizzes++;dailyTrack('lessons');if(p>=80)dailyTrack('quiz80');if(p===100&&S.qList.length)S.pf=(S.pf||0)+1;if(p>=80)addXP(20);else if(p>=60)addXP(10);else addXP(5);if(p>=50){sfx('finish.mp3');confetti();}saveState();renderAch();renderLearnPath();renderQuestList('qdQuests',true);setTimeout(checkBadges,1400);}
+function finishQ(){let bf=document.getElementById('quizBarFill');if(bf)bf.style.width='100%';document.getElementById('quizArea').className='hidden';document.getElementById('quizComplete').className='';document.getElementById('finalRight').textContent=S.qRight;document.getElementById('finalTotal').textContent=S.qList.length;let p=S.qList.length?Math.round(S.qRight/S.qList.length*100):0;document.getElementById('finalMsg').textContent=p>=90?'Outstanding! Almost perfect.':(p>=70?'Great! Keep it up.':(p>=50?'Not bad — keep practicing.':'Practice more — you can do it.'));document.getElementById('qdXP').textContent='+'+(p>=80?20:(p>=60?10:5));document.getElementById('qdHearts').textContent=S.qHearts;let qdI=document.getElementById('qdImg'),qdF=document.getElementById('qdFi');qdI.src=p>=50?'assets/finish.svg':'assets/mascot_sad.svg';if(p>=50&&window.FI){qdI.style.display='none';qdF.style.display='block';FI.mount(qdF.parentNode)}else{qdI.style.display='block';qdF.style.display='none'}document.getElementById('qdTitle').textContent=p>=50?'Practice complete!':'Don’t give up!';S.quizzes++;dailyTrack('lessons');if(p>=80)dailyTrack('quiz80');if(p===100&&S.qList.length)S.pf=(S.pf||0)+1;if(p>=80)addXP(20);else if(p>=60)addXP(10);else addXP(5);if(p>=50){sfx('finish.mp3');confetti();}saveState();renderAch();renderLearnPath();renderQuestList('qdQuests',true);if(S.qExam)examResult();setTimeout(checkBadges,1400);}
 function reviewWrong(){if(!S.wrongIds.length){toast('No mistakes!');return;}let h='<div class="card"><h3 style="font-size:14px;margin-bottom:8px">Review</h3>';S.wrongIds.forEach(id=>{let v=vocab.find(x=>x.id===id);if(v)h+='<div class="review-item"><span class="rv-hanzi">'+v.hanzi+'</span><span class="rv-info">'+v.pinyin+' - '+v.meaning+'</span></div>';});h+='</div>';document.getElementById('reviewSection').innerHTML=h;document.getElementById('reviewSection').className='';}
 
 function jumpWord(hz){let v=vocab.find(x=>x.hanzi===hz);if(v)jumpToVocab(v.id);}
@@ -1244,7 +1257,7 @@ document.addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')
 function setupUI(){document.querySelectorAll('#levelSwitch button').forEach(b=>b.addEventListener('click',()=>switchLevel(b.dataset.lv)));document.querySelectorAll('#sideBar .sb-item,.bottom-nav button').forEach(b=>b.addEventListener('click',()=>switchScreen(b.dataset.screen)));document.querySelectorAll('#fcModeSelect button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#fcModeSelect button').forEach(x=>x.className='');b.className='active';S.mode=b.dataset.mode;applyMode();openSession('Practice • '+b.textContent.trim());}));document.getElementById('flashcard').addEventListener('click',function(e){if(e.target.closest('#playBtn')||e.target.closest('#fcSentences'))return;flipCard();});document.querySelectorAll('#knownFilter button').forEach(b=>b.addEventListener('click',()=>{S.kf=b.dataset.kf;document.querySelectorAll('#knownFilter button').forEach(x=>x.className=x===b?'active':'');renderKnown();saveState();}));document.querySelectorAll('#vocabFilter button').forEach(b=>b.addEventListener('click',()=>{S.vf=b.dataset.vf;document.querySelectorAll('#vocabFilter button').forEach(x=>x.className=x===b?'active':'');renderVocab();saveState();}));}
 
 function switchScreen(s){document.querySelectorAll('.screen').forEach(x=>x.className='screen');let tgt={learn:'screenLearn',vocab:'screenVocab',known:'screenKnown',quiz:'screenQuiz',radicals:'screenRadicals',progress:'screenProgress'}[s];let el=document.getElementById(tgt);if(el)el.className='screen active';document.querySelectorAll('.sb-item,.bottom-nav button').forEach(b=>b.className=(b.dataset.screen===s?(b.classList.contains('sb-item')?'sb-item active':'active'):(b.classList.contains('sb-item')?'sb-item':'')));if(s==='learn')renderLearnPath();if(s==='vocab')renderVocab();if(s==='radicals'){renderRadicals();renderHanziTab();}if(s==='known')renderKnown();if(s==='quiz')renderQuizPicker();if(s==='progress'){renderHub();renderStats();renderAch();refreshSaveInfo();let av=document.getElementById('appVersion');if(av)av.textContent='App version: '+APP_VERSION;}S.screen=s;saveState();}
-function resetProgress(){if(window.confirm('Delete all progress for this level — XP, streak, quiz results, and memorized words? This cannot be undone.')){localStorage.removeItem(storeKey());S.prog={};S.streak=0;S.xp=0;S.quizzes=0;S.ach={};S.pf=0;S.known=seedKnown();S.last=new Date().toDateString();S.streak=1;saveState();renderStats();renderAch();applyMode();renderLearnPath();renderVocab();toast('Reset!');refreshSaveInfo();}}
+function resetProgress(){if(window.confirm('Delete all progress for this level — XP, streak, quiz results, and memorized words? This cannot be undone.')){localStorage.removeItem(storeKey());S.prog={};S.streak=0;S.xp=0;S.quizzes=0;S.ach={};S.pf=0;S.cp={};S.known=seedKnown();S.last=new Date().toDateString();S.streak=1;saveState();renderStats();renderAch();applyMode();renderLearnPath();renderVocab();toast('Reset!');refreshSaveInfo();}}
 function toast(m){let e=document.getElementById('toast');e.textContent=m;e.className='toast show';setTimeout(()=>e.className='toast',2200);}
 
 // DARK MODE
@@ -1296,7 +1309,7 @@ function switchLevel(l){
   LEVEL=l;try{localStorage.setItem('khsk-level',l);}catch(e){}
   let L=curLevel();
   vocab=L.vocab;WORD_TOPIC=L.topics;
-  S.prog={};S.known=null;S.streak=0;S.last='';S.xp=0;S.quizzes=0;S.ach={};S.st={};S.ld={};S.pf=0;S.mode='unmem';S.vf='belum';S.kf='belum';S.wid=null;S.screen='learn';S.idx=0;S.qList=[];
+  S.prog={};S.known=null;S.streak=0;S.last='';S.xp=0;S.quizzes=0;S.ach={};S.st={};S.ld={};S.pf=0;S.cp={};S.mode='unmem';S.vf='belum';S.kf='belum';S.wid=null;S.screen='learn';S.idx=0;S.qList=[];
   buildUnits();loadState();cv=vocab.map((_,i)=>i);applyMode();
   renderVocab();renderStats();renderAch();renderLearnPath();renderRail();renderLevelUI();refreshSaveInfo();startQuiz();reappliedSession();
   toast('Switched to '+L.label+' • '+vocab.length+' words');
@@ -1457,15 +1470,16 @@ function buildQTyped(v,i,ft){
   if(t==='write')q.ch=writeCharFor(v);
   return q;
 }
-function startQuiz(topic,pool,forceType){
+function startQuiz(topic,pool,forceType,opts){
+  opts=opts||{};S.qExam=opts.exam||null;S.qWasExam=null;
   S.qTopic=topic||null;
   let src=pool||vocab;
   if(topic)src=vocab.filter(function(v,i){return WORD_TOPIC[i]===topic;});
   if(!src.length){toast('No words for this practice yet');return;}
-  let n=Math.min(10,src.length),sh=src.slice().sort(function(){return Math.random()-.5;}).slice(0,n);
+  let n=Math.min(opts.n||10,src.length),sh=src.slice().sort(function(){return Math.random()-.5;}).slice(0,n);
   S.qList=sh.map(function(v,i){return buildQTyped(v,i,forceType);});
   S.qBase=S.qList.length;
-  S.qIdx=0;S.qRight=0;S.qWrong=0;S.wrongIds=[];S.qDone=false;S.qHearts=5;S.qRow=0;
+  S.qIdx=0;S.qRight=0;S.qWrong=0;S.wrongIds=[];S.qDone=false;S.qHearts=opts.hearts||5;S.qRow=0;
   document.getElementById('quizPicker').className='hidden';
   document.getElementById('quizComplete').className='hidden';document.getElementById('reviewSection').className='hidden';
   document.getElementById('quizArea').className='';
@@ -2063,10 +2077,11 @@ hzShow=function(el){
 // learn path: tombol quiz di banner + node buku + long-press
 let lpSuppress=false;
 renderLearnPath=function(){
-  let host=document.getElementById('learnPath');if(!host)return;let h='',foundCur=false,g=0;
+  let host=document.getElementById('learnPath');if(!host)return;let h='',foundCur=false,g=0,cur=curUnitIdx();
   UNITS.forEach(function(u,ui){
     let total=u.lessons.reduce(function(a,l){return a+l.length;},0);
     h+='<div class="unit"><div class="unit-banner"><div class="ub-l"><div class="ub-sec">Section '+(ui+1)+' • '+total+' words</div><h2>'+u.name+'</h2></div><div class="ub-btns"><button class="ub-quiz" data-ug="'+u.key+'">📖 Guide</button><button class="ub-quiz" data-uq="'+u.key+'">📝 Quiz</button></div></div><div class="unit-path">';
+    if(ui>cur)h+='<button class="jump-btn" data-jump="'+ui+'">⏩ Jump here?</button>';
     u.lessons.forEach(function(ls,li){
       let st=lessonState(ls);if(!st.done&&S.ld&&S.ld[ui+'_'+li])st.done=true;
       let off=NODE_WAVE[g%NODE_WAVE.length];g++;
@@ -2079,6 +2094,9 @@ renderLearnPath=function(){
     let boff=NODE_WAVE[g%NODE_WAVE.length];g++;
     let stDone=S.st[LEVEL+'-'+u.key];
     h+='<div class="node-wrap book" style="transform:translateX('+boff+'px)"><button class="lesson-node book" data-st="'+u.key+'" title="Story: '+u.name+'"><svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.1.25.1.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg></button><div class="node-label">'+(stDone?'✓':'📖')+'</div></div>';
+    // checkpoint (unit test) at the very end of the unit
+    let cpd=S.cp&&S.cp[u.key];
+    h+='<div class="node-wrap cp"><button class="lesson-node cp'+(cpd?' passed':'')+'" data-cp="'+ui+'" title="Checkpoint: '+u.name+'" aria-label="Checkpoint: '+u.name+(cpd?' (passed)':'')+'"><svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg></button><div class="node-label">'+(cpd?'✓ Checkpoint':'Checkpoint')+'</div></div>';
     h+='</div><div class="unit-end">✦ &nbsp;Finished this unit? Keep going to the next one&nbsp; ✦</div></div>';
   });
   host.innerHTML=h;
@@ -2087,6 +2105,7 @@ renderLearnPath=function(){
   host.querySelectorAll('[data-ug]').forEach(function(b){b.onclick=function(e){e.stopPropagation();openGuide(b.dataset.ug);};});
   // binding: cerita
   host.querySelectorAll('[data-st]').forEach(function(b){b.onclick=function(){openStory(b.dataset.st);};});
+host.querySelectorAll('[data-cp]').forEach(function(b){b.onclick=function(){openExamIntro('cp',+b.dataset.cp);};});  host.querySelectorAll('[data-jump]').forEach(function(b){b.onclick=function(){openExamIntro('jump',+b.dataset.jump);};});
   // binding: node tap + long-press
   host.querySelectorAll('[data-lp]').forEach(function(b){
     let pr=b.dataset.lp.split('_'),ui=+pr[0],li=+pr[1],tm=null;
@@ -2469,6 +2488,57 @@ function renderAch(){
   host.innerHTML='<div class="bdg-sum">'+earned+' of '+total+' badge levels earned</div><div class="bdg-grid">'+h+'</div>';
 }
 if(typeof loadStories==='function')loadStories();
+
+// ===== Checkpoints (end-of-unit test) & jump-ahead tests =====
+// Pass = finish the test with at least one heart left. Passing marks every lesson of the
+// covered units done (S.ld) and their checkpoints passed (S.cp), so the path moves on.
+const EXAM_HEARTS=3,EXAM_N={cp:12,jump:15};
+function unitWords(ui){let u=UNITS[ui];return u?u.lessons.flat().map(function(i){return vocab[i];}):[];}
+function unitDone(ui){return UNITS[ui].lessons.every(function(ls,li){return lessonState(ls).done||(S.ld&&S.ld[ui+'_'+li]);});}
+function curUnitIdx(){for(let ui=0;ui<UNITS.length;ui++){if(!unitDone(ui))return ui;}return UNITS.length;}
+function examRange(kind,ui){return kind==='cp'?{from:ui,to:ui}:{from:Math.min(curUnitIdx(),ui-1),to:ui-1};}
+function openExamIntro(kind,ui){
+  let r=examRange(kind,ui),pool=[];for(let i=r.from;i<=r.to;i++)pool=pool.concat(unitWords(i));
+  let n=Math.min(EXAM_N[kind],pool.length),u=UNITS[ui];
+  document.getElementById('eiIcon').textContent=kind==='cp'?'🏆':'⏩';
+  document.getElementById('eiTitle').textContent=kind==='cp'?'Unit '+(ui+1)+' checkpoint':'Jump to Unit '+(ui+1)+'?';
+  document.getElementById('eiMsg').textContent=kind==='cp'
+    ?'Test yourself on '+u.name+'. Pass to complete the whole unit.'
+    :'Already know '+(r.from===r.to?'Unit '+(r.from+1):'Units '+(r.from+1)+'–'+(r.to+1))+'? Pass this test to mark '+(r.from===r.to?'it':'them')+' complete and start at '+u.name+'.';
+  document.getElementById('eiMeta').innerHTML='<span>📝 '+n+' questions</span><span>❤️ '+EXAM_HEARTS+' hearts</span>';
+  document.getElementById('eiStart').onclick=function(){closeExamIntro();startExam(kind,ui);};
+  document.getElementById('examIntro').className='sd open';
+  setTimeout(function(){document.getElementById('eiStart').focus();},50);
+}
+function closeExamIntro(){document.getElementById('examIntro').className='sd';}
+function startExam(kind,ui){
+  let r=examRange(kind,ui),pool=[];for(let i=r.from;i<=r.to;i++)pool=pool.concat(unitWords(i));
+  if(!pool.length){toast('Nothing to test yet');return;}
+  switchScreen('quiz');window.scrollTo(0,0);
+  startQuiz(null,pool,undefined,{n:EXAM_N[kind],hearts:EXAM_HEARTS,exam:{kind:kind,ui:ui,from:r.from,to:r.to}});
+}
+function examResult(){
+  let ex=S.qExam,pass=S.qHearts>0;S.qExam=null;S.qWasExam=ex;
+  let t=document.getElementById('qdTitle'),m=document.getElementById('finalMsg'),img=document.getElementById('qdImg'),fi=document.getElementById('qdFi');
+  if(pass){
+    S.cp=S.cp||{};S.ld=S.ld||{};
+    for(let i=ex.from;i<=ex.to;i++){S.cp[UNITS[i].key]=1;UNITS[i].lessons.forEach(function(ls,li){S.ld[i+'_'+li]=1;});}
+    t.textContent=ex.kind==='cp'?'Checkpoint passed!':'Jumped to Unit '+(ex.ui+1)+'!';
+    m.textContent=ex.kind==='cp'?UNITS[ex.ui].name+' is complete. On to the next unit!':(ex.from===ex.to?'Unit '+(ex.from+1)+' is':'Units '+(ex.from+1)+'–'+(ex.to+1)+' are')+' marked complete.';
+    addXP(ex.kind==='cp'?15:25);
+  }else{
+    t.textContent='Out of hearts';
+    m.textContent='Finish with at least one heart to pass. Review your mistakes and try again.';
+    img.src='assets/mascot_sad.svg';img.style.display='block';fi.style.display='none';
+  }
+  saveState();renderLearnPath();renderHearts();
+}
+function retryQuiz(){let ex=S.qWasExam;if(ex)startExam(ex.kind,ex.ui);else startQuiz(S.qTopic);}
+renderHearts=function(){
+  let h=document.getElementById('exHearts'),e=document.getElementById('exEnergy');if(!h)return;
+  if(S.qExam){h.className='ex-hearts';h.textContent='❤️ '+S.qHearts;h.setAttribute('aria-label',S.qHearts+' hearts left');if(e)e.style.display='none';}
+  else{h.className='ex-hearts hidden';if(e)e.style.display='';}
+};
 loadDaily();
 
 initData();
@@ -2490,6 +2560,7 @@ applyTheme(document.documentElement.dataset.theme==='dark'?'dark':'light');
 <!-- Unit guidebook overlay -->
 <div id="guideView" role="dialog" aria-label="Unit guidebook"><div class="wr-view-top"><button class="icon-btn" onclick="closeGuide()" title="Close" aria-label="Close guidebook"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><b style="font-size:16px">📖 Guidebook</b></div><div class="gd-body" id="gdBody"></div></div>
 <div id="badgeView" class="sd" role="dialog" aria-modal="true" aria-labelledby="bvName"><div class="sd-card"><div class="bv-ring" id="bvRing"><span id="bvIcon" aria-hidden="true"></span></div><div class="bv-kicker">Badge unlocked!</div><h2 id="bvName"></h2><div class="bv-tier" id="bvTier"></div><p id="bvDesc"></p><button class="btn pri wide" id="bvBtn" onclick="nextBadge()">CONTINUE</button></div></div>
+<div id="examIntro" class="sd" role="dialog" aria-modal="true" aria-labelledby="eiTitle"><div class="sd-card"><div class="ei-ic" id="eiIcon" aria-hidden="true"></div><h2 id="eiTitle"></h2><p id="eiMsg"></p><div class="ei-meta" id="eiMeta"></div><button class="btn pri wide" id="eiStart">START</button><button class="btn wide mt-8" onclick="closeExamIntro()">NOT NOW</button></div></div>
 <div id="writeView"><div class="wr-view-top"><button class="icon-btn" onclick="closeWrite()" title="Close" aria-label="Close writing practice"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/></svg></button><div style="font-weight:800;color:var(--text)">Writing Practice</div></div><div class="wr-view-body" id="wrViewBody"></div></div>
 <!-- Speak overlay -->
 <div id="speakView" class="session" style="z-index:625"><div class="session-top"><button class="icon-btn" onclick="closeSpeak()" title="Close" aria-label="Close speaking practice"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/></svg></button><div class="session-meta">Speaking Practice</div></div><div class="session-scroll" style="text-align:center;padding-top:30px"><div id="sovWord"></div><div id="sovSent"></div><div style="margin-top:22px"><button class="lst-slow" id="sovModel">🔊 Hear example</button></div><div class="ex-speak"><button class="spk-mic" id="sovMic" aria-label="Start recording">🎤</button><div class="spk-status" id="sovStatus"></div><div class="spk-heard" id="sovHeard"></div><div class="spk-self hidden" id="sovSelf"></div><div class="spk-note" id="sovNote"></div></div></div></div>
