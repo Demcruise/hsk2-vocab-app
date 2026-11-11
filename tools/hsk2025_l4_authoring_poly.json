@@ -1,0 +1,41 @@
+{
+  "_note": "Original sentences and topics for HSK 3.0 (2025) Level 4 polyphone entries, keyed hanzi|pinyin. Pinyin written by hand.",
+  "topics": { "重|chóng": "umum", "重|zhòng": "sifat", "空|kōng": "sifat", "空|kòng": "waktu", "熟|shú": "makan" },
+  "sentences": {
+    "重|chóng": [
+      ["这个字写错了，请重写。", "Zhège zì xiě cuò le, qǐng chóng xiě.", "This character is wrong, please write it again."],
+      ["我们重新开始吧。", "Wǒmen chóngxīn kāishǐ ba.", "Let's start over."],
+      ["请把这句话重说一遍。", "Qǐng bǎ zhè jù huà chóng shuō yí biàn.", "Please say that sentence again."]
+    ],
+    "重|zhòng": [
+      ["这个箱子太重了。", "Zhège xiāngzi tài zhòng le.", "This suitcase is too heavy."],
+      ["他病得很重。", "Tā bìng de hěn zhòng.", "He is seriously ill."],
+      ["你的包有多重？", "Nǐ de bāo yǒu duō zhòng?", "How heavy is your bag?"]
+    ],
+    "落|luò": [
+      ["秋天树叶落了。", "Qiūtiān shùyè luò le.", "The leaves fell in autumn."],
+      ["太阳落山了。", "Tàiyáng luò shān le.", "The sun has set."],
+      ["飞机已经落地了。", "Fēijī yǐjīng luò dì le.", "The plane has landed."]
+    ],
+    "熟|shú": [
+      ["苹果熟了。", "Píngguǒ shú le.", "The apples are ripe."],
+      ["饭已经熟了，可以吃了。", "Fàn yǐjīng shú le, kěyǐ chī le.", "The rice is cooked, we can eat."],
+      ["我跟他很熟。", "Wǒ gēn tā hěn shú.", "I know him well."]
+    ],
+    "着|zháo": [
+      ["我昨天很晚才睡着。", "Wǒ zuótiān hěn wǎn cái shuìzháo.", "I didn't fall asleep until very late yesterday."],
+      ["别着急，慢慢来。", "Bié zháojí, mànmàn lái.", "Don't worry, take your time."],
+      ["你找着钥匙了吗？", "Nǐ zhǎozháo yàoshi le ma?", "Did you find the keys?"]
+    ],
+    "空|kōng": [
+      ["这个房间是空的。", "Zhège fángjiān shì kōng de.", "This room is empty."],
+      ["天空很蓝。", "Tiānkōng hěn lán.", "The sky is very blue."],
+      ["瓶子已经空了。", "Píngzi yǐjīng kōng le.", "The bottle is already empty."]
+    ],
+    "空|kòng": [
+      ["你明天有空吗？", "Nǐ míngtiān yǒu kòng ma?", "Are you free tomorrow?"],
+      ["有空来我家玩儿。", "Yǒu kòng lái wǒ jiā wánr.", "Come over to my place when you're free."],
+      ["我最近没有空。", "Wǒ zuìjìn méiyǒu kòng.", "I haven't had any free time lately."]
+    ]
+  }
+}

@@ -5,6 +5,7 @@
   "type": "commonjs",
   "devDependencies": {
     "pdfjs-dist": "4.10.38",
+    "pinyin-pro": "^3.26.0",
     "puppeteer-core": "*"
   }
 }

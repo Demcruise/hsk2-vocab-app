@@ -1,0 +1,26 @@
+{
+  "_note": "Original sentences and topics for HSK 3.0 (2025) Level 3 polyphone entries, keyed hanzi|pinyin. Pinyin written by hand.",
+  "topics": { "得|děi": "fungsi", "还|huán": "umum" },
+  "sentences": {
+    "得|děi": [
+      ["我得走了，明天见。", "Wǒ děi zǒu le, míngtiān jiàn.", "I have to go now, see you tomorrow."],
+      ["你得多喝水。", "Nǐ děi duō hē shuǐ.", "You need to drink more water."],
+      ["明天考试，今天得复习。", "Míngtiān kǎoshì, jīntiān děi fùxí.", "There's an exam tomorrow, so I must review today."]
+    ],
+    "地|dì": [
+      ["地上有一本书。", "Dì shang yǒu yì běn shū.", "There is a book on the floor."],
+      ["下雨以后地很滑。", "Xià yǔ yǐhòu dì hěn huá.", "The ground is slippery after the rain."],
+      ["他把杯子放在地上。", "Tā bǎ bēizi fàng zài dì shang.", "He put the cup on the floor."]
+    ],
+    "还|huán": [
+      ["我明天还你钱。", "Wǒ míngtiān huán nǐ qián.", "I'll pay you back tomorrow."],
+      ["这本书我要还给图书馆。", "Zhè běn shū wǒ yào huán gěi túshūguǎn.", "I need to return this book to the library."],
+      ["你借的东西用完了要还。", "Nǐ jiè de dōngxi yòngwán le yào huán.", "Return the things you borrow when you've finished with them."]
+    ],
+    "行|xíng": [
+      ["明天三点见，行吗？", "Míngtiān sān diǎn jiàn, xíng ma?", "Shall we meet at three tomorrow, is that OK?"],
+      ["行，没问题。", "Xíng, méi wèntí.", "OK, no problem."],
+      ["他做饭很行。", "Tā zuò fàn hěn xíng.", "He's really good at cooking."]
+    ]
+  }
+}
