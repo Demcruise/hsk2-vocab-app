@@ -106,7 +106,9 @@ async function fresh(page) {
   const b = await page.evaluate(() => ({ lv: LEVEL, has: !!LEVELS.hsk2b, btn: !!document.querySelector('[data-lv="hsk2b"]'), n: vocab.length }));
   ok('falls back to hsk2', b.lv === 'hsk2' && b.n === 770, JSON.stringify(b));
   ok('no local level registered', !b.has && !b.btn);
-  ok('level pill cycles built-in levels', await page.evaluate(() => { const a = nextLevel(); switchLevel(a); const r = LEVEL; switchLevel('hsk2'); return r === 'hsk1'; }));
+  ok('level picker lives in Settings, not on Learn', await page.evaluate(() => !!document.querySelector('#screenProgress #levelSwitch') && !document.querySelector('#screenLearn #levelSwitch')));
+  ok('header pill opens Settings', await page.evaluate(() => { document.getElementById('lvlPill').click(); return S.screen === 'progress' || document.getElementById('screenProgress').classList.contains('active'); }));
+  ok('picking a level in Settings switches it', await page.evaluate(() => { document.querySelector('#levelSwitch [data-lv="hsk1"]').click(); const r = LEVEL; switchLevel('hsk2'); return r === 'hsk1'; }));
   ok('no page errors (B)', errors.length === 0, errors.join(' | '));
 
   await browser.close();
