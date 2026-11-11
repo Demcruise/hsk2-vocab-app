@@ -396,6 +396,18 @@ html[data-theme="dark"] .hz.open{background:#4A3F14;color:#FFD966;box-shadow:0 0
 .level-switch button.active{border-color:var(--green-d);background:var(--green-aa);color:#fff}
 .level-switch .lv-c{font-size:10px;font-weight:800;opacity:.75}
 .set-label{font-size:14px;font-weight:900;margin:4px 0 2px}
+/* daily streak, goal & quests */
+#mHeader .mh-stats .st.off{filter:grayscale(1);opacity:.6}
+.streak-card .streak-sub{font-size:12px;font-weight:700;opacity:.9;margin-top:4px}
+.daily-card h3{display:flex;align-items:center;gap:8px}
+.dq-left{margin-left:auto;font-size:12px;font-weight:800;color:var(--text-light)}
+.quest.done .q-bar i{background:var(--green-aa)}
+.quest .q-done{font-size:11px;font-weight:900;color:var(--green-d);margin-left:6px}
+.goal-pick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 14px}
+.goal-pick button{padding:10px 4px;border:2px solid var(--border);border-bottom-width:4px;border-radius:12px;background:var(--card);color:var(--text);font-family:inherit;font-weight:900;font-size:13px;cursor:pointer}
+.goal-pick button.active{border-color:var(--green-d);background:var(--green-aa);color:#fff}
+.qd-quests{width:100%;max-width:420px;margin:4px auto 14px;text-align:left}
+.qd-quests h4{margin:0 0 4px;font-size:14px;font-weight:900}
 #levelSwitch{margin:8px 0 14px}
 .lvl-pill{background:rgba(255,255,255,.22);border:2px solid rgba(255,255,255,.45);color:#fff;border-radius:9px;padding:3px 9px;font-size:11.5px;font-weight:900;cursor:pointer;letter-spacing:.4px;font-family:inherit;min-height:40px;display:inline-flex;align-items:center}
 .lvl-pill:active{transform:translateY(1px)}
@@ -680,7 +692,7 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
 <header id="mHeader">
   <div class="mh-logo"><img src="assets/cn.svg" alt=""><span>Kunkwan</span><button class="lvl-pill" id="lvlPill" onclick="openLevelSettings()" title="Ganti level HSK" aria-label="Ganti level HSK"><span class="lv-name">HSK 2</span></button></div>
   <div class="mh-stats">
-    <span class="st">🔥<span id="streakCount">0</span></span>
+    <span class="st" id="streakSt" title="Day streak">🔥<span id="streakCount">0</span></span>
     <span class="st">✨<span id="xpDisplay">0</span></span>
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">🌙</button>
   </div>
@@ -792,6 +804,7 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
         <div class="qd-card blue"><div class="qd-h">Accuracy</div><div class="qd-v"><span id="finalRight">0</span>/<span id="finalTotal">0</span></div></div>
         <div class="qd-card red"><div class="qd-h">Lives</div><div class="qd-v" id="qdHearts">5</div></div>
       </div>
+      <div class="qd-quests" id="qdQuests"></div>
       <button class="btn pri wide" onclick="startQuiz(S.qTopic)">🔄 Retry Quiz</button>
       <button class="btn wide mt-8" onclick="reviewWrong()">📝 Review Mistakes</button>
     </div></div>
@@ -811,6 +824,11 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
   <div class="streak-card">
     <div class="streak-num" id="pStreak">0</div>
     <div class="streak-label">🔥 Study Streak</div>
+    <div class="streak-sub" id="pStreakSub"></div>
+  </div>
+  <div class="card daily-card">
+    <h3>🎯 Daily Quests <span class="dq-left" id="dqLeft"></span></h3>
+    <div id="dailyQuests"></div>
   </div>
   <div class="stats-grid" id="statsGrid"></div>
   <div class="card"><h3>💪 Skill Practice</h3><div class="hub-grid" id="hubSkills"></div></div>
@@ -837,6 +855,9 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
       <button data-lv="hsk1">🐣 HSK 1 <span class="lv-c">300 words</span></button>
       <button data-lv="hsk2" class="active">🚀 HSK 2 <span class="lv-c">770 words</span></button>
     </div>
+    <div class="set-label">🎯 Daily goal</div>
+    <p class="save-note">XP to earn each day. Earning any XP keeps your streak going.</p>
+    <div class="goal-pick" id="goalPick"></div>
     <button class="btn-danger" onclick="resetProgress()">🔄 Reset All Progress</button>
   </div>
   <div class="card">
@@ -967,7 +988,7 @@ function setSpeed(s){S.speed=s;document.getElementById('speedNorm').className=s=
 function initData(){let L=curLevel();vocab=L.vocab;WORD_TOPIC=L.topics;radicals=RADICALS_DATA;renderLevelUI();buildUnits();loadState();initTTS();cv=vocab.map((_,i)=>i);applyMode();renderVocab();renderStats();renderAch();renderLearnPath();renderRail();setupUI();setupHanzi();refreshSaveInfo();loadHW();if(S.screen==='quiz')renderQuizPicker();reappliedSession();}
 
 function saveState(){S.savedAt=new Date().toLocaleString();try{localStorage.setItem(storeKey(),JSON.stringify({p:S.prog,s:S.streak,l:S.last,x:S.xp,q:S.quizzes,a:S.ach,k:S.known,sc:S.screen,md:S.mode,vf:S.vf,kf:S.kf,wid:S.wid,sa:S.savedAt,st:S.st,ld:S.ld}));}catch(e){}updateHUD();refreshSaveInfo();}
-function loadState(){try{let s=localStorage.getItem(storeKey());if(s){let p=JSON.parse(s);S.prog=p.p||{};S.streak=p.s||0;S.last=p.l||'';S.xp=p.x||0;S.quizzes=p.q||0;S.ach=p.a||{};S.known=(p.k&&typeof p.k==='object')?p.k:null;S.screen=p.sc||'learn';S.mode=p.md||S.mode;S.vf=p.vf||'belum';S.kf=p.kf||'belum';S.wid=(p.wid===undefined?null:p.wid);S.savedAt=p.sa||'';S.st=p.st||{};S.ld=p.ld||{};}else if(curLevel().local)seedFromOtherLevels();}catch(e){}if(!S.known)S.known=seedKnown();let t=new Date().toDateString();if(S.last!==t){S.streak=(S.last===new Date(Date.now()-86400000).toDateString())?S.streak+1:1;S.last=t;saveState();}updateHUD();}
+function loadState(){try{let s=localStorage.getItem(storeKey());if(s){let p=JSON.parse(s);S.prog=p.p||{};S.streak=p.s||0;S.last=p.l||'';S.xp=p.x||0;S.quizzes=p.q||0;S.ach=p.a||{};S.known=(p.k&&typeof p.k==='object')?p.k:null;S.screen=p.sc||'learn';S.mode=p.md||S.mode;S.vf=p.vf||'belum';S.kf=p.kf||'belum';S.wid=(p.wid===undefined?null:p.wid);S.savedAt=p.sa||'';S.st=p.st||{};S.ld=p.ld||{};}else if(curLevel().local)seedFromOtherLevels();}catch(e){}if(!S.known)S.known=seedKnown();S.streak=streakNow();updateHUD();}
 
 // SAVE / BACKUP
 function progressPayload(){return {v:2,app:storeKey(),at:new Date().toISOString(),p:S.prog,s:S.streak,l:S.last,x:S.xp,q:S.quizzes,a:S.ach,k:S.known,sc:S.screen,md:S.mode,vf:S.vf,kf:S.kf,wid:S.wid,st:S.st,ld:S.ld};}
@@ -978,8 +999,8 @@ function forceAppUpdate(){toast('Checking for updates...');let go=function(){set
 function importProgress(input){let f=input.files&&input.files[0];if(!f)return;let r=new FileReader();r.onload=function(){try{let p=JSON.parse(r.result);if(p&&p.app&&p.app!==storeKey()){toast('This file is for '+String(p.app).replace('khsk','HSK ').toUpperCase()+' — switch levels first');input.value='';return;}if(applyPayload(p))toast('Progress loaded!');else toast('Invalid file');}catch(e){toast('Couldn’t read file');}input.value='';};r.onerror=function(){toast('Failed to read file');input.value='';};r.readAsText(f);}
 function copyProgress(){let t=document.getElementById('saveBox');if(!t)return;t.focus();t.select();try{t.setSelectionRange(0,999999);}catch(e){}let ok=false;try{ok=document.execCommand('copy');}catch(e){}if(ok){toast('Backup copied!');}else if(navigator.clipboard){navigator.clipboard.writeText(t.value).then(function(){toast('Backup copied!');},function(){toast('Copy failed');});}else{toast('Press Ctrl+C to copy');}}
 function refreshSaveInfo(){let el=document.getElementById('saveInfo');if(!el)return;let n=Object.keys(S.prog).length,m=Object.values(S.prog).filter(p=>p.l>=3).length;el.textContent=n+' words logged • '+m+' known • '+S.xp+' XP'+(S.savedAt?' • saved '+S.savedAt:'');let box=document.getElementById('saveBox');if(box)box.value=JSON.stringify(progressPayload());}
-function updateHUD(){let s1=document.getElementById('streakCount');if(s1)s1.textContent=S.streak;let x1=document.getElementById('xpDisplay');if(x1)x1.textContent=S.xp;renderRail();}
-function addXP(n){S.xp+=n;saveState();toast('+'+n+' XP');}
+function updateHUD(){S.streak=streakNow();let s1=document.getElementById('streakCount');if(s1)s1.textContent=S.streak;let ss=document.getElementById('streakSt');if(ss){ss.className='st'+(extendedToday()?'':' off');ss.title=extendedToday()?'Streak extended today':'Earn XP today to keep your streak';}let x1=document.getElementById('xpDisplay');if(x1)x1.textContent=S.xp;renderRail();}
+function addXP(n){S.xp+=n;dailyTrack('xp',n);saveState();toast('+'+n+' XP');}
 function wordLevel(id){let p=S.prog[id+''];return p?p.l:0;}
 function toggleKnown(id){id=id+'';if(S.known[id])delete S.known[id];else S.known[id]=1;saveState();if(S.mode==='unmem'||S.mode==='known'){applyMode();if(cv.length)showCard(Math.min(S.idx,cv.length-1));}renderKnown();renderVocab();updateHUD();}
 function renderKnown(){let sum=document.getElementById('knownSummary');if(!sum)return;let q=(document.getElementById('knownSearch').value||'').toLowerCase();let n=0,k=0;vocab.forEach(v=>isKnown(v.id)?k++:n++);sum.innerHTML='<b>'+k+'</b> memorized • <b>'+n+'</b> not yet • '+(k+n)+' total';let f=vocab.filter(v=>{let kk=isKnown(v.id);if(S.kf==='sudah'?kk===false:kk===true)return false;if(q&&!(v.hanzi.indexOf(q)>=0||v.pinyin.toLowerCase().indexOf(q)>=0||pinyinPlain(v.pinyin).indexOf(q)>=0||v.meaning.toLowerCase().indexOf(q)>=0))return false;return true;});f.sort((a,b)=>{let la=alphaOf(a),lb=alphaOf(b);if(la!==lb)return la<lb?-1:1;let pa=pinyinPlain(a.pinyin),pb=pinyinPlain(b.pinyin);return pa<pb?-1:(pa>pb?1:0);});let groups={},order=[];f.forEach(v=>{let L=alphaOf(v);if(!groups[L]){groups[L]=[];order.push(L);}groups[L].push(v);});let h='';order.forEach(L=>{let list=groups[L];let isSudah=S.kf==='sudah';h+='<div class="alpha-group"><div class="alpha-head"><span class="alpha-letter">'+L+'</span><span class="alpha-count">'+list.length+' kata</span><button class="mark-all" onclick="markGroupKnown(\''+L+'\')">'+(isSudah?'↩️ Undo':'\u2705 Know it')+'</button></div><div class="alpha-body">';list.forEach(v=>{let kk=isKnown(v.id);h+='<div class="vocab-item" tabindex="0" role="button" onclick="jumpToVocab('+v.id+')"><span class="num">'+v.id+'</span><span class="hanzi">'+v.hanzi+'</span><span class="pinyin">'+v.pinyin+'</span><span class="meaning">'+v.meaning.slice(0,16)+(v.meaning.length>16?'...':'')+'</span><button class="mark-btn'+(kk?' on':'')+'" onclick="event.stopPropagation();toggleKnown('+v.id+')" aria-label="Toggle memorized">'+(kk?'↩️':'\u2705')+'</button></div>';});h+='</div></div>';});document.getElementById('knownList').innerHTML=f.length?h:'<div class="empty-state"><canvas class="fi" data-icon="sprout" aria-hidden="true"></canvas><div class="es-ic">🌱</div><div class="es-t">Nothing here yet</div><div class="es-s">'+(S.kf==='sudah'?'Mark words as known and they will show up here.':'Everything is memorized — nice work!')+'</div></div>';document.getElementById('knownCount').textContent='Menampilkan '+f.length+' words • '+order.length+' groups';window.KNOWN_VIEW=f;if(window.FI)FI.mount(document.getElementById('knownList'));}
@@ -998,7 +1019,7 @@ function nextCard(){if(cv.length)showCard((S.idx+1)%cv.length);}
 function rateCard(l){if(!cv.length)return;let v=vocab[cv[S.idx]],id=v.id+'';if(!S.prog[id])S.prog[id]={l:0,c:0,w:0,t:''};let p=S.prog[id];if(l===1){p.l=Math.max(0,p.l-1);p.w++;toast('Will appear more often');}else if(l===2){p.l=Math.min(2,p.l+1);p.c++;addXP(5);sfx('correct.wav');}else{p.l=Math.min(3,p.l+1);p.c++;addXP(10);sfx('correct.wav');if(p.l>=3&&!S.known[id]){S.known[id]=1;renderKnown();renderVocab();}}p.t=new Date().toISOString();saveState();renderLearnPath();if(S.idx<cv.length-1)showCard(S.idx+1);else sessionComplete();}
 let sessKey=null;
 function sessionComplete(){
-  confetti();sfx('finish.mp3');addXP(10);
+  confetti();sfx('finish.mp3');dailyTrack('lessons');addXP(10);
   let ov=document.getElementById('sessDone');if(!ov){closeSession();return;}
   document.getElementById('sdTitle').textContent=sessKey!==null?'Lesson complete!':'Session complete!';
   document.getElementById('sdMsg').textContent=sessKey!==null?'Nice work — this course point is done.':'You finished this practice session.';
@@ -1126,7 +1147,7 @@ function perfectOverlay(){
 
 function nextQuizQ(){if(S.qHearts<=0){finishQ();return;}S.qIdx++;showQ();}
 
-function finishQ(){let bf=document.getElementById('quizBarFill');if(bf)bf.style.width='100%';document.getElementById('quizArea').className='hidden';document.getElementById('quizComplete').className='';document.getElementById('finalRight').textContent=S.qRight;document.getElementById('finalTotal').textContent=S.qList.length;let p=S.qList.length?Math.round(S.qRight/S.qList.length*100):0;document.getElementById('finalMsg').textContent=p>=90?'Outstanding! Almost perfect.':(p>=70?'Great! Keep it up.':(p>=50?'Not bad — keep practicing.':'Practice more — you can do it.'));document.getElementById('qdXP').textContent='+'+(p>=80?20:(p>=60?10:5));document.getElementById('qdHearts').textContent=S.qHearts;let qdI=document.getElementById('qdImg'),qdF=document.getElementById('qdFi');qdI.src=p>=50?'assets/finish.svg':'assets/mascot_sad.svg';if(p>=50&&window.FI){qdI.style.display='none';qdF.style.display='block';FI.mount(qdF.parentNode)}else{qdI.style.display='block';qdF.style.display='none'}document.getElementById('qdTitle').textContent=p>=50?'Practice complete!':'Don’t give up!';S.quizzes++;if(p>=80)addXP(20);else if(p>=60)addXP(10);else addXP(5);if(p>=50){sfx('finish.mp3');confetti();}saveState();renderAch();renderLearnPath();}
+function finishQ(){let bf=document.getElementById('quizBarFill');if(bf)bf.style.width='100%';document.getElementById('quizArea').className='hidden';document.getElementById('quizComplete').className='';document.getElementById('finalRight').textContent=S.qRight;document.getElementById('finalTotal').textContent=S.qList.length;let p=S.qList.length?Math.round(S.qRight/S.qList.length*100):0;document.getElementById('finalMsg').textContent=p>=90?'Outstanding! Almost perfect.':(p>=70?'Great! Keep it up.':(p>=50?'Not bad — keep practicing.':'Practice more — you can do it.'));document.getElementById('qdXP').textContent='+'+(p>=80?20:(p>=60?10:5));document.getElementById('qdHearts').textContent=S.qHearts;let qdI=document.getElementById('qdImg'),qdF=document.getElementById('qdFi');qdI.src=p>=50?'assets/finish.svg':'assets/mascot_sad.svg';if(p>=50&&window.FI){qdI.style.display='none';qdF.style.display='block';FI.mount(qdF.parentNode)}else{qdI.style.display='block';qdF.style.display='none'}document.getElementById('qdTitle').textContent=p>=50?'Practice complete!':'Don’t give up!';S.quizzes++;dailyTrack('lessons');if(p>=80)dailyTrack('quiz80');if(p>=80)addXP(20);else if(p>=60)addXP(10);else addXP(5);if(p>=50){sfx('finish.mp3');confetti();}saveState();renderAch();renderLearnPath();renderQuestList('qdQuests',true);}
 function reviewWrong(){if(!S.wrongIds.length){toast('No mistakes!');return;}let h='<div class="card"><h3 style="font-size:14px;margin-bottom:8px">Review</h3>';S.wrongIds.forEach(id=>{let v=vocab.find(x=>x.id===id);if(v)h+='<div class="review-item"><span class="rv-hanzi">'+v.hanzi+'</span><span class="rv-info">'+v.pinyin+' - '+v.meaning+'</span></div>';});h+='</div>';document.getElementById('reviewSection').innerHTML=h;document.getElementById('reviewSection').className='';}
 
 function jumpWord(hz){let v=vocab.find(x=>x.hanzi===hz);if(v)jumpToVocab(v.id);}
@@ -1244,7 +1265,7 @@ document.addEventListener('keydown',function(e){
 });
 
 // rail
-function renderRail(){let r1=document.getElementById('railStreak'),r2=document.getElementById('railXP');if(r1)r1.textContent=S.streak;if(r2)r2.textContent=S.xp;let ql=document.getElementById('questList');if(!ql)return;let mastered=Object.values(S.prog).filter(function(p){return p.l>=3;}).length;let quests=[{ic:'🔥',n:'Keep a 7-day streak',cur:S.streak,goal:7},{ic:'✨',n:'Collect 500 XP',cur:S.xp,goal:500},{ic:'⭐',n:'Master 100 words',cur:mastered,goal:100}];let h='';quests.forEach(function(q){let pct=Math.min(100,Math.round(q.cur/q.goal*100));h+='<div class="quest"><div class="q-ic">'+q.ic+'</div><div class="q-body"><div class="q-name">'+q.n+'</div><div class="q-bar"><i style="width:'+pct+'%"></i><b>'+Math.min(q.cur,q.goal)+'/'+q.goal+'</b></div></div></div>';});ql.innerHTML=h;}
+function renderRail(){let r1=document.getElementById('railStreak'),r2=document.getElementById('railXP');if(r1)r1.textContent=S.streak;if(r2)r2.textContent=S.xp;renderQuestList('questList');renderDailyCard();}
 
 // confetti
 function confetti(){let cv2=document.getElementById('confettiCv');if(!cv2)return;let ctx=cv2.getContext('2d');cv2.width=innerWidth;cv2.height=innerHeight;let colors=['#58CC02','#1CB0F6','#FFC800','#FF4B4B','#CE82FF','#FF9600'];let ps=[];for(let i=0;i<140;i++)ps.push({x:Math.random()*cv2.width,y:-20-Math.random()*cv2.height*.5,w:6+Math.random()*8,h:8+Math.random()*8,c:colors[i%colors.length],vy:2+Math.random()*3.5,vx:-1.5+Math.random()*3,r:Math.random()*Math.PI,vr:-.1+Math.random()*.2});let t0=performance.now();(function tick(t){let el=t-t0;ctx.clearRect(0,0,cv2.width,cv2.height);ps.forEach(function(p){p.y+=p.vy;p.x+=p.vx;p.r+=p.vr;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();});if(el<3200)requestAnimationFrame(tick);else ctx.clearRect(0,0,cv2.width,cv2.height);})(t0);}
@@ -1414,6 +1435,7 @@ function resolveQ(ok,ansHtml){
     band.className='quiz-band show good';ic.textContent='\u2713';
     r.innerHTML='<b>'+(['Nice!','Awesome!','Great job!','Perfect!'][Math.floor(Math.random()*4)])+'</b> +10 XP'+meaningLine(q);
     if(q.firstTry)perfectOverlay();
+    dailyTrack('correct');if(S.qRow===10)dailyTrack('combo10');
   }else{
     S.qWrong++;S.wrongIds.push(q.id);S.qRow=0;S.qHearts=Math.max(0,S.qHearts-1);renderHearts();sfx('incorrect.wav');
     S.prog[id].w++;
@@ -1423,6 +1445,7 @@ function resolveQ(ok,ansHtml){
     // Missed exercises come back at the end, flagged as PREVIOUS MISTAKE (fresh state).
     if(S.qIdx+1<S.qList.length)S.qList.push(Object.assign({},q,{sel:[],firstTry:false,again:true,selMc:-1,matched:[],miss:0,pick:null,typed:false,input:''}));
   }
+  if(q.type==='listen'||q.type==='speak'||q.type==='write')dailyTrack(q.type);
   saveState();
 }
 // "Meaning:" line under the result for exercises whose prompt isn't already English.
@@ -1924,7 +1947,7 @@ function stFinish(){
   host.insertAdjacentHTML('beforeend','<div style="text-align:center;padding:30px 0"><img src="assets/finish.svg" style="width:150px"><h2 style="color:var(--text)">Story complete!</h2><div class="qd-cards" style="max-width:420px;margin:16px auto"><div class="qd-card gold"><div class="qd-h">Total XP</div><div class="qd-v">+20</div></div><div class="qd-card blue"><div class="qd-h">Accuracy</div><div class="qd-v">'+acc+'%</div></div><div class="qd-card red"><div class="qd-h">Time</div><div class="qd-v">'+mins+'m</div></div></div></div>');
   let btn=document.getElementById('stNext');
   btn.textContent='CLAIM XP';btn.disabled=false;btn.onclick=function(){
-    addXP(20);S.st[STD.cur.id]=1;saveState();confetti();sfx('finish.mp3');
+    dailyTrack('stories');addXP(20);S.st[STD.cur.id]=1;saveState();confetti();sfx('finish.mp3');
     btn.textContent='CONTINUE';btn.onclick=stNext;closeStory();
   };
   host.scrollTop=host.scrollHeight;
@@ -2030,6 +2053,104 @@ function loadLocalLevels(){
     if(LEVELS[SAVED_LEVEL]&&LEVEL!==SAVED_LEVEL)switchLevel(SAVED_LEVEL);
   }).catch(function(){});
 }
+
+// ===== DAILY: streak, daily goal, quests =====
+// One state for the whole app (not per HSK level), stored under khsk-daily.
+// Streak rule (fixes K-03): a day counts only when XP is earned that day; opening the app does nothing.
+var DAILY_KEY='khsk-daily',DAILY=null;
+const QUEST_POOL=[
+  {id:'lessons2',ic:'📘',name:'Complete 2 lessons or quizzes',metric:'lessons',target:2},
+  {id:'quiz80',ic:'🎯',name:'Score 80% or higher in 2 quizzes',metric:'quiz80',target:2},
+  {id:'combo10',ic:'🔥',name:'Get 10 in a row correct',metric:'combo10',target:1},
+  {id:'correct30',ic:'✅',name:'Answer 30 questions correctly',metric:'correct',target:30},
+  {id:'listen5',ic:'🎧',name:'Do 5 listening exercises',metric:'listen',target:5},
+  {id:'speak3',ic:'🎤',name:'Do 3 speaking exercises',metric:'speak',target:3},
+  {id:'write3',ic:'✍️',name:'Write 3 characters',metric:'write',target:3},
+  {id:'story1',ic:'📚',name:'Finish a story',metric:'stories',target:1}
+];
+const QUEST_BONUS=5;
+function todayStr(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function dayDiff(a,b){return Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/86400000);}
+function pickQuests(day){
+  // Same 3 quests all day: XP goal + 2 picked with a date-seeded shuffle.
+  let seed=0;for(let c of day)seed=(seed*31+c.charCodeAt(0))>>>0;
+  let rnd=function(){seed=(seed*1103515245+12345)>>>0;return seed/4294967296;};
+  let pool=QUEST_POOL.slice();for(let i=pool.length-1;i>0;i--){let j=Math.floor(rnd()*(i+1));let t=pool[i];pool[i]=pool[j];pool[j]=t;}
+  return ['xp'].concat(pool.slice(0,2).map(function(q){return q.id;}));
+}
+function questDef(id){
+  if(id==='xp')return {id:'xp',ic:'⚡',name:'Earn '+DAILY.goal+' XP',metric:'xp',target:DAILY.goal};
+  return QUEST_POOL.find(function(q){return q.id===id;});
+}
+function saveDaily(){try{localStorage.setItem(DAILY_KEY,JSON.stringify(DAILY));}catch(e){}}
+function rollDay(){
+  let t=todayStr();
+  if(DAILY.day!==t){DAILY.day=t;DAILY.stats={};DAILY.quests=pickQuests(t);DAILY.claimed={};}
+  if(DAILY.lastActive&&dayDiff(DAILY.lastActive,t)>1)DAILY.streak=0;
+}
+function loadDaily(){
+  try{DAILY=JSON.parse(localStorage.getItem(DAILY_KEY)||'null');}catch(e){DAILY=null;}
+  if(!DAILY||typeof DAILY!=='object'){
+    DAILY={v:1,goal:30,streak:0,best:0,lastActive:'',day:'',stats:{},quests:[],claimed:{},history:{}};
+    // One-time migration: keep the best per-level streak that is still alive (active today or yesterday).
+    let t=todayStr();
+    Object.keys(localStorage).filter(function(k){return /^khsk\d+b?$/.test(k);}).forEach(function(k){
+      try{let b=JSON.parse(localStorage.getItem(k));if(!b||!b.l||!b.s)return;let d=todayStr(new Date(b.l));
+        if(dayDiff(d,t)<=1&&b.s>DAILY.streak){DAILY.streak=b.s;DAILY.lastActive=d;}}catch(e){}
+    });
+    DAILY.best=DAILY.streak;
+  }
+  rollDay();saveDaily();
+}
+function streakNow(){if(!DAILY)return 0;rollDay();return DAILY.streak;}
+function extendedToday(){return !!DAILY&&DAILY.lastActive===todayStr();}
+function questProgress(id){let q=questDef(id);return {q:q,cur:Math.min(q.target,DAILY.stats[q.metric]||0),done:(DAILY.stats[q.metric]||0)>=q.target};}
+function dailyTrack(metric,n){
+  if(!DAILY)return;rollDay();n=n||1;
+  DAILY.stats[metric]=(DAILY.stats[metric]||0)+n;
+  if(metric==='xp'){
+    DAILY.history[DAILY.day]=(DAILY.history[DAILY.day]||0)+n;
+    if(DAILY.lastActive!==DAILY.day){
+      DAILY.streak=(DAILY.lastActive&&dayDiff(DAILY.lastActive,DAILY.day)===1)?DAILY.streak+1:1;
+      DAILY.lastActive=DAILY.day;DAILY.best=Math.max(DAILY.best||0,DAILY.streak);
+      setTimeout(function(){toast('🔥 '+DAILY.streak+'-day streak!');},900);
+    }
+  }
+  DAILY.quests.forEach(function(id){
+    let p=questProgress(id);
+    if(p.done&&!DAILY.claimed[id]){
+      DAILY.claimed[id]=1;S.xp+=QUEST_BONUS;   // bonus is not routed through addXP: no quest feedback loop
+      setTimeout(function(){toast('🎁 Quest complete: '+p.q.name+' (+'+QUEST_BONUS+' XP)');},1600);
+    }
+  });
+  saveDaily();
+  if(typeof renderRail==='function')renderRail();
+}
+function hoursLeftText(){
+  let now=new Date(),mid=new Date(now);mid.setHours(24,0,0,0);
+  let m=Math.max(1,Math.round((mid-now)/60000));
+  return m>=60?Math.floor(m/60)+'h left':m+'m left';
+}
+function renderQuestList(hostId,withTitle){
+  let host=document.getElementById(hostId);if(!host||!DAILY)return;rollDay();
+  let h=withTitle?'<h4>Daily Quests · '+hoursLeftText()+'</h4>':'';
+  DAILY.quests.forEach(function(id){
+    let p=questProgress(id),pct=Math.round(p.cur/p.q.target*100);
+    h+='<div class="quest'+(p.done?' done':'')+'"><div class="q-ic">'+p.q.ic+'</div><div class="q-body"><div class="q-name">'+exEsc(p.q.name)+(p.done?'<span class="q-done">✓ DONE</span>':'')+'</div><div class="q-bar"><i style="width:'+pct+'%"></i><b>'+p.cur+'/'+p.q.target+'</b></div></div></div>';
+  });
+  host.innerHTML=h;
+}
+function renderDailyCard(){
+  if(!DAILY)return;
+  renderQuestList('dailyQuests');
+  let left=document.getElementById('dqLeft');if(left)left.textContent='⏳ '+hoursLeftText();
+  let sub=document.getElementById('pStreakSub');
+  if(sub)sub.textContent=(extendedToday()?'✓ Extended today':'Earn XP today to keep it')+' · Best: '+(DAILY.best||0)+((DAILY.best||0)===1?' day':' days');
+  let gp=document.getElementById('goalPick');
+  if(gp)gp.innerHTML=[10,20,30,50].map(function(g){return '<button class="'+(DAILY.goal===g?'active':'')+'" onclick="setDailyGoal('+g+')">'+g+' XP</button>';}).join('');
+}
+function setDailyGoal(g){if(!DAILY)return;DAILY.goal=g;saveDaily();renderRail();toast('Daily goal: '+g+' XP');}
+loadDaily();
 
 initData();
 loadLocalLevels();
