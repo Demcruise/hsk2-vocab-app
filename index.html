@@ -1834,17 +1834,25 @@ function seedFromOtherLevels(){
   S.prog={};S.known={};
   vocab.forEach(function(v){let e=byHz[v.hanzi];if(!e)return;if(e.p)S.prog[v.id+'']=e.p;if(e.k)S.known[v.id+'']=1;});
 }
+function registerLocalLevel(d){
+  if(!d||!Array.isArray(d.vocab)||!d.vocab.length||!d.key||LEVELS[d.key])return;
+  LEVELS[d.key]={key:d.key,label:d.label,vocab:d.vocab,topics:d.topics,seed:[],store:d.store,local:true};
+  let host=document.getElementById('levelSwitch');
+  if(host&&!host.querySelector('[data-lv="'+d.key+'"]')){
+    let b=document.createElement('button');b.dataset.lv=d.key;
+    b.innerHTML='🎯 '+exEsc(d.label)+' <span class="lv-c">'+d.vocab.length+' words · local</span>';
+    b.addEventListener('click',function(){switchLevel(d.key);});host.appendChild(b);
+  }
+}
 function loadLocalLevels(){
-  return fetch('local-content/level-hsk2-2025.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
-    if(!d||!Array.isArray(d.vocab)||!d.vocab.length||!d.key||LEVELS[d.key])return;
-    LEVELS[d.key]={key:d.key,label:d.label,vocab:d.vocab,topics:d.topics,seed:[],store:d.store,local:true};
-    let host=document.getElementById('levelSwitch');
-    if(host&&!host.querySelector('[data-lv="'+d.key+'"]')){
-      let b=document.createElement('button');b.dataset.lv=d.key;
-      b.innerHTML='🎯 '+exEsc(d.label)+' <span class="lv-c">'+d.vocab.length+' words · local</span>';
-      b.addEventListener('click',function(){switchLevel(d.key);});host.appendChild(b);
-    }
-    if(SAVED_LEVEL===d.key&&LEVEL!==d.key)switchLevel(d.key);
+  let get=function(f){return fetch('local-content/'+f,{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;});};
+  // levels.json is written by tools/build_local_level.mjs; fall back to the first local level file.
+  return get('levels.json').then(function(ix){
+    let files=ix&&Array.isArray(ix.levels)?ix.levels.filter(function(f){return /^level-hsk[\w-]+-2025\.json$/.test(f);}):['level-hsk2-2025.json'];
+    return Promise.all(files.map(get));
+  }).then(function(list){
+    list.forEach(registerLocalLevel);
+    if(LEVELS[SAVED_LEVEL]&&LEVEL!==SAVED_LEVEL)switchLevel(SAVED_LEVEL);
   }).catch(function(){});
 }
 

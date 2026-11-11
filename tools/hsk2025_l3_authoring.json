@@ -1,0 +1,419 @@
+{
+  "_note": "Original project content for HSK 3.0 (2025) Level 3: unit topics for words not in the old app data, and hand-written example sentences where the project's sentence corpus has fewer than 3. Topic keys match UNIT_DEFS in index.html.",
+  "topics": {
+    "阿姨": "orang", "矮": "sifat", "把": "fungsi", "搬": "rumah", "班级": "sekolah", "搬家": "rumah",
+    "半天": "waktu", "北": "jalan", "被": "fungsi", "比较": "fungsi", "比赛": "hobi", "变化": "umum",
+    "表演": "hobi", "别的": "fungsi", "别人": "orang", "宾馆": "jalan", "冰": "alam", "冰激凌": "makan",
+    "冰箱": "rumah", "病人": "tubuh", "不见": "umum", "不用": "fungsi", "差": "sifat", "尝": "makan",
+    "常": "waktu", "常常": "waktu", "衬衫": "belanja", "城市": "jalan", "迟到": "waktu", "初中": "sekolah",
+    "除了": "fungsi", "聪明": "sifat", "打扫": "rumah", "大概": "fungsi", "大熊猫": "alam", "担心": "tubuh",
+    "蛋糕": "makan", "当然": "fungsi", "得到": "umum", "得分": "hobi", "地": "alam", "地点": "jalan",
+    "地方": "jalan", "地图": "jalan", "电": "rumah", "电梯": "rumah", "电子书": "hobi", "丢": "umum",
+    "东": "jalan", "短裤": "belanja", "锻炼": "hobi", "饿": "tubuh", "耳朵": "tubuh", "耳机": "hobi",
+    "发烧": "tubuh", "发生": "umum", "发展": "umum", "房子": "rumah", "放": "umum", "放假": "sekolah",
+    "放学": "sekolah", "风": "alam", "夫妻": "orang", "附近": "jalan", "干净": "sifat", "感兴趣": "hobi",
+    "感冒": "tubuh", "干": "umum", "高铁": "jalan", "根据": "fungsi", "工作日": "waktu", "刮": "alam",
+    "关": "rumah", "关系": "orang", "关于": "fungsi", "关注": "umum", "国家": "jalan", "过节": "hobi",
+    "害怕": "tubuh", "号码": "waktu", "红绿灯": "jalan", "后年": "waktu", "后天": "waktu", "环境": "alam",
+    "回答": "sekolah", "会议": "sekolah", "几乎": "fungsi", "极": "fungsi", "记": "sekolah", "季": "waktu",
+    "季节": "alam", "坚持": "umum", "简单": "sifat", "检票": "jalan", "见面": "orang", "结婚": "orang",
+    "结束": "waktu", "解决": "umum", "姐妹": "orang", "久": "waktu", "旧": "sifat", "决定": "umum",
+    "开花": "alam", "开会": "sekolah", "看来": "fungsi", "可": "fungsi", "渴": "tubuh", "课本": "sekolah",
+    "课文": "sekolah", "空调": "rumah", "矿泉水": "makan", "老人": "orang", "历史": "sekolah", "聊": "dasar",
+    "聊天儿": "dasar", "了解": "umum", "邻居": "orang", "留学": "sekolah", "楼梯": "rumah", "路口": "jalan",
+    "马": "alam", "马路": "jalan", "马上": "waktu", "毛": "belanja", "明白": "umum", "名人": "orang",
+    "南": "jalan", "难": "sifat", "男人": "orang", "男生": "sekolah", "牛": "alam", "女人": "orang",
+    "女生": "sekolah", "拍照": "hobi", "盘子": "rumah", "胖": "tubuh", "啤酒": "makan", "奇怪": "sifat",
+    "其实": "fungsi", "起": "umum", "汽车": "jalan", "铅笔": "sekolah", "前天": "waktu", "请假": "sekolah",
+    "裙子": "belanja", "认得": "umum", "认真": "sifat", "容易": "sifat", "伞": "alam", "扫": "rumah",
+    "沙发": "rumah", "山": "alam", "上衣": "belanja", "勺子": "rumah", "身高": "tubuh", "声": "umum",
+    "生气": "tubuh", "试": "umum", "室": "rumah", "世界": "jalan", "受": "umum", "瘦": "tubuh",
+    "叔叔": "orang", "树": "alam", "数学": "sekolah", "刷": "rumah", "双": "waktu", "四季": "alam",
+    "糖": "makan", "甜": "makan", "跳": "hobi", "同意": "umum", "突然": "fungsi", "图书馆": "sekolah",
+    "外语": "sekolah", "晚点": "jalan", "忘记": "umum", "为了": "fungsi", "卫生间": "rumah", "文化": "sekolah",
+    "屋子": "rumah", "西": "jalan", "西瓜": "makan", "喜爱": "hobi", "先": "fungsi", "香蕉": "makan",
+    "箱子": "rumah", "小区": "rumah", "新年": "waktu", "新鲜": "makan", "行": "fungsi", "行李": "jalan",
+    "兴趣": "hobi", "需要": "umum", "选择": "umum", "牙": "tubuh", "牙刷": "rumah", "羊": "alam",
+    "页": "sekolah", "一块儿": "fungsi", "一样": "fungsi", "一边": "fungsi", "饮料": "makan", "用": "umum",
+    "邮件": "sekolah", "游戏": "hobi", "邮箱": "sekolah", "有关": "fungsi", "有名": "sifat", "有用": "sifat",
+    "羽毛球": "hobi", "雨衣": "alam", "遇到": "umum", "遇见": "orang", "园": "alam", "员": "orang",
+    "运动会": "hobi", "运动员": "hobi", "张": "waktu", "着急": "tubuh", "照": "hobi", "直到": "waktu",
+    "只是": "fungsi", "只有": "fungsi", "中": "jalan", "中间": "jalan", "终于": "fungsi", "种": "fungsi",
+    "重要": "sifat", "注意": "umum", "子": "fungsi", "总": "fungsi", "总是": "waktu", "最好": "fungsi",
+    "最后": "waktu", "做客": "orang"
+  },
+  "sentences": {
+    "班级": [
+      ["我们班级有三十个学生。", "Wǒmen bānjí yǒu sānshí ge xuésheng.", "Our class has thirty students."],
+      ["他是班级里最高的。", "Tā shì bānjí li zuì gāo de.", "He is the tallest in the class."],
+      ["这个班级的学生都很认真。", "Zhège bānjí de xuésheng dōu hěn rènzhēn.", "The students in this class are all very serious."]
+    ],
+    "宾馆": [
+      ["我们住在车站附近的宾馆。", "Wǒmen zhù zài chēzhàn fùjìn de bīnguǎn.", "We are staying at a guesthouse near the station."],
+      ["这家宾馆又干净又便宜。", "Zhè jiā bīnguǎn yòu gānjìng yòu piányi.", "This guesthouse is both clean and cheap."],
+      ["宾馆的房间里有空调吗？", "Bīnguǎn de fángjiān li yǒu kōngtiáo ma?", "Is there air conditioning in the guesthouse rooms?"]
+    ],
+    "冰激凌": [
+      ["夏天我常常吃冰激凌。", "Xiàtiān wǒ chángcháng chī bīngjīlíng.", "I often eat ice cream in summer."],
+      ["孩子们都喜欢冰激凌。", "Háizimen dōu xǐhuan bīngjīlíng.", "Children all like ice cream."],
+      ["这个冰激凌太甜了。", "Zhège bīngjīlíng tài tián le.", "This ice cream is too sweet."]
+    ],
+    "病人": [
+      ["医生正在给病人看病。", "Yīshēng zhèngzài gěi bìngrén kànbìng.", "The doctor is examining the patient."],
+      ["病人需要多休息。", "Bìngrén xūyào duō xiūxi.", "The patient needs to rest more."],
+      ["这个病人今天好多了。", "Zhège bìngrén jīntiān hǎo duō le.", "This patient is much better today."]
+    ],
+    "大熊猫": [
+      ["大熊猫喜欢吃竹子。", "Dàxióngmāo xǐhuan chī zhúzi.", "Giant pandas like eating bamboo."],
+      ["我在动物园看到了大熊猫。", "Wǒ zài dòngwùyuán kàndào le dàxióngmāo.", "I saw a giant panda at the zoo."],
+      ["大熊猫是中国有名的动物。", "Dàxióngmāo shì Zhōngguó yǒumíng de dòngwù.", "The giant panda is a famous Chinese animal."]
+    ],
+    "当然": [
+      ["你能来吗？当然能！", "Nǐ néng lái ma? Dāngrán néng!", "Can you come? Of course!"],
+      ["他是中国人，当然会说中文。", "Tā shì Zhōngguórén, dāngrán huì shuō Zhōngwén.", "He is Chinese, so of course he speaks Chinese."],
+      ["我当然记得你。", "Wǒ dāngrán jìde nǐ.", "Of course I remember you."]
+    ],
+    "地点": [
+      ["开会的地点在三楼。", "Kāihuì de dìdiǎn zài sān lóu.", "The meeting place is on the third floor."],
+      ["请告诉我见面的时间和地点。", "Qǐng gàosu wǒ jiànmiàn de shíjiān hé dìdiǎn.", "Please tell me the time and place to meet."],
+      ["这个地点离学校很近。", "Zhège dìdiǎn lí xuéxiào hěn jìn.", "This location is very close to the school."]
+    ],
+    "电子书": [
+      ["我喜欢在手机上看电子书。", "Wǒ xǐhuan zài shǒujī shang kàn diànzǐshū.", "I like reading e-books on my phone."],
+      ["电子书比纸书便宜。", "Diànzǐshū bǐ zhǐshū piányi.", "E-books are cheaper than paper books."],
+      ["这本电子书你看完了吗？", "Zhè běn diànzǐshū nǐ kànwán le ma?", "Have you finished reading this e-book?"]
+    ],
+    "发生": [
+      ["昨天发生了什么事？", "Zuótiān fāshēng le shénme shì?", "What happened yesterday?"],
+      ["这种事情很少发生。", "Zhè zhǒng shìqing hěn shǎo fāshēng.", "This kind of thing rarely happens."],
+      ["路口发生了一件小事。", "Lùkǒu fāshēng le yí jiàn xiǎo shì.", "A small incident happened at the intersection."]
+    ],
+    "发展": [
+      ["这个城市发展得很快。", "Zhège chéngshì fāzhǎn de hěn kuài.", "This city is developing very fast."],
+      ["他想去大城市发展。", "Tā xiǎng qù dà chéngshì fāzhǎn.", "He wants to go to a big city to develop his career."],
+      ["中国的高铁发展得很好。", "Zhōngguó de gāotiě fāzhǎn de hěn hǎo.", "China's high-speed rail has developed very well."]
+    ],
+    "夫妻": [
+      ["他们是一对年轻的夫妻。", "Tāmen shì yí duì niánqīng de fūqī.", "They are a young married couple."],
+      ["这对夫妻每天一起跑步。", "Zhè duì fūqī měitiān yìqǐ pǎobù.", "This couple goes running together every day."],
+      ["邻居夫妻对我们很好。", "Línjū fūqī duì wǒmen hěn hǎo.", "The couple next door is very nice to us."]
+    ],
+    "感兴趣": [
+      ["我对中国文化很感兴趣。", "Wǒ duì Zhōngguó wénhuà hěn gǎn xìngqù.", "I am very interested in Chinese culture."],
+      ["你对什么感兴趣？", "Nǐ duì shénme gǎn xìngqù?", "What are you interested in?"],
+      ["他对数学不感兴趣。", "Tā duì shùxué bù gǎn xìngqù.", "He isn't interested in maths."]
+    ],
+    "根据": [
+      ["根据天气预报，明天会下雨。", "Gēnjù tiānqì yùbào, míngtiān huì xià yǔ.", "According to the weather forecast, it will rain tomorrow."],
+      ["根据你的回答，我明白了。", "Gēnjù nǐ de huídá, wǒ míngbai le.", "Based on your answer, I understand."],
+      ["老师根据成绩选择了他。", "Lǎoshī gēnjù chéngjì xuǎnzé le tā.", "The teacher chose him based on his grades."]
+    ],
+    "关系": [
+      ["我们两个人的关系很好。", "Wǒmen liǎng ge rén de guānxi hěn hǎo.", "The two of us get along very well."],
+      ["这件事跟你没有关系。", "Zhè jiàn shì gēn nǐ méiyǒu guānxi.", "This matter has nothing to do with you."],
+      ["他和邻居的关系不太好。", "Tā hé línjū de guānxi bú tài hǎo.", "His relationship with the neighbours isn't very good."]
+    ],
+    "关注": [
+      ["很多人关注这个比赛。", "Hěn duō rén guānzhù zhège bǐsài.", "Many people are following this match."],
+      ["请大家关注天气变化。", "Qǐng dàjiā guānzhù tiānqì biànhuà.", "Everyone, please pay attention to the weather changes."],
+      ["我在网上关注了她。", "Wǒ zài wǎng shang guānzhù le tā.", "I followed her online."]
+    ],
+    "红绿灯": [
+      ["前面有红绿灯，开慢一点儿。", "Qiánmiàn yǒu hónglǜdēng, kāi màn yìdiǎnr.", "There's a traffic light ahead, drive a bit slower."],
+      ["过马路要看红绿灯。", "Guò mǎlù yào kàn hónglǜdēng.", "You should look at the traffic lights when crossing the road."],
+      ["在第二个红绿灯往左走。", "Zài dì-èr ge hónglǜdēng wǎng zuǒ zǒu.", "Turn left at the second traffic light."]
+    ],
+    "后年": [
+      ["我后年去中国留学。", "Wǒ hòunián qù Zhōngguó liúxué.", "I'm going to study in China the year after next."],
+      ["他们打算后年结婚。", "Tāmen dǎsuan hòunián jiéhūn.", "They plan to get married the year after next."],
+      ["后年我就大学毕业了。", "Hòunián wǒ jiù dàxué bìyè le.", "I'll graduate from university the year after next."]
+    ],
+    "环境": [
+      ["这里的环境很安静。", "Zhèlǐ de huánjìng hěn ānjìng.", "The environment here is very quiet."],
+      ["我们要保护环境。", "Wǒmen yào bǎohù huánjìng.", "We must protect the environment."],
+      ["新学校的学习环境很好。", "Xīn xuéxiào de xuéxí huánjìng hěn hǎo.", "The new school has a good learning environment."]
+    ],
+    "姐妹": [
+      ["她们是好姐妹。", "Tāmen shì hǎo jiěmèi.", "They are close as sisters."],
+      ["你有兄弟姐妹吗？", "Nǐ yǒu xiōngdì jiěmèi ma?", "Do you have any brothers or sisters?"],
+      ["姐妹两个长得很像。", "Jiěmèi liǎng ge zhǎng de hěn xiàng.", "The two sisters look very alike."]
+    ],
+    "开花": [
+      ["春天到了，树开花了。", "Chūntiān dào le, shù kāihuā le.", "Spring has come and the trees are blossoming."],
+      ["这种花冬天也开花。", "Zhè zhǒng huā dōngtiān yě kāihuā.", "This kind of flower blooms in winter too."],
+      ["公园里的花都开花了。", "Gōngyuán li de huā dōu kāihuā le.", "The flowers in the park have all bloomed."]
+    ],
+    "看来": [
+      ["看来今天要下雨。", "Kànlái jīntiān yào xià yǔ.", "It looks like it's going to rain today."],
+      ["看来他不想去了。", "Kànlái tā bù xiǎng qù le.", "It seems he doesn't want to go anymore."],
+      ["门关着，看来没有人在家。", "Mén guānzhe, kànlái méiyǒu rén zài jiā.", "The door is closed; apparently no one is home."]
+    ],
+    "聊天儿": [
+      ["我们在咖啡店聊天儿。", "Wǒmen zài kāfēidiàn liáotiānr.", "We are chatting in the coffee shop."],
+      ["他喜欢跟朋友聊天儿。", "Tā xǐhuan gēn péngyou liáotiānr.", "He likes chatting with friends."],
+      ["上课的时候别聊天儿。", "Shàngkè de shíhou bié liáotiānr.", "Don't chat during class."]
+    ],
+    "了解": [
+      ["我想多了解中国文化。", "Wǒ xiǎng duō liǎojiě Zhōngguó wénhuà.", "I want to learn more about Chinese culture."],
+      ["你了解他吗？", "Nǐ liǎojiě tā ma?", "Do you know him well?"],
+      ["我们需要了解一下情况。", "Wǒmen xūyào liǎojiě yíxià qíngkuàng.", "We need to find out about the situation."]
+    ],
+    "毛": [
+      ["这只猫的毛很长。", "Zhè zhī māo de máo hěn cháng.", "This cat's fur is very long."],
+      ["一个苹果五毛钱。", "Yí ge píngguǒ wǔ máo qián.", "One apple costs fifty cents."],
+      ["小狗的毛是白色的。", "Xiǎogǒu de máo shì báisè de.", "The puppy's fur is white."]
+    ],
+    "名人": [
+      ["他是我们城市的名人。", "Tā shì wǒmen chéngshì de míngrén.", "He is a celebrity in our city."],
+      ["很多名人来过这家饭店。", "Hěn duō míngrén lái guo zhè jiā fàndiàn.", "Many famous people have been to this restaurant."],
+      ["我在机场见到了一个名人。", "Wǒ zài jīchǎng jiàndào le yí ge míngrén.", "I saw a famous person at the airport."]
+    ],
+    "女人": [
+      ["那个女人是我的老师。", "Nàge nǚrén shì wǒ de lǎoshī.", "That woman is my teacher."],
+      ["门口站着一个女人。", "Ménkǒu zhànzhe yí ge nǚrén.", "A woman is standing at the door."],
+      ["这个女人说话很快。", "Zhège nǚrén shuōhuà hěn kuài.", "This woman speaks very fast."]
+    ],
+    "汽车": [
+      ["我爸爸买了一辆新汽车。", "Wǒ bàba mǎi le yí liàng xīn qìchē.", "My dad bought a new car."],
+      ["路上汽车很多。", "Lù shang qìchē hěn duō.", "There are many cars on the road."],
+      ["坐汽车去要一个小时。", "Zuò qìchē qù yào yí ge xiǎoshí.", "It takes an hour to go by car."]
+    ],
+    "铅笔": [
+      ["我的铅笔丢了。", "Wǒ de qiānbǐ diū le.", "I lost my pencil."],
+      ["请用铅笔写名字。", "Qǐng yòng qiānbǐ xiě míngzi.", "Please write your name with a pencil."],
+      ["书包里有三支铅笔。", "Shūbāo li yǒu sān zhī qiānbǐ.", "There are three pencils in the schoolbag."]
+    ],
+    "前天": [
+      ["我前天去看了电影。", "Wǒ qiántiān qù kàn le diànyǐng.", "I went to see a film the day before yesterday."],
+      ["前天下了一天的雨。", "Qiántiān xià le yì tiān de yǔ.", "It rained all day the day before yesterday."],
+      ["他前天就回来了。", "Tā qiántiān jiù huílai le.", "He came back the day before yesterday."]
+    ],
+    "身高": [
+      ["你的身高是多少？", "Nǐ de shēngāo shì duōshao?", "How tall are you?"],
+      ["他的身高一米八。", "Tā de shēngāo yì mǐ bā.", "He is 1.8 metres tall."],
+      ["我和哥哥的身高一样。", "Wǒ hé gēge de shēngāo yíyàng.", "My older brother and I are the same height."]
+    ],
+    "世界": [
+      ["我想去世界上很多国家。", "Wǒ xiǎng qù shìjiè shang hěn duō guójiā.", "I want to visit many countries in the world."],
+      ["这是世界上最高的楼吗？", "Zhè shì shìjiè shang zuì gāo de lóu ma?", "Is this the tallest building in the world?"],
+      ["世界很大，人很多。", "Shìjiè hěn dà, rén hěn duō.", "The world is big and has many people."]
+    ],
+    "叔叔": [
+      ["叔叔是我爸爸的弟弟。", "Shūshu shì wǒ bàba de dìdi.", "My uncle is my dad's younger brother."],
+      ["叔叔，请问车站怎么走？", "Shūshu, qǐngwèn chēzhàn zěnme zǒu?", "Excuse me, sir, how do I get to the station?"],
+      ["叔叔送了我一个生日礼物。", "Shūshu sòng le wǒ yí ge shēngrì lǐwù.", "My uncle gave me a birthday present."]
+    ],
+    "四季": [
+      ["这里四季都很暖和。", "Zhèlǐ sìjì dōu hěn nuǎnhuo.", "It is warm here in all four seasons."],
+      ["一年有四季。", "Yì nián yǒu sìjì.", "A year has four seasons."],
+      ["四季中我最喜欢秋天。", "Sìjì zhōng wǒ zuì xǐhuan qiūtiān.", "Of the four seasons I like autumn best."]
+    ],
+    "卫生间": [
+      ["请问卫生间在哪儿？", "Qǐngwèn wèishēngjiān zài nǎr?", "Excuse me, where is the toilet?"],
+      ["卫生间在二楼左边。", "Wèishēngjiān zài èr lóu zuǒbian.", "The toilet is on the left on the second floor."],
+      ["我们家有两个卫生间。", "Wǒmen jiā yǒu liǎng ge wèishēngjiān.", "Our home has two bathrooms."]
+    ],
+    "文化": [
+      ["我对中国文化感兴趣。", "Wǒ duì Zhōngguó wénhuà gǎn xìngqù.", "I'm interested in Chinese culture."],
+      ["每个国家都有自己的文化。", "Měi ge guójiā dōu yǒu zìjǐ de wénhuà.", "Every country has its own culture."],
+      ["这本书介绍了很多文化知识。", "Zhè běn shū jièshào le hěn duō wénhuà zhīshi.", "This book introduces a lot of cultural knowledge."]
+    ],
+    "西": [
+      ["太阳从西边下山。", "Tàiyáng cóng xībian xià shān.", "The sun sets in the west."],
+      ["学校在公园的西边。", "Xuéxiào zài gōngyuán de xībian.", "The school is to the west of the park."],
+      ["往西走五分钟就到了。", "Wǎng xī zǒu wǔ fēnzhōng jiù dào le.", "Walk west for five minutes and you're there."]
+    ],
+    "喜爱": [
+      ["这是孩子们喜爱的游戏。", "Zhè shì háizimen xǐ'ài de yóuxì.", "This is a game children love."],
+      ["她很喜爱这只小猫。", "Tā hěn xǐ'ài zhè zhī xiǎo māo.", "She really loves this kitten."],
+      ["这首歌很受大家喜爱。", "Zhè shǒu gē hěn shòu dàjiā xǐ'ài.", "This song is very popular with everyone."]
+    ],
+    "牙刷": [
+      ["我买了一把新牙刷。", "Wǒ mǎi le yì bǎ xīn yáshuā.", "I bought a new toothbrush."],
+      ["牙刷在卫生间里。", "Yáshuā zài wèishēngjiān li.", "The toothbrush is in the bathroom."],
+      ["别忘了带牙刷。", "Bié wàng le dài yáshuā.", "Don't forget to bring your toothbrush."]
+    ],
+    "一块儿": [
+      ["我们一块儿去吃饭吧。", "Wǒmen yíkuàir qù chīfàn ba.", "Let's go eat together."],
+      ["他们一块儿住在学校。", "Tāmen yíkuàir zhù zài xuéxiào.", "They live together at school."],
+      ["把这些东西放在一块儿。", "Bǎ zhèxiē dōngxi fàng zài yíkuàir.", "Put these things together."]
+    ],
+    "园": [
+      ["我家附近有一个小花园。", "Wǒ jiā fùjìn yǒu yí ge xiǎo huāyuán.", "There is a small garden near my home."],
+      ["果园里有很多苹果树。", "Guǒyuán li yǒu hěn duō píngguǒshù.", "There are many apple trees in the orchard."],
+      ["这个公园很大。", "Zhège gōngyuán hěn dà.", "This park is very big."]
+    ],
+    "运动员": [
+      ["他是一名足球运动员。", "Tā shì yì míng zúqiú yùndòngyuán.", "He is a football player."],
+      ["运动员每天都要锻炼。", "Yùndòngyuán měitiān dōu yào duànliàn.", "Athletes have to train every day."],
+      ["这个运动员跑得非常快。", "Zhège yùndòngyuán pǎo de fēicháng kuài.", "This athlete runs extremely fast."]
+    ],
+    "中间": [
+      ["请坐在我们中间。", "Qǐng zuò zài wǒmen zhōngjiān.", "Please sit between us."],
+      ["银行在超市和饭店中间。", "Yínháng zài chāoshì hé fàndiàn zhōngjiān.", "The bank is between the supermarket and the restaurant."],
+      ["房间中间有一张桌子。", "Fángjiān zhōngjiān yǒu yì zhāng zhuōzi.", "There is a table in the middle of the room."]
+    ],
+    "变化": [
+      ["这几年城市变化很大。", "Zhè jǐ nián chéngshì biànhuà hěn dà.", "The city has changed a lot in recent years."],
+      ["最近天气变化很快。", "Zuìjìn tiānqì biànhuà hěn kuài.", "The weather has been changing quickly recently."]
+    ],
+    "表演": [
+      ["晚上有一个音乐表演。", "Wǎnshang yǒu yí ge yīnyuè biǎoyǎn.", "There is a music performance tonight."],
+      ["学生们在台上表演节目。", "Xuéshengmen zài tái shang biǎoyǎn jiémù.", "The students are performing on stage."]
+    ],
+    "初中": [
+      ["我妹妹在上初中。", "Wǒ mèimei zài shàng chūzhōng.", "My younger sister is in junior high school."],
+      ["我们是初中同学。", "Wǒmen shì chūzhōng tóngxué.", "We were classmates in junior high."]
+    ],
+    "得分": [
+      ["他这次考试得分很高。", "Tā zhè cì kǎoshì défēn hěn gāo.", "He got a high score on this exam."],
+      ["我们队又得分了！", "Wǒmen duì yòu défēn le!", "Our team scored again!"]
+    ],
+    "短裤": [
+      ["夏天我常穿短裤。", "Xiàtiān wǒ cháng chuān duǎnkù.", "I often wear shorts in summer."],
+      ["这条短裤多少钱？", "Zhè tiáo duǎnkù duōshao qián?", "How much are these shorts?"]
+    ],
+    "工作日": [
+      ["工作日我早上七点起床。", "Gōngzuòrì wǒ zǎoshang qī diǎn qǐchuáng.", "On workdays I get up at seven in the morning."],
+      ["商场工作日人不多。", "Shāngchǎng gōngzuòrì rén bù duō.", "The mall isn't crowded on workdays."]
+    ],
+    "过节": [
+      ["过节的时候我们回家。", "Guòjié de shíhou wǒmen huí jiā.", "We go home for the holidays."],
+      ["你们怎么过节？", "Nǐmen zěnme guòjié?", "How do you celebrate the festival?"]
+    ],
+    "几乎": [
+      ["他几乎每天都跑步。", "Tā jīhū měitiān dōu pǎobù.", "He runs almost every day."],
+      ["我几乎忘了这件事。", "Wǒ jīhū wàng le zhè jiàn shì.", "I almost forgot about this."]
+    ],
+    "极": [
+      ["今天天气好极了。", "Jīntiān tiānqì hǎo jí le.", "The weather is extremely nice today."],
+      ["这个菜好吃极了。", "Zhège cài hǎochī jí le.", "This dish is extremely tasty."]
+    ],
+    "检票": [
+      ["火车站正在检票。", "Huǒchēzhàn zhèngzài jiǎnpiào.", "They're checking tickets at the train station."],
+      ["检票以后才能上车。", "Jiǎnpiào yǐhòu cái néng shàng chē.", "You can only board after your ticket is checked."]
+    ],
+    "渴": [
+      ["我渴了，想喝水。", "Wǒ kě le, xiǎng hē shuǐ.", "I'm thirsty and want some water."],
+      ["跑完步大家都很渴。", "Pǎowán bù dàjiā dōu hěn kě.", "Everyone is thirsty after running."]
+    ],
+    "矿泉水": [
+      ["请给我一瓶矿泉水。", "Qǐng gěi wǒ yì píng kuàngquánshuǐ.", "Please give me a bottle of mineral water."],
+      ["冰箱里还有矿泉水吗？", "Bīngxiāng li hái yǒu kuàngquánshuǐ ma?", "Is there still mineral water in the fridge?"]
+    ],
+    "留学": [
+      ["她明年去英国留学。", "Tā míngnián qù Yīngguó liúxué.", "She's going to study in the UK next year."],
+      ["留学的生活很有意思。", "Liúxué de shēnghuó hěn yǒu yìsi.", "Life as an overseas student is very interesting."]
+    ],
+    "楼梯": [
+      ["电梯坏了，我们走楼梯吧。", "Diàntī huài le, wǒmen zǒu lóutī ba.", "The lift is broken, let's take the stairs."],
+      ["下楼梯的时候小心一点儿。", "Xià lóutī de shíhou xiǎoxīn yìdiǎnr.", "Be careful going down the stairs."]
+    ],
+    "胖": [
+      ["我最近胖了一点儿。", "Wǒ zuìjìn pàng le yìdiǎnr.", "I've put on a bit of weight recently."],
+      ["这只猫太胖了。", "Zhè zhī māo tài pàng le.", "This cat is too fat."]
+    ],
+    "裙子": [
+      ["她穿了一条红裙子。", "Tā chuān le yì tiáo hóng qúnzi.", "She is wearing a red skirt."],
+      ["这条裙子太短了。", "Zhè tiáo qúnzi tài duǎn le.", "This skirt is too short."]
+    ],
+    "认得": [
+      ["你还认得我吗？", "Nǐ hái rènde wǒ ma?", "Do you still recognise me?"],
+      ["我认得这个字。", "Wǒ rènde zhège zì.", "I recognise this character."]
+    ],
+    "勺子": [
+      ["请给我一个勺子。", "Qǐng gěi wǒ yí ge sháozi.", "Please give me a spoon."],
+      ["他用勺子喝汤。", "Tā yòng sháozi hē tāng.", "He eats soup with a spoon."]
+    ],
+    "受": [
+      ["他受到了老师的表扬。", "Tā shòudào le lǎoshī de biǎoyáng.", "He was praised by the teacher."],
+      ["这个电影很受欢迎。", "Zhège diànyǐng hěn shòu huānyíng.", "This film is very popular."]
+    ],
+    "兴趣": [
+      ["我的兴趣是画画儿。", "Wǒ de xìngqù shì huà huàr.", "My hobby is drawing."],
+      ["他对音乐很有兴趣。", "Tā duì yīnyuè hěn yǒu xìngqù.", "He is very interested in music."]
+    ],
+    "有关": [
+      ["这本书和历史有关。", "Zhè běn shū hé lìshǐ yǒuguān.", "This book is related to history."],
+      ["我想看有关中国的电影。", "Wǒ xiǎng kàn yǒuguān Zhōngguó de diànyǐng.", "I want to watch films about China."]
+    ],
+    "遇见": [
+      ["我在路上遇见了老同学。", "Wǒ zài lù shang yùjiàn le lǎo tóngxué.", "I ran into an old classmate on the road."],
+      ["真没想到在这儿遇见你。", "Zhēn méi xiǎngdào zài zhèr yùjiàn nǐ.", "I really didn't expect to meet you here."]
+    ],
+    "直到": [
+      ["他直到晚上十点才回家。", "Tā zhídào wǎnshang shí diǎn cái huí jiā.", "He didn't get home until ten at night."],
+      ["我等你直到你来。", "Wǒ děng nǐ zhídào nǐ lái.", "I'll wait for you until you come."]
+    ],
+    "做客": [
+      ["欢迎你来我家做客。", "Huānyíng nǐ lái wǒ jiā zuòkè.", "You're welcome to visit my home."],
+      ["周末我们去朋友家做客。", "Zhōumò wǒmen qù péngyou jiā zuòkè.", "We're visiting a friend's home this weekend."]
+    ],
+    "阿姨": [
+      ["阿姨，这个苹果多少钱？", "Āyí, zhège píngguǒ duōshao qián?", "Excuse me, ma'am, how much is this apple?"]
+    ],
+    "矮": [
+      ["我弟弟比我矮一点儿。", "Wǒ dìdi bǐ wǒ ǎi yìdiǎnr.", "My younger brother is a bit shorter than me."]
+    ],
+    "比较": [
+      ["今天比较冷，多穿点儿衣服。", "Jīntiān bǐjiào lěng, duō chuān diǎnr yīfu.", "It's rather cold today, wear more clothes."]
+    ],
+    "衬衫": [
+      ["他穿着一件白衬衫。", "Tā chuānzhe yí jiàn bái chènshān.", "He is wearing a white shirt."]
+    ],
+    "聪明": [
+      ["这个孩子很聪明。", "Zhège háizi hěn cōngming.", "This child is very clever."]
+    ],
+    "大概": [
+      ["他大概八点到。", "Tā dàgài bā diǎn dào.", "He'll probably arrive around eight."]
+    ],
+    "锻炼": [
+      ["我每天早上锻炼身体。", "Wǒ měitiān zǎoshang duànliàn shēntǐ.", "I exercise every morning."]
+    ],
+    "害怕": [
+      ["别害怕，我在这儿。", "Bié hàipà, wǒ zài zhèr.", "Don't be afraid, I'm here."]
+    ],
+    "季节": [
+      ["你最喜欢哪个季节？", "Nǐ zuì xǐhuan nǎge jìjié?", "Which season do you like best?"]
+    ],
+    "历史": [
+      ["这个城市有很长的历史。", "Zhège chéngshì yǒu hěn cháng de lìshǐ.", "This city has a long history."]
+    ],
+    "男人": [
+      ["那个男人是谁？", "Nàge nánrén shì shéi?", "Who is that man?"]
+    ],
+    "上衣": [
+      ["这件上衣很好看。", "Zhè jiàn shàngyī hěn hǎokàn.", "This top looks very nice."]
+    ],
+    "瘦": [
+      ["他比以前瘦多了。", "Tā bǐ yǐqián shòu duō le.", "He is much thinner than before."]
+    ],
+    "外语": [
+      ["你会说几门外语？", "Nǐ huì shuō jǐ mén wàiyǔ?", "How many foreign languages can you speak?"]
+    ],
+    "屋子": [
+      ["屋子里很暖和。", "Wūzi li hěn nuǎnhuo.", "It's warm inside the room."]
+    ],
+    "香蕉": [
+      ["我早上吃了一根香蕉。", "Wǒ zǎoshang chī le yì gēn xiāngjiāo.", "I ate a banana this morning."]
+    ],
+    "选择": [
+      ["你可以选择你喜欢的颜色。", "Nǐ kěyǐ xuǎnzé nǐ xǐhuan de yánsè.", "You can choose the colour you like."]
+    ],
+    "羊": [
+      ["山上有很多羊。", "Shān shang yǒu hěn duō yáng.", "There are many sheep on the mountain."]
+    ],
+    "邮箱": [
+      ["请告诉我你的邮箱。", "Qǐng gàosu wǒ nǐ de yóuxiāng.", "Please tell me your email address."]
+    ],
+    "有用": [
+      ["这本书对我很有用。", "Zhè běn shū duì wǒ hěn yǒuyòng.", "This book is very useful to me."]
+    ],
+    "羽毛球": [
+      ["我们下午去打羽毛球吧。", "Wǒmen xiàwǔ qù dǎ yǔmáoqiú ba.", "Let's play badminton this afternoon."]
+    ],
+    "雨衣": [
+      ["下雨了，穿上雨衣吧。", "Xià yǔ le, chuānshang yǔyī ba.", "It's raining, put on your raincoat."]
+    ]
+  }
+}

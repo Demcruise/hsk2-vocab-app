@@ -61,6 +61,34 @@ async function fresh(page) {
     const re = await page.evaluate(() => ({ lv: LEVEL, ld: S.ld }));
     ok('hsk2b restored after reload', re.lv === 'hsk2b');
     ok('hsk2b lesson completion persisted', re.ld && re.ld['0_0'] === 1, JSON.stringify(re.ld));
+
+    // Every other level listed in local-content/levels.json.
+    const ixPath = path.join(__dirname, '..', 'local-content', 'levels.json');
+    const files = fs.existsSync(ixPath) ? JSON.parse(fs.readFileSync(ixPath, 'utf8')).levels : [];
+    for (const f of files.filter((x) => x !== 'level-hsk2-2025.json')) {
+      const d = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'local-content', f), 'utf8'));
+      const r = await page.evaluate((k) => {
+        if (!LEVELS[k]) return { reg: false };
+        // Plant HSK2 progress for a word this level shares with the built-in HSK2 list.
+        const hz = new Set(LEVELS[k].vocab.map((v) => v.hanzi));
+        const w = VOCAB_DATA.find((v) => hz.has(v.hanzi));
+        const b = JSON.parse(localStorage.getItem('khsk2') || '{}');
+        b.p = b.p || {}; b.p[w.id] = { l: 2, c: 3, w: 0, t: '2026-11-02T00:00:00Z' };
+        localStorage.setItem('khsk2', JSON.stringify(b));
+        localStorage.removeItem(LEVELS[k].store);
+        switchLevel(k); switchScreen('quiz'); startQuiz();
+        const mine = vocab.find((v) => v.hanzi === w.hanzi);
+        return { reg: true, lv: LEVEL, n: vocab.length, units: UNITS.length, key: storeKey(), q: S.qList.length,
+          seeded: (S.prog[mine.id + ''] || {}).l, word: w.hanzi };
+      }, d.key);
+      ok(`${d.key} registered`, r.reg);
+      ok(`${d.key} loads ${d.vocab.length} words in ${r.units} units`, r.lv === d.key && r.n === d.vocab.length && r.units > 0, JSON.stringify(r));
+      ok(`${d.key} own bucket ${d.store}`, r.key === d.store);
+      ok(`${d.key} quiz runs`, r.q > 0);
+      ok(`${d.key} carried progress from HSK2 where hanzi overlap`, r.seeded === 2, `${r.word} l=${r.seeded}`);
+    }
+    const btns = await page.evaluate(() => [...document.querySelectorAll('#levelSwitch button')].map((b) => b.dataset.lv));
+    ok('one button per level', btns.length === 2 + files.length, btns.join(','));
     ok('no page errors (A)', errors.length === 0, errors.join(' | '));
     await page.close();
   } else {

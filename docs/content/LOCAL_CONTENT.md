@@ -55,3 +55,19 @@ Serve the repo root over http (e.g. `npx http-server -p 8734 .`) and open it. Wh
 - Not yet: stories for this level (story nodes show "No story for this topic yet"), Flutter app support, levels 3–9.
 
 Tests: `node tools/local_level.test.js` (part A runs when the local file exists; part B simulates the public site).
+
+## Local level: HSK 3 (2025)
+
+```bash
+node tools/build_local_level.mjs 3   # -> local-content/level-hsk3-2025.json + levels.json index
+```
+
+The builder now takes the level as an argument and writes `local-content/levels.json`, which the app reads to discover every built level (one button per level, storage bucket `khsk<N>b`).
+
+- 500 words; 264 keep their own sentences/topics from the old app data (they were in the 2021 HSK 2 list).
+- 148 use corpus sentences; 88 use hand-written sentences in `tools/hsk2025_l3_authoring.json` (all words ≥3 sentences). 236 topics hand-assigned.
+- Known source defects carried into the data: some pinyin split mid-syllable in the PDF (宾馆 "bīng uǎn") — harmless once compacted to "bīnguǎn"; a few meanings merged with the next field (短裤, 遇见); 园 has no part of speech.
+
+## Progress from the public site
+
+Progress saved on demcruise.github.io lives in that origin's browser storage and is not visible on `localhost`. To carry it over: on the public site use **Save to File** on HSK 2, open the local app, switch to HSK 2, **Load from File**, then open the 2025 levels for the first time (carry-over only runs when a 2025 level's bucket is still empty).
