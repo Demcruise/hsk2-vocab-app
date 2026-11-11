@@ -1,0 +1,102 @@
+{
+  "_note": "Original project content for HSK 3.0 (2025) Level 2: unit topics for words not in the old app data, and hand-written example sentences for words the existing sentence corpus does not cover. Topic keys match UNIT_DEFS in index.html.",
+  "topics": {
+    "爱好": "hobi", "班": "sekolah", "帮": "umum", "帮忙": "umum", "包": "belanja", "本子": "sekolah",
+    "比": "fungsi", "别": "fungsi", "车站": "jalan", "出": "jalan", "出来": "jalan", "出去": "jalan",
+    "床": "rumah", "次": "waktu", "从": "fungsi", "错": "sifat", "打": "umum", "打车": "jalan",
+    "打开": "umum", "地": "fungsi", "动": "umum", "飞": "jalan", "高": "sifat", "告诉": "dasar",
+    "跟": "fungsi", "还是": "fungsi", "红茶": "makan", "后面": "jalan", "坏": "sifat", "回来": "jalan",
+    "回去": "jalan", "机场": "jalan", "机票": "jalan", "记得": "umum", "间": "rumah", "教": "sekolah",
+    "介绍": "dasar", "进": "jalan", "进来": "jalan", "进去": "jalan", "就": "fungsi", "咖啡": "makan",
+    "开始": "waktu", "考": "sekolah", "考试": "sekolah", "裤子": "belanja", "快": "sifat", "累": "tubuh",
+    "里面": "jalan", "楼": "rumah", "路": "jalan", "路上": "jalan", "绿茶": "makan", "慢": "sifat",
+    "没意思": "sifat", "每": "waktu", "门": "rumah", "门口": "rumah", "门票": "belanja", "拿": "umum",
+    "奶茶": "makan", "奶奶": "orang", "男孩儿": "orang", "女孩儿": "orang", "旁边": "jalan", "跑": "hobi",
+    "跑步": "hobi", "票": "belanja", "妻子": "orang", "起来": "umum", "前面": "jalan", "球": "hobi",
+    "肉": "makan", "商场": "belanja", "上来": "jalan", "上面": "jalan", "上去": "jalan", "上网": "hobi",
+    "身体": "tubuh", "生日": "hobi", "时": "waktu", "手": "tubuh", "书包": "sekolah", "送": "belanja",
+    "踢": "hobi", "跳舞": "hobi", "外国": "jalan", "外面": "jalan", "网上": "hobi", "忘": "umum",
+    "希望": "tubuh", "洗": "rumah", "洗手间": "rumah", "下来": "jalan", "下面": "jalan", "下去": "jalan",
+    "小孩儿": "orang", "笑": "tubuh", "爷爷": "orang", "一起": "fungsi", "游": "hobi", "游泳": "hobi",
+    "有时": "waktu", "右": "jalan", "右边": "jalan", "远": "jalan", "丈夫": "orang", "着": "fungsi",
+    "正": "fungsi", "准备": "umum", "走": "jalan", "走路": "jalan", "足球": "hobi", "最": "fungsi",
+    "左": "jalan", "左边": "jalan"
+  },
+  "sentences": {
+    "红茶": [
+      ["我喜欢喝红茶。", "Wǒ xǐhuan hē hóngchá.", "I like drinking black tea."],
+      ["你要红茶还是绿茶？", "Nǐ yào hóngchá háishi lǜchá?", "Do you want black tea or green tea?"],
+      ["这杯红茶很热。", "Zhè bēi hóngchá hěn rè.", "This cup of black tea is very hot."]
+    ],
+    "裤子": [
+      ["这条裤子太长了。", "Zhè tiáo kùzi tài cháng le.", "These trousers are too long."],
+      ["我想买一条黑裤子。", "Wǒ xiǎng mǎi yì tiáo hēi kùzi.", "I want to buy a pair of black trousers."],
+      ["他的裤子很新。", "Tā de kùzi hěn xīn.", "His trousers are very new."]
+    ],
+    "绿茶": [
+      ["妈妈每天早上喝绿茶。", "Māma měitiān zǎoshang hē lǜchá.", "Mom drinks green tea every morning."],
+      ["绿茶不太贵。", "Lǜchá bú tài guì.", "Green tea isn't very expensive."],
+      ["请给我一杯绿茶。", "Qǐng gěi wǒ yì bēi lǜchá.", "Please give me a cup of green tea."]
+    ],
+    "没意思": [
+      ["这个电影没意思。", "Zhège diànyǐng méi yìsi.", "This movie is boring."],
+      ["一个人吃饭很没意思。", "Yí ge rén chīfàn hěn méi yìsi.", "Eating alone is very boring."],
+      ["你觉得这本书没意思吗？", "Nǐ juéde zhè běn shū méi yìsi ma?", "Do you think this book is boring?"]
+    ],
+    "男孩儿": [
+      ["那个男孩儿是我弟弟。", "Nàge nánháir shì wǒ dìdi.", "That boy is my younger brother."],
+      ["男孩儿们在外面踢球。", "Nánháirmen zài wàimiàn tī qiú.", "The boys are playing football outside."],
+      ["她有两个男孩儿。", "Tā yǒu liǎng ge nánháir.", "She has two boys."]
+    ],
+    "女孩儿": [
+      ["这个女孩儿很喜欢唱歌。", "Zhège nǚháir hěn xǐhuan chànggē.", "This girl really likes singing."],
+      ["那个女孩儿是谁？", "Nàge nǚháir shì shéi?", "Who is that girl?"],
+      ["我们班有十个女孩儿。", "Wǒmen bān yǒu shí ge nǚháir.", "There are ten girls in our class."]
+    ],
+    "妻子": [
+      ["他的妻子是老师。", "Tā de qīzi shì lǎoshī.", "His wife is a teacher."],
+      ["我和妻子一起去商场。", "Wǒ hé qīzi yìqǐ qù shāngchǎng.", "My wife and I go to the mall together."],
+      ["你妻子今天在家吗？", "Nǐ qīzi jīntiān zài jiā ma?", "Is your wife at home today?"]
+    ],
+    "希望": [
+      ["我希望明天不下雨。", "Wǒ xīwàng míngtiān bú xià yǔ.", "I hope it doesn't rain tomorrow."],
+      ["希望你身体好。", "Xīwàng nǐ shēntǐ hǎo.", "I hope you are in good health."],
+      ["他希望去中国学习。", "Tā xīwàng qù Zhōngguó xuéxí.", "He hopes to go to China to study."]
+    ],
+    "下去": [
+      ["你先下去，我马上来。", "Nǐ xiān xiàqu, wǒ mǎshàng lái.", "You go down first, I'm coming right away."],
+      ["电梯坏了，我们走下去吧。", "Diàntī huài le, wǒmen zǒu xiàqu ba.", "The elevator is broken, let's walk down."],
+      ["他从楼上跑下去了。", "Tā cóng lóu shang pǎo xiàqu le.", "He ran down from upstairs."]
+    ],
+    "小孩儿": [
+      ["这个小孩儿很可爱。", "Zhège xiǎoháir hěn kě'ài.", "This kid is very cute."],
+      ["小孩儿不能一个人出去。", "Xiǎoháir bù néng yí ge rén chūqu.", "Kids can't go out alone."],
+      ["公园里有很多小孩儿。", "Gōngyuán li yǒu hěn duō xiǎoháir.", "There are many kids in the park."]
+    ],
+    "右边": [
+      ["洗手间在右边。", "Xǐshǒujiān zài yòubian.", "The restroom is on the right."],
+      ["坐在我右边的是我朋友。", "Zuò zài wǒ yòubian de shì wǒ péngyou.", "The person sitting on my right is my friend."],
+      ["商场右边有一个咖啡店。", "Shāngchǎng yòubian yǒu yí ge kāfēidiàn.", "There is a coffee shop to the right of the mall."]
+    ],
+    "右": [
+      ["前面路口往右走。", "Qiánmiàn lùkǒu wǎng yòu zǒu.", "Go right at the intersection ahead."],
+      ["请向右看。", "Qǐng xiàng yòu kàn.", "Please look to the right."],
+      ["他用右手写字。", "Tā yòng yòushǒu xiě zì.", "He writes with his right hand."]
+    ],
+    "丈夫": [
+      ["她丈夫在医院工作。", "Tā zhàngfu zài yīyuàn gōngzuò.", "Her husband works at a hospital."],
+      ["我丈夫很喜欢做饭。", "Wǒ zhàngfu hěn xǐhuan zuò fàn.", "My husband really likes cooking."],
+      ["你丈夫今天回来吗？", "Nǐ zhàngfu jīntiān huílai ma?", "Is your husband coming back today?"]
+    ],
+    "足球": [
+      ["我们下午去踢足球吧。", "Wǒmen xiàwǔ qù tī zúqiú ba.", "Let's go play football this afternoon."],
+      ["他的足球是新的。", "Tā de zúqiú shì xīn de.", "His football is new."],
+      ["你喜欢看足球比赛吗？", "Nǐ xǐhuan kàn zúqiú bǐsài ma?", "Do you like watching football matches?"]
+    ],
+    "左边": [
+      ["银行在左边。", "Yínháng zài zuǒbian.", "The bank is on the left."],
+      ["请坐在我左边。", "Qǐng zuò zài wǒ zuǒbian.", "Please sit on my left."],
+      ["车站左边有一个商场。", "Chēzhàn zuǒbian yǒu yí ge shāngchǎng.", "There is a mall to the left of the station."]
+    ]
+  }
+}

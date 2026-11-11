@@ -37,3 +37,21 @@ Validation: 3 errors, all defects in the source PDFs (换乘 has no definition; 
 | App HSK 2 (2021 list) | 770 | 38 | 84 | 258 | 227 | 56 | 7 | 100 |
 
 So the current "HSK 2" set covers only 84 of the 200 words of 2025 HSK 2; most of it belongs to 2025 HSK 3–4. The 100 unmatched words are mostly compounds absent from the 2025 lists (e.g. 公共汽车, 比如说) — keep them as extra practice, not as curriculum.
+
+## Local level in the PWA: HSK 2 (2025)
+
+```bash
+node tools/extract_local_hsk.mjs     # PDFs -> local-content/hsk2025.json
+node tools/build_local_level.mjs     # -> local-content/level-hsk2-2025.json
+```
+
+Serve the repo root over http (e.g. `npx http-server -p 8734 .`) and open it. When `local-content/level-hsk2-2025.json` is present, a third level button **🎯 HSK 2 (2025) · local** appears; the public GitHub Pages build has no such file and is unchanged.
+
+- 200 words; storage bucket `khsk2b` (separate from `khsk1`/`khsk2`).
+- First visit copies progress (level, counts, memorized flag) for the same hanzi from the HSK 1 and HSK 2 buckets; those buckets are not modified.
+- Sentences: 84 words keep their own 10 sentences, 101 use matching sentences from the project's own corpus (occurrences inside longer known words are ignored, so 地 "de" does not match 地方), 15 use hand-written sentences in `tools/hsk2025_l2_authoring.json`. Every word has ≥3 sentences.
+- Topics: 84 from existing data, 116 hand-assigned in the authoring file.
+- The service worker never caches `local-content/`.
+- Not yet: stories for this level (story nodes show "No story for this topic yet"), Flutter app support, levels 3–9.
+
+Tests: `node tools/local_level.test.js` (part A runs when the local file exists; part B simulates the public site).

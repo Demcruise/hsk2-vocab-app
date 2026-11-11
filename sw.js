@@ -8,7 +8,7 @@
  * re-precached; normal `index.html` edits are picked up by the network-first
  * navigation handler.
  */
-const VERSION = 'v19';
+const VERSION = 'v20';
 const CACHE = `khsk2-${VERSION}`;
 
 const APP_SHELL = [
@@ -72,6 +72,8 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   if (url.origin !== self.location.origin) return;
+  // Local-only personal content: never cache, always read the current file.
+  if (url.pathname.includes('/local-content/')) return;
 
   // Page loads: try the network so updates land, fall back to cache offline.
   if (req.mode === 'navigate') {

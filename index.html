@@ -660,7 +660,7 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
 
 <!-- Mobile header -->
 <header id="mHeader">
-  <div class="mh-logo"><img src="assets/cn.svg" alt=""><span>Kunkwan</span><button class="lvl-pill" id="lvlPill" onclick="switchLevel(LEVEL==='hsk1'?'hsk2':'hsk1')" title="Ganti level HSK" aria-label="Ganti level HSK"><span class="lv-name">HSK 2</span></button></div>
+  <div class="mh-logo"><img src="assets/cn.svg" alt=""><span>Kunkwan</span><button class="lvl-pill" id="lvlPill" onclick="switchLevel(nextLevel())" title="Ganti level HSK" aria-label="Ganti level HSK"><span class="lv-name">HSK 2</span></button></div>
   <div class="mh-stats">
     <span class="st">🔥<span id="streakCount">0</span></span>
     <span class="st">✨<span id="xpDisplay">0</span></span>
@@ -946,8 +946,8 @@ function setSpeed(s){S.speed=s;document.getElementById('speedNorm').className=s=
 
 function initData(){let L=curLevel();vocab=L.vocab;WORD_TOPIC=L.topics;radicals=RADICALS_DATA;renderLevelUI();buildUnits();loadState();initTTS();cv=vocab.map((_,i)=>i);applyMode();renderVocab();renderStats();renderAch();renderLearnPath();renderRail();setupUI();setupHanzi();refreshSaveInfo();loadHW();if(S.screen==='quiz')renderQuizPicker();reappliedSession();}
 
-function loadState(){try{let s=localStorage.getItem(storeKey());if(s){let p=JSON.parse(s);S.prog=p.p||{};S.streak=p.s||0;S.last=p.l||'';S.xp=p.x||0;S.quizzes=p.q||0;S.ach=p.a||{};S.known=(p.k&&typeof p.k==='object')?p.k:null;S.screen=p.sc||'learn';S.mode=p.md||S.mode;S.vf=p.vf||'belum';S.kf=p.kf||'belum';S.wid=(p.wid===undefined?null:p.wid);S.savedAt=p.sa||'';S.st=p.st||{};S.ld=p.ld||{};}}catch(e){}if(!S.known)S.known=seedKnown();let t=new Date().toDateString();if(S.last!==t){S.streak=(S.last===new Date(Date.now()-86400000).toDateString())?S.streak+1:1;S.last=t;saveState();}updateHUD();}
 function saveState(){S.savedAt=new Date().toLocaleString();try{localStorage.setItem(storeKey(),JSON.stringify({p:S.prog,s:S.streak,l:S.last,x:S.xp,q:S.quizzes,a:S.ach,k:S.known,sc:S.screen,md:S.mode,vf:S.vf,kf:S.kf,wid:S.wid,sa:S.savedAt,st:S.st,ld:S.ld}));}catch(e){}updateHUD();refreshSaveInfo();}
+function loadState(){try{let s=localStorage.getItem(storeKey());if(s){let p=JSON.parse(s);S.prog=p.p||{};S.streak=p.s||0;S.last=p.l||'';S.xp=p.x||0;S.quizzes=p.q||0;S.ach=p.a||{};S.known=(p.k&&typeof p.k==='object')?p.k:null;S.screen=p.sc||'learn';S.mode=p.md||S.mode;S.vf=p.vf||'belum';S.kf=p.kf||'belum';S.wid=(p.wid===undefined?null:p.wid);S.savedAt=p.sa||'';S.st=p.st||{};S.ld=p.ld||{};}else if(curLevel().local)seedFromOtherLevels();}catch(e){}if(!S.known)S.known=seedKnown();let t=new Date().toDateString();if(S.last!==t){S.streak=(S.last===new Date(Date.now()-86400000).toDateString())?S.streak+1:1;S.last=t;saveState();}updateHUD();}
 
 // SAVE / BACKUP
 function progressPayload(){return {v:2,app:storeKey(),at:new Date().toISOString(),p:S.prog,s:S.streak,l:S.last,x:S.xp,q:S.quizzes,a:S.ach,k:S.known,sc:S.screen,md:S.mode,vf:S.vf,kf:S.kf,wid:S.wid,st:S.st,ld:S.ld};}
@@ -1145,10 +1145,12 @@ const LEVELS={
   hsk1:{key:'hsk1',label:'HSK 1',vocab:HSK1_VOCAB_DATA,topics:HSK1_WORD_TOPIC,seed:[]},
   hsk2:{key:'hsk2',label:'HSK 2',vocab:VOCAB_DATA,topics:WORD_TOPIC,seed:KNOWN_DEFAULT},
 };
-let LEVEL='hsk2';
-try{LEVEL=localStorage.getItem('khsk-level')||'hsk2';}catch(e){}
-if(!LEVELS[LEVEL])LEVEL='hsk2';
-function storeKey(){return 'khsk'+LEVEL.slice(-1);}
+let SAVED_LEVEL='hsk2';
+try{SAVED_LEVEL=localStorage.getItem('khsk-level')||'hsk2';}catch(e){}
+// A saved local-only level (e.g. hsk2b) is registered asynchronously by loadLocalLevels().
+let LEVEL=LEVELS[SAVED_LEVEL]?SAVED_LEVEL:'hsk2';
+function nextLevel(){let k=Object.keys(LEVELS);return k[(k.indexOf(LEVEL)+1)%k.length];}
+function storeKey(){let L=LEVELS[LEVEL];return (L&&L.store)||('khsk'+LEVEL.slice(-1));}
 function curLevel(){return LEVELS[LEVEL];}
 function levelRadicals(){
   if(LEVEL==='hsk2')return radicals;
@@ -1159,7 +1161,7 @@ function levelRadicals(){
       if(!map[rc])map[rc]={radical:rc,variant:'',pinyin:d[3]||'',meaning:d[4]||'',explanation:'',chars:{},words:{}};
       map[rc].chars[c]=1;map[rc].words[v.hanzi]=1;}
   });
-  return Object.values(map).map(function(r){return{radical:r.radical,variant:r.variant,pinyin:r.pinyin,meaning:r.meaning,explanation:'A radical appearing in HSK 1 vocabulary.',chars:Object.keys(r.chars),words:Object.keys(r.words).sort()};}).sort(function(a,b){return b.words.length-a.words.length;});
+  return Object.values(map).map(function(r){return{radical:r.radical,variant:r.variant,pinyin:r.pinyin,meaning:r.meaning,explanation:'A radical appearing in '+curLevel().label+' vocabulary.',chars:Object.keys(r.chars),words:Object.keys(r.words).sort()};}).sort(function(a,b){return b.words.length-a.words.length;});
 }
 function renderLevelUI(){
   let lb=curLevel().label;
@@ -1815,7 +1817,39 @@ renderLearnPath=function(){
 };
 
 
+// ===== LOCAL-ONLY LEVELS =====
+// local-content/ is gitignored personal-use data (see docs/content/LOCAL_CONTENT.md).
+// On the public site the file is absent and nothing changes.
+function seedFromOtherLevels(){
+  // First visit to a local level: carry over progress for the same hanzi from the built-in levels.
+  let byHz={};
+  ['hsk1','hsk2'].forEach(function(k){
+    let L=LEVELS[k],raw=null;try{raw=JSON.parse(localStorage.getItem(L.store||('khsk'+k.slice(-1)))||'null');}catch(e){}
+    if(!raw)return;
+    L.vocab.forEach(function(v){let id=v.id+'',p=raw.p&&raw.p[id],kn=raw.k&&raw.k[id];if(!p&&!kn)return;
+      let e=byHz[v.hanzi]||(byHz[v.hanzi]={p:null,k:false});
+      if(p){if(!e.p)e.p={l:0,c:0,w:0,t:''};e.p.l=Math.max(e.p.l,p.l||0);e.p.c+=p.c||0;e.p.w+=p.w||0;if((p.t||'')>e.p.t)e.p.t=p.t||'';}
+      if(kn)e.k=true;});
+  });
+  S.prog={};S.known={};
+  vocab.forEach(function(v){let e=byHz[v.hanzi];if(!e)return;if(e.p)S.prog[v.id+'']=e.p;if(e.k)S.known[v.id+'']=1;});
+}
+function loadLocalLevels(){
+  return fetch('local-content/level-hsk2-2025.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null;}).then(function(d){
+    if(!d||!Array.isArray(d.vocab)||!d.vocab.length||!d.key||LEVELS[d.key])return;
+    LEVELS[d.key]={key:d.key,label:d.label,vocab:d.vocab,topics:d.topics,seed:[],store:d.store,local:true};
+    let host=document.getElementById('levelSwitch');
+    if(host&&!host.querySelector('[data-lv="'+d.key+'"]')){
+      let b=document.createElement('button');b.dataset.lv=d.key;
+      b.innerHTML='🎯 '+exEsc(d.label)+' <span class="lv-c">'+d.vocab.length+' words · local</span>';
+      b.addEventListener('click',function(){switchLevel(d.key);});host.appendChild(b);
+    }
+    if(SAVED_LEVEL===d.key&&LEVEL!==d.key)switchLevel(d.key);
+  }).catch(function(){});
+}
+
 initData();
+loadLocalLevels();
 applyTheme(document.documentElement.dataset.theme==='dark'?'dark':'light');
 </script>
 <script>
