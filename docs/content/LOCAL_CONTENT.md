@@ -94,3 +94,13 @@ node tools/build_local_level.mjs 5
 - 1,600 words: 70 reuse old app data, 318 use corpus sentences, 1,212 use original sentences (`tools/hsk2025_l5_authoring_s1..s7.json`, ≈2,150 sentences; topics in `hsk2025_l5_authoring_topics.json`; polyphones 传 chuán, 调 diào/tiáo, 行 háng, 系 jì/xì in `hsk2025_l5_authoring_poly.json`).
 - Pinyin generator rules added after reviewing output: standalone 得 → "de" (complement), or "děi" right after a subject or 还/就/也/都; 地 after an adjective (source POS data) or a reduplicated word → "de" (also stops 乐观地面对 being read as 地面); 们 attaches to the previous word (孩子们 → háizimen); 长得 → zhǎngde.
 - Known: greedy word matching can still put a space in the wrong place when two words overlap (这本书写得 → "shūxiě de"); syllables and tones are correct.
+
+## Local level: HSK 6 (2025)
+
+```bash
+node tools/build_local_level.mjs 6
+```
+
+- 1,800 words: 9 reuse old app data, 239 use corpus sentences, 1,552 use original sentences (`tools/hsk2025_l6_authoring_s1..s9.json`; polyphones 落 là, 料 liào (two senses sharing one key), 露 lòu/lù, 率 lǜ, 圈 quān, 折 zhé in `hsk2025_l6_authoring_poly.json`). Every word has ≥2 sentences and a topic.
+- s9 is the gap-fill batch: one more hand-written sentence for every word that had only a single corpus sentence, so the whole level reaches MIN_SENT=2.
+- Known: same pinyin-generator caveats as level 5 (greedy word matching can misplace a space; syllables/tones correct).

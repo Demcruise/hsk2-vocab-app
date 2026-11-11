@@ -1,0 +1,38 @@
+{
+  "_note": "Hand-written sentences with explicit pinyin for HSK 6 (2025) polyphones — corpus sentences can't tell readings apart (see DATA_QUALITY_RULES). Keyed hanzi|pinyin. 料|liào covers both entries (material & expect senses).",
+  "sentences": {
+    "落|là": [
+      ["出门太急，他把手机落在家里了。", "Chūmén tài jí, tā bǎ shǒujī là zài jiāli le.", "He was in such a hurry to leave that he left his phone at home."],
+      ["我的伞落在图书馆了，得回去拿。", "Wǒ de sǎn là zài túshūguǎn le, děi huíqù ná.", "I left my umbrella in the library and have to go back for it."]
+    ],
+    "料|liào": [
+      ["这种料做出来的衣服特别透气。", "Zhè zhǒng liào zuò chūlái de yīfu tèbié tòuqì.", "Clothes made from this material are especially breathable."],
+      ["这道菜料放得足，味道自然好。", "Zhè dào cài liào fàng de zú, wèidao zìrán hǎo.", "This dish is loaded with ingredients, so naturally it tastes great."],
+      ["谁也没料到他会突然辞职。", "Shéi yě méi liàodào tā huì tūrán cízhí.", "No one expected that he would suddenly quit his job."]
+    ],
+    "露|lòu": [
+      ["她一笑就露出两颗小虎牙。", "Tā yí xiào jiù lòuchū liǎng kē xiǎo hǔyá.", "When she smiles, two little canine teeth show."],
+      ["说话小心点，别说漏了，露出马脚。", "Shuōhuà xiǎoxīn diǎn, bié shuōlòu le, lòuchū mǎjiǎo.", "Be careful what you say — don't slip up and give yourself away."],
+      ["他紧张得直冒汗，生怕露馅。", "Tā jǐnzhāng de zhí mào hàn, shēngpà lòuxiàn.", "He was so nervous he kept sweating, afraid of letting the secret out."]
+    ],
+    "露|lù": [
+      ["清晨的草叶上全是露水。", "Qīngchén de cǎoyè shàng quán shì lùshuǐ.", "The grass leaves were covered in dew in the early morning."],
+      ["这篇文章揭露了事情的真相。", "Zhè piān wénzhāng jiēlù le shìqing de zhēnxiàng.", "This article exposed the truth of the matter."],
+      ["野营时我们在山沟里露宿了一晚。", "Yěyíng shí wǒmen zài shāngōu lǐ lùsù le yì wǎn.", "While camping we spent a night sleeping out in the valley."]
+    ],
+    "率|lǜ": [
+      ["这家医院的治疗成功率很高。", "Zhè jiā yīyuàn de zhìliáo chénggōnglǜ hěn gāo.", "This hospital has a very high treatment success rate."],
+      ["最近银行的利率又下调了一点。", "Zuìjìn yínháng de lìlǜ yòu xiàtiáo le yìdiǎn.", "The bank's interest rate was lowered a bit more recently."]
+    ],
+    "圈|quān": [
+      ["孩子们围成一个圈做游戏。", "Háizimen wéichéng yí ge quān zuò yóuxì.", "The children formed a circle to play a game."],
+      ["她在地图上画了一个红圈。", "Tā zài dìtú shàng huà le yí ge hóng quān.", "She drew a red circle on the map."],
+      ["这件事在朋友圈里传开了。", "Zhè jiàn shì zài péngyouquān lǐ chuánkāi le.", "The news of this spread through everyone's friend circles."]
+    ],
+    "折|zhé": [
+      ["大风把院子里的树枝折断了。", "Dàfēng bǎ yuànzi lǐ de shùzhī zhéduàn le.", "The strong wind snapped the branches in the yard."],
+      ["他把信纸折好，放进信封里。", "Tā bǎ xìnzhǐ zhé hǎo, fàng jìn xìnfēng lǐ.", "He folded the letter paper neatly and put it into the envelope."],
+      ["老人把那根铁丝折成了两半。", "Lǎorén bǎ nà gēn tiěsī zhéchéng le liǎng bàn.", "The old man bent the wire in half."]
+    ]
+  }
+}
