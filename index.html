@@ -396,6 +396,34 @@ html[data-theme="dark"] .hz.open{background:#4A3F14;color:#FFD966;box-shadow:0 0
 .level-switch button.active{border-color:var(--green-d);background:var(--green-aa);color:#fff}
 .level-switch .lv-c{font-size:10px;font-weight:800;opacity:.75}
 .set-label{font-size:14px;font-weight:900;margin:4px 0 2px}
+/* Hanzi screen: tabs, per-unit characters, pinyin chart */
+.hz-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--card);border:2px solid var(--border);border-radius:14px;padding:4px;margin-bottom:14px}
+.hz-tabs button{padding:9px 4px;border:none;border-radius:10px;background:none;color:var(--text-light);font-family:inherit;font-weight:900;font-size:13px;letter-spacing:.6px;cursor:pointer}
+.hz-tabs button.active{background:var(--blue);color:#fff}
+.hz-sum{font-size:13px;font-weight:800;color:var(--text-light);margin:0 2px 10px}
+.hz-unit{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:12px 14px;margin-bottom:12px}
+.hz-unit-h{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.hz-unit-h .t{flex:1;min-width:0}
+.hz-unit-h .s{font-size:11px;font-weight:900;letter-spacing:.6px;color:var(--text-light)}
+.hz-unit-h .n{font-size:16px;font-weight:900}
+.hz-sub{font-size:12px;font-weight:800;color:var(--text-light);margin:8px 0 6px}
+.hz-chars{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:6px}
+.hz-ch{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:58px;border:2px solid var(--border);border-bottom-width:4px;border-radius:12px;background:var(--card);color:var(--text);cursor:pointer;font-family:inherit;padding:4px 2px}
+.hz-ch b{font-size:24px;font-weight:600;line-height:1.1}
+.hz-ch i{font-style:normal;font-size:10.5px;font-weight:800;color:var(--text-light)}
+.hz-ch.done{border-color:var(--green-d);background:color-mix(in srgb,var(--green) 14%,var(--card))}
+.hz-ch.reused{opacity:.75}
+.hz-ch.nostroke{cursor:default}
+.hz-ch.nostroke b{color:var(--text-light)}
+.py-sec{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:12px 14px;margin-bottom:12px}
+.py-sec h3{margin:0 0 2px;font-size:16px}
+.py-sec p{margin:0 0 10px;font-size:12.5px;color:var(--text-light);font-weight:700}
+.py-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:6px}
+.py-cell{display:flex;flex-direction:column;align-items:center;padding:8px 2px;border:2px solid var(--border);border-bottom-width:4px;border-radius:12px;background:var(--card);color:var(--text);font-family:inherit;cursor:pointer}
+.py-cell b{font-size:17px;font-weight:900}
+.py-cell i{font-style:normal;font-size:12px;font-weight:700;color:var(--text-light)}
+.py-tones{grid-template-columns:repeat(5,1fr)}
+.py-tones .py-cell b{font-size:20px}
 .review-btn{margin-top:8px;width:100%;background:var(--card);color:var(--text-light);border:2px solid var(--border);border-bottom-width:4px}
 .review-btn.due{background:#A560E8;border-color:#7E3FC2;color:#fff}
 /* daily streak, goal & quests */
@@ -709,7 +737,7 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
   <button class="sb-item" data-screen="vocab"><span class="em">📖</span>Vocab<span class="nav-arrow">›</span></button>
   <button class="sb-item" data-screen="known"><img src="assets/quests.svg" alt="">Memorized<span class="nav-arrow">›</span></button>
   <button class="sb-item" data-screen="quiz"><span class="em">✍️</span>Quiz<span class="nav-arrow">›</span></button>
-  <button class="sb-item" data-screen="radicals"><span class="em">🀄</span>Radicals<span class="nav-arrow">›</span></button>
+  <button class="sb-item" data-screen="radicals"><span class="em">字</span>Hanzi<span class="nav-arrow">›</span></button>
   <button class="sb-item" data-screen="progress"><img src="assets/leaderboard.svg" alt="">Progress<span class="nav-arrow">›</span></button>
   <div class="sb-foot"><button class="btn sm wide" id="themeBtnD" onclick="toggleTheme()">🌙 Dark Mode</button></div>
 </aside>
@@ -817,9 +845,18 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
 
 <!-- RADICALS -->
 <div class="screen" id="screenRadicals">
-  <input class="search-bar" id="radicalSearch" placeholder="🔍 Search radical / pinyin / meaning..." oninput="renderRadicals()">
-  <div id="radicalDetail" class="radical-detail"></div>
-  <div id="radicalGrid"></div>
+  <div class="hz-tabs" role="tablist" aria-label="Characters">
+    <button role="tab" data-hztab="chars" class="active" onclick="setHanziTab('chars')">Hanzi</button>
+    <button role="tab" data-hztab="pinyin" onclick="setHanziTab('pinyin')">Pinyin</button>
+    <button role="tab" data-hztab="radicals" onclick="setHanziTab('radicals')">Radicals</button>
+  </div>
+  <div id="hzPaneChars"></div>
+  <div id="hzPanePinyin" class="hidden"></div>
+  <div id="hzPaneRadicals" class="hidden">
+    <input class="search-bar" id="radicalSearch" placeholder="🔍 Search radical / pinyin / meaning..." oninput="renderRadicals()">
+    <div id="radicalDetail" class="radical-detail"></div>
+    <div id="radicalGrid"></div>
+  </div>
 </div>
 
 <!-- PROGRESS -->
@@ -958,7 +995,7 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
   <button data-screen="vocab"><span class="nav-icon">📖</span>Vocab</button>
   <button data-screen="known"><span class="nav-icon">✅</span>Memorized</button>
   <button data-screen="quiz"><span class="nav-icon">✍️</span>Quiz</button>
-  <button data-screen="radicals"><span class="nav-icon">🀄</span>Radicals</button>
+  <button data-screen="radicals"><span class="nav-icon">字</span>Hanzi</button>
   <button data-screen="progress"><span class="nav-icon">📊</span>Progress</button>
 </nav>
 
@@ -1172,7 +1209,7 @@ document.addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')
 
 function setupUI(){document.querySelectorAll('#levelSwitch button').forEach(b=>b.addEventListener('click',()=>switchLevel(b.dataset.lv)));document.querySelectorAll('#sideBar .sb-item,.bottom-nav button').forEach(b=>b.addEventListener('click',()=>switchScreen(b.dataset.screen)));document.querySelectorAll('#fcModeSelect button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#fcModeSelect button').forEach(x=>x.className='');b.className='active';S.mode=b.dataset.mode;applyMode();openSession('Practice • '+b.textContent.trim());}));document.getElementById('flashcard').addEventListener('click',function(e){if(e.target.closest('#playBtn')||e.target.closest('#fcSentences'))return;flipCard();});document.querySelectorAll('#knownFilter button').forEach(b=>b.addEventListener('click',()=>{S.kf=b.dataset.kf;document.querySelectorAll('#knownFilter button').forEach(x=>x.className=x===b?'active':'');renderKnown();saveState();}));document.querySelectorAll('#vocabFilter button').forEach(b=>b.addEventListener('click',()=>{S.vf=b.dataset.vf;document.querySelectorAll('#vocabFilter button').forEach(x=>x.className=x===b?'active':'');renderVocab();saveState();}));}
 
-function switchScreen(s){document.querySelectorAll('.screen').forEach(x=>x.className='screen');let tgt={learn:'screenLearn',vocab:'screenVocab',known:'screenKnown',quiz:'screenQuiz',radicals:'screenRadicals',progress:'screenProgress'}[s];let el=document.getElementById(tgt);if(el)el.className='screen active';document.querySelectorAll('.sb-item,.bottom-nav button').forEach(b=>b.className=(b.dataset.screen===s?(b.classList.contains('sb-item')?'sb-item active':'active'):(b.classList.contains('sb-item')?'sb-item':'')));if(s==='learn')renderLearnPath();if(s==='vocab')renderVocab();if(s==='radicals')renderRadicals();if(s==='known')renderKnown();if(s==='quiz')renderQuizPicker();if(s==='progress'){renderHub();renderStats();renderAch();refreshSaveInfo();let av=document.getElementById('appVersion');if(av)av.textContent='App version: '+APP_VERSION;}S.screen=s;saveState();}
+function switchScreen(s){document.querySelectorAll('.screen').forEach(x=>x.className='screen');let tgt={learn:'screenLearn',vocab:'screenVocab',known:'screenKnown',quiz:'screenQuiz',radicals:'screenRadicals',progress:'screenProgress'}[s];let el=document.getElementById(tgt);if(el)el.className='screen active';document.querySelectorAll('.sb-item,.bottom-nav button').forEach(b=>b.className=(b.dataset.screen===s?(b.classList.contains('sb-item')?'sb-item active':'active'):(b.classList.contains('sb-item')?'sb-item':'')));if(s==='learn')renderLearnPath();if(s==='vocab')renderVocab();if(s==='radicals'){renderRadicals();renderHanziTab();}if(s==='known')renderKnown();if(s==='quiz')renderQuizPicker();if(s==='progress'){renderHub();renderStats();renderAch();refreshSaveInfo();let av=document.getElementById('appVersion');if(av)av.textContent='App version: '+APP_VERSION;}S.screen=s;saveState();}
 function resetProgress(){if(window.confirm('Delete all progress for this level — XP, streak, quiz results, and memorized words? This cannot be undone.')){localStorage.removeItem(storeKey());S.prog={};S.streak=0;S.xp=0;S.quizzes=0;S.ach={};S.known=seedKnown();S.last=new Date().toDateString();S.streak=1;saveState();renderStats();renderAch();applyMode();renderLearnPath();renderVocab();toast('Reset!');refreshSaveInfo();}}
 function toast(m){let e=document.getElementById('toast');e.textContent=m;e.className='toast show';setTimeout(()=>e.className='toast',2200);}
 
@@ -1674,7 +1711,7 @@ function renderWriteQ(q){
     if(!quizWriter){document.getElementById('wrQuizInfo').textContent='No stroke data — answer in your head, then continue';return;}
     quizWriter.quiz({
       onMistake:function(){document.getElementById('wrQuizInfo').textContent='Try again…';},
-      onComplete:function(s){resolveQ(s.totalMistakes===0,'<b>'+exEsc(q.ch)+'</b> ('+exEsc(q.word.pinyin)+')');}
+      onComplete:function(s){markCharPractised(q.ch);resolveQ(s.totalMistakes===0,'<b>'+exEsc(q.ch)+'</b> ('+exEsc(q.word.pinyin)+')');}
     });
   });
   document.getElementById('wrHintBtn').onclick=function(){if(quizWriter)quizWriter.animateCharacter();};
@@ -1762,7 +1799,7 @@ function openWrite(topicOrChars,li){
     wrRenderChar();
   });
 }
-function closeWrite(){document.getElementById('writeView').classList.remove('open');document.body.style.overflow='';}
+function closeWrite(){document.getElementById('writeView').classList.remove('open');document.body.style.overflow='';let hs=document.getElementById('screenRadicals');if(hs&&hs.classList.contains('active'))renderHanziTab();}
 function wrRenderChar(){
   let ch=WV.chars[WV.i],v=WV.words[WV.i],d=HW[ch];
   let dots=WV.chars.map(function(c,i){return '<span class="wr-dot'+(i<WV.i?' on':i===WV.i?' cur':'')+'"></span>';}).join('');
@@ -1782,6 +1819,7 @@ function wrRenderChar(){
     if(!WV.w)return;let st=document.getElementById('wrVInfo');st.textContent='Your turn — follow the stroke order';
     WV.w.hideCharacter();
     WV.w.quiz({onComplete:function(s){
+      markCharPractised(ch);
       if(s.totalMistakes===0){st.textContent='Perfect! 🎉';sfx('correct.wav');}
       else{st.textContent='Done — '+s.totalMistakes+' strokes missed';bumpSkill(WV.words[WV.i]?WV.words[WV.i].id:ch,'write');saveState();}
       WV.w.showCharacter();
@@ -2212,6 +2250,71 @@ function startWeak(){
   let w=weakWords();
   if(!w.length){toast('No weak words yet 💪');return;}
   startSkillQuiz(null,w.slice(0,10));
+}
+// ===== HANZI SCREEN: characters per unit + pinyin chart (+ existing radicals tab) =====
+var HZ_TAB='chars';
+function setHanziTab(t){
+  HZ_TAB=t;
+  document.querySelectorAll('.hz-tabs button').forEach(function(b){b.className=b.dataset.hztab===t?'active':'';b.setAttribute('aria-selected',b.dataset.hztab===t);});
+  document.getElementById('hzPaneChars').className=t==='chars'?'':'hidden';
+  document.getElementById('hzPanePinyin').className=t==='pinyin'?'':'hidden';
+  document.getElementById('hzPaneRadicals').className=t==='radicals'?'':'hidden';
+  renderHanziTab();
+}
+function renderHanziTab(){if(HZ_TAB==='chars')renderCharUnits();else if(HZ_TAB==='pinyin')renderPinyinChart();else renderRadicals();}
+// Practised characters (writing finished) — shared by all levels.
+function charsPractised(){try{return JSON.parse(localStorage.getItem('khsk-chars')||'{}');}catch(e){return {};}}
+function markCharPractised(ch){let m=charsPractised();m[ch]=(m[ch]||0)+1;try{localStorage.setItem('khsk-chars',JSON.stringify(m));}catch(e){}}
+// For each unit (in path order): characters it introduces, and earlier characters its new words reuse.
+function unitCharacters(){
+  let seen={};
+  return UNITS.map(function(u){
+    let intro=[],reused=[];
+    u.lessons.forEach(function(ls){ls.forEach(function(i){
+      for(let c of vocab[i].hanzi){
+        if(!/[一-鿿]/.test(c))continue;
+        if(!seen[c]){seen[c]=u.key;intro.push(c);}
+        else if(seen[c]!==u.key&&reused.indexOf(c)<0)reused.push(c);
+      }
+    });});
+    return {key:u.key,name:u.name,intro:intro,reused:reused};
+  });
+}
+function charPinyin(c){let d=HANZI_DATA[c];if(d&&d[0])return d[0];let v=vocab.find(function(x){return x.hanzi===c;});return v?v.pinyin:'';}
+function renderCharUnits(){
+  let host=document.getElementById('hzPaneChars');if(!host)return;
+  loadHW().then(function(){
+    let units=unitCharacters(),done=charsPractised();
+    let total=units.reduce(function(a,u){return a+u.intro.length;},0);
+    let practised=units.reduce(function(a,u){return a+u.intro.filter(function(c){return done[c];}).length;},0);
+    let tile=function(c,reused){
+      let has=!!(HW&&HW[c]);
+      return '<button class="hz-ch'+(done[c]?' done':'')+(reused?' reused':'')+(has?'':' nostroke')+'" '+(has?'onclick="openWrite([\''+c+'\'])"':'onclick="speak(\''+c+'\')"')+' title="'+exEsc(charPinyin(c))+'"><b>'+c+'</b><i>'+exEsc(charPinyin(c))+'</i></button>';
+    };
+    let h='<div class="hz-sum">'+curLevel().label+' · '+total+' characters · '+practised+' practised</div>';
+    units.forEach(function(u,ui){
+      if(!u.intro.length&&!u.reused.length)return;
+      let writable=u.intro.filter(function(c){return HW&&HW[c];});
+      h+='<div class="hz-unit"><div class="hz-unit-h"><span class="em" style="font-size:22px">'+(UNIT_ICONS[u.key]||'📚')+'</span><div class="t"><div class="s">UNIT '+(ui+1)+'</div><div class="n">'+exEsc(u.name)+'</div></div>'+
+        (writable.length?'<button class="btn sec sm" onclick="openWrite(['+writable.map(function(c){return '\''+c+'\'';}).join(',')+'])">✍️ Practice</button>':'')+'</div>';
+      if(u.intro.length)h+='<div class="hz-sub">Introduced in this unit · '+u.intro.length+'</div><div class="hz-chars">'+u.intro.map(function(c){return tile(c,false);}).join('')+'</div>';
+      if(u.reused.length)h+='<div class="hz-sub">Used in new words</div><div class="hz-chars">'+u.reused.map(function(c){return tile(c,true);}).join('')+'</div>';
+      h+='</div>';
+    });
+    host.innerHTML=h;
+  });
+}
+const PY_TONES=[['mā','1st','妈'],['má','2nd','麻'],['mǎ','3rd','马'],['mà','4th','骂'],['ma','neutral','吗']];
+const PY_INITIALS=[['b','爸'],['p','跑'],['m','妈'],['f','飞'],['d','大'],['t','他'],['n','你'],['l','来'],['g','哥'],['k','看'],['h','好'],['j','家'],['q','去'],['x','下'],['zh','中'],['ch','吃'],['sh','是'],['r','人'],['z','在'],['c','菜'],['s','四']];
+const PY_FINALS=[['a','八'],['ai','爱'],['ao','好'],['an','安'],['ang','忙'],['e','饿'],['ei','黑'],['en','门'],['eng','冷'],['o','我'],['ou','走'],['ong','红'],['i','一'],['ia','家'],['ie','姐'],['iao','小'],['iu','六'],['ian','天'],['in','今'],['iang','想'],['ing','听'],['iong','熊'],['u','五'],['ua','花'],['uo','多'],['uai','快'],['ui','对'],['uan','晚'],['un','问'],['uang','黄'],['ü','绿'],['üe','学'],['üan','远'],['ün','云'],['er','二']];
+function renderPinyinChart(){
+  let host=document.getElementById('hzPanePinyin');if(!host||host.dataset.done)return;
+  let cell=function(top,sub,ch){return '<button class="py-cell" onclick="speak(\''+ch+'\')" title="Listen: '+ch+'"><b>'+top+'</b><i>'+sub+'</i></button>';};
+  host.innerHTML=
+    '<div class="py-sec"><h3>Tones</h3><p>Every syllable has one of five tones. Tap to listen.</p><div class="py-grid py-tones">'+PY_TONES.map(function(t){return cell(t[0],t[1]+' · '+t[2],t[2]);}).join('')+'</div></div>'+
+    '<div class="py-sec"><h3>Initials</h3><p>Sounds at the start of a syllable, with an example character.</p><div class="py-grid">'+PY_INITIALS.map(function(t){return cell(t[0],t[1],t[1]);}).join('')+'</div></div>'+
+    '<div class="py-sec"><h3>Finals</h3><p>Sounds at the end of a syllable, with an example character.</p><div class="py-grid">'+PY_FINALS.map(function(t){return cell(t[0],t[1],t[1]);}).join('')+'</div></div>';
+  host.dataset.done='1';
 }
 function renderReviewBtn(){
   let b=document.getElementById('reviewBtn');if(!b)return;

@@ -8,7 +8,7 @@
  * re-precached; normal `index.html` edits are picked up by the network-first
  * navigation handler.
  */
-const VERSION = 'v24';
+const VERSION = 'v25';
 const CACHE = `khsk2-${VERSION}`;
 
 const APP_SHELL = [
