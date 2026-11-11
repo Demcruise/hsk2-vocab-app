@@ -582,6 +582,26 @@ html[data-theme="dark"] .ex-chip.in-ans{color:var(--green)}
 /* Writing overlay (from card / tooltip / node) */
 #writeView{position:fixed;inset:0;background:var(--bg);z-index:620;display:none;flex-direction:column}
 #writeView.open{display:flex;animation:scrIn .15s var(--ease-out)}
+/* unit guidebook */
+#guideView{position:fixed;inset:0;background:var(--bg);z-index:620;display:none;flex-direction:column}
+#guideView.open{display:flex;animation:scrIn .15s var(--ease-out)}
+.gd-body{flex:1;overflow:auto;padding:16px;max-width:720px;width:100%;margin:0 auto;box-sizing:border-box}
+.gd-title{font-size:20px;font-weight:900;margin:2px 0 2px}
+.gd-sub{font-size:13px;font-weight:800;color:var(--text-light);margin-bottom:14px}
+.gd-h{font-size:13px;font-weight:900;letter-spacing:.8px;color:var(--text-light);margin:18px 0 8px}
+.gd-phrase{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)}
+.gd-phrase .gd-zh{font-size:19px;line-height:1.35}
+.gd-phrase .gd-py{font-size:13px;color:var(--blue);font-weight:700}
+.gd-phrase .gd-en{font-size:14px;color:var(--text-light);font-weight:700}
+.gd-play{flex-shrink:0;width:36px;height:36px;border-radius:50%;border:2px solid var(--border);background:var(--card);cursor:pointer;font-size:16px}
+.gd-tip{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:14px;margin-bottom:12px}
+.gd-tip h4{margin:0 0 6px;font-size:16px;font-weight:900}
+.gd-tip p{margin:0 0 10px;font-size:14px;line-height:1.5}
+.gd-pat{width:100%;border-collapse:collapse;margin-bottom:8px;font-size:14px}
+.gd-pat td{border:1px solid var(--border);padding:7px 9px}
+.gd-pat td:first-child{font-weight:800;white-space:nowrap}
+.gd-empty{padding:14px;border:2px dashed var(--border);border-radius:14px;color:var(--text-light);font-weight:700;font-size:14px}
+.ub-btns{display:flex;flex-direction:column;gap:6px;flex-shrink:0}
 .wr-view-top{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:2px solid var(--border)}
 .wr-view-body{flex:1;overflow:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;overscroll-behavior:contain}
 
@@ -2032,7 +2052,7 @@ renderLearnPath=function(){
   let host=document.getElementById('learnPath');if(!host)return;let h='',foundCur=false,g=0;
   UNITS.forEach(function(u,ui){
     let total=u.lessons.reduce(function(a,l){return a+l.length;},0);
-    h+='<div class="unit"><div class="unit-banner"><div class="ub-l"><div class="ub-sec">Section '+(ui+1)+' • '+total+' words</div><h2>'+u.name+'</h2></div><button class="ub-quiz" data-uq="'+u.key+'">📝 Quiz</button></div><div class="unit-path">';
+    h+='<div class="unit"><div class="unit-banner"><div class="ub-l"><div class="ub-sec">Section '+(ui+1)+' • '+total+' words</div><h2>'+u.name+'</h2></div><div class="ub-btns"><button class="ub-quiz" data-ug="'+u.key+'">📖 Guide</button><button class="ub-quiz" data-uq="'+u.key+'">📝 Quiz</button></div></div><div class="unit-path">';
     u.lessons.forEach(function(ls,li){
       let st=lessonState(ls);if(!st.done&&S.ld&&S.ld[ui+'_'+li])st.done=true;
       let off=NODE_WAVE[g%NODE_WAVE.length];g++;
@@ -2050,6 +2070,7 @@ renderLearnPath=function(){
   host.innerHTML=h;
   // binding: quiz unit
   host.querySelectorAll('[data-uq]').forEach(function(b){b.onclick=function(e){e.stopPropagation();switchScreen('quiz');startQuiz(b.dataset.uq);};});
+  host.querySelectorAll('[data-ug]').forEach(function(b){b.onclick=function(e){e.stopPropagation();openGuide(b.dataset.ug);};});
   // binding: cerita
   host.querySelectorAll('[data-st]').forEach(function(b){b.onclick=function(){openStory(b.dataset.st);};});
   // binding: node tap + long-press
@@ -2251,6 +2272,51 @@ function startWeak(){
   if(!w.length){toast('No weak words yet 💪');return;}
   startSkillQuiz(null,w.slice(0,10));
 }
+// ===== UNIT GUIDEBOOK: key phrases (from the unit's own sentences) + grammar notes =====
+var GRAMMAR=null;
+function loadGrammar(){
+  if(GRAMMAR)return Promise.resolve(GRAMMAR);
+  return fetch('assets/data/grammar.json').then(function(r){return r.json();}).then(function(j){GRAMMAR=j;return j;}).catch(function(){GRAMMAR={};return GRAMMAR;});
+}
+// Grammar notes exist for HSK 1 and HSK 2; the 2025 HSK 2 level shares the HSK 2 notes.
+function grammarKey(){return LEVEL==='hsk1'?'hsk1':(LEVEL==='hsk2'||LEVEL==='hsk2b')?'hsk2':null;}
+// Up to 5 short sentences, one per word, taken from the unit's words in path order.
+function keyPhrases(u,max){
+  let out=[],seen={};
+  u.lessons.forEach(function(ls){ls.forEach(function(i){
+    if(out.length>=(max||5))return;
+    let v=vocab[i];
+    let s=(v.sentences||[]).filter(function(x){let n=x[2].split(/\s+/).length;return n>=3&&n<=8&&x[0].length<=14&&x[0].indexOf(v.hanzi)>=0;})
+      .sort(function(a,b){return a[0].length-b[0].length;})[0];
+    if(s&&!seen[s[0]]){seen[s[0]]=1;out.push({word:v,s:s});}
+  });});
+  return out;
+}
+function openGuide(key){
+  let ui=UNITS.findIndex(function(x){return x.key===key;});if(ui<0)return;
+  let u=UNITS[ui];
+  loadGrammar().then(function(G){
+    let gk=grammarKey(),tips=(gk&&G[gk]&&G[gk][key])||[];
+    let h='<div class="gd-title">Unit '+(ui+1)+' · '+exEsc(u.name)+'</div><div class="gd-sub">'+curLevel().label+' guidebook — key phrases and grammar tips for this unit</div>';
+    h+='<div class="gd-h">KEY PHRASES</div>';
+    let kp=keyPhrases(u,5);
+    h+=kp.length?kp.map(function(p,k){return '<div class="gd-phrase"><button class="gd-play" data-gp="'+k+'" aria-label="Listen">🔊</button><div><div class="gd-zh">'+segSentence(p.s[0],p.word.hanzi)+'</div><div class="gd-py">'+exEsc(p.s[1])+'</div><div class="gd-en">'+exEsc(p.s[2])+'</div></div></div>';}).join('')
+      :'<div class="gd-empty">No example sentences for this unit yet.</div>';
+    h+='<div class="gd-h">GRAMMAR TIPS</div>';
+    h+=tips.length?tips.map(function(t){
+      return '<div class="gd-tip"><h4>'+exEsc(t.title)+'</h4><p>'+exEsc(t.explain)+'</p>'+
+        (t.pattern&&t.pattern.length?'<table class="gd-pat"><tbody>'+t.pattern.map(function(r){return '<tr><td>'+exEsc(r[0])+'</td><td>'+exEsc(r[1])+'</td></tr>';}).join('')+'</tbody></table>':'')+
+        (t.examples||[]).map(function(e){return '<div class="gd-phrase"><button class="gd-play" data-gs="'+exEsc(e[0])+'" aria-label="Listen">🔊</button><div><div class="gd-zh">'+exEsc(e[0])+'</div><div class="gd-py">'+exEsc(e[1])+'</div><div class="gd-en">'+exEsc(e[2])+'</div></div></div>';}).join('')+
+        '</div>';
+    }).join(''):'<div class="gd-empty">Grammar notes for '+exEsc(curLevel().label)+' are coming soon. The key phrases above already show the patterns in use.</div>';
+    let body=document.getElementById('gdBody');body.innerHTML=h;body.scrollTop=0;
+    body.querySelectorAll('[data-gp]').forEach(function(b){b.onclick=function(){speak(kp[+b.dataset.gp].s[0]);};});
+    body.querySelectorAll('[data-gs]').forEach(function(b){b.onclick=function(){speak(b.dataset.gs);};});
+    document.getElementById('guideView').classList.add('open');document.body.style.overflow='hidden';
+  });
+}
+function closeGuide(){document.getElementById('guideView').classList.remove('open');document.body.style.overflow='';}
+
 // ===== HANZI SCREEN: characters per unit + pinyin chart (+ existing radicals tab) =====
 var HZ_TAB='chars';
 function setHanziTab(t){
@@ -2340,6 +2406,8 @@ applyTheme(document.documentElement.dataset.theme==='dark'?'dark':'light');
 })();
 </script>
 <!-- Writing overlay -->
+<!-- Unit guidebook overlay -->
+<div id="guideView" role="dialog" aria-label="Unit guidebook"><div class="wr-view-top"><button class="icon-btn" onclick="closeGuide()" title="Close" aria-label="Close guidebook"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><b style="font-size:16px">📖 Guidebook</b></div><div class="gd-body" id="gdBody"></div></div>
 <div id="writeView"><div class="wr-view-top"><button class="icon-btn" onclick="closeWrite()" title="Close" aria-label="Close writing practice"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/></svg></button><div style="font-weight:800;color:var(--text)">Writing Practice</div></div><div class="wr-view-body" id="wrViewBody"></div></div>
 <!-- Speak overlay -->
 <div id="speakView" class="session" style="z-index:625"><div class="session-top"><button class="icon-btn" onclick="closeSpeak()" title="Close" aria-label="Close speaking practice"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/></svg></button><div class="session-meta">Speaking Practice</div></div><div class="session-scroll" style="text-align:center;padding-top:30px"><div id="sovWord"></div><div id="sovSent"></div><div style="margin-top:22px"><button class="lst-slow" id="sovModel">🔊 Hear example</button></div><div class="ex-speak"><button class="spk-mic" id="sovMic" aria-label="Start recording">🎤</button><div class="spk-status" id="sovStatus"></div><div class="spk-heard" id="sovHeard"></div><div class="spk-self hidden" id="sovSelf"></div><div class="spk-note" id="sovNote"></div></div></div></div>

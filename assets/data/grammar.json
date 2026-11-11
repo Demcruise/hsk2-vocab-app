@@ -1,0 +1,186 @@
+{
+  "_note": "Original grammar notes for the unit guidebooks. Keyed by level, then unit key (UNIT_DEFS in index.html). Each tip: title, explain, pattern [[form, meaning]], examples [[hanzi, pinyin, english]].",
+  "hsk1": {
+    "dasar": [
+      {"title": "Saying what something is with 是", "explain": "是 links two nouns, like \"am / is / are\". Put 不 in front of 是 to say \"is not\".",
+       "pattern": [["A 是 B", "A is B"], ["A 不是 B", "A is not B"]],
+       "examples": [["我是学生。", "Wǒ shì xuésheng.", "I am a student."], ["他不是老师。", "Tā bú shì lǎoshī.", "He is not a teacher."], ["这是我的书。", "Zhè shì wǒ de shū.", "This is my book."]]},
+      {"title": "Yes/no questions with 吗", "explain": "Add 吗 to the end of a statement to turn it into a yes/no question. The word order does not change.",
+       "pattern": [["Statement + 吗？", "yes/no question"]],
+       "examples": [["你是中国人吗？", "Nǐ shì Zhōngguó rén ma?", "Are you Chinese?"], ["你好吗？", "Nǐ hǎo ma?", "How are you?"], ["你喝茶吗？", "Nǐ hē chá ma?", "Do you drink tea?"]]}
+    ],
+    "waktu": [
+      {"title": "Numbers need a measure word", "explain": "Between a number (or 这/那) and a noun you need a measure word. 个 is the most common one.",
+       "pattern": [["number + 个 + noun", "e.g. 三个人"], ["这/那 + 个 + noun", "this / that ..."]],
+       "examples": [["我有两个朋友。", "Wǒ yǒu liǎng ge péngyou.", "I have two friends."], ["这个苹果很大。", "Zhège píngguǒ hěn dà.", "This apple is big."], ["三本书", "sān běn shū", "three books (本 for books)"]]},
+      {"title": "Big to small: dates and times", "explain": "Chinese puts time from the largest unit to the smallest: year → month → day → time. Time words come before the verb.",
+       "pattern": [["年 → 月 → 号 → 点", "year → month → day → o'clock"], ["Subject + time + verb", "time before the verb"]],
+       "examples": [["今天是五月三号。", "Jīntiān shì wǔ yuè sān hào.", "Today is May 3rd."], ["我八点上课。", "Wǒ bā diǎn shàngkè.", "I have class at eight."], ["他明天去北京。", "Tā míngtiān qù Běijīng.", "He's going to Beijing tomorrow."]]}
+    ],
+    "orang": [
+      {"title": "Possession with 的", "explain": "的 works like \"'s\": the owner comes first. With close family or people, 的 is often dropped (我妈妈).",
+       "pattern": [["owner + 的 + thing", "someone's thing"], ["我/你/他 + family", "的 often left out"]],
+       "examples": [["这是老师的书。", "Zhè shì lǎoshī de shū.", "This is the teacher's book."], ["我妈妈是医生。", "Wǒ māma shì yīshēng.", "My mum is a doctor."], ["那是谁的手机？", "Nà shì shéi de shǒujī?", "Whose phone is that?"]]},
+      {"title": "Plural people with 们", "explain": "们 after a pronoun or a word for people makes it plural. It is not used after numbers.",
+       "pattern": [["我们 / 你们 / 他们", "we / you all / they"], ["学生们", "the students"]],
+       "examples": [["我们是同学。", "Wǒmen shì tóngxué.", "We are classmates."], ["他们在家。", "Tāmen zài jiā.", "They are at home."], ["朋友们，你们好！", "Péngyoumen, nǐmen hǎo!", "Hello, friends!"]]}
+    ],
+    "tubuh": [
+      {"title": "Describing with 很 + adjective", "explain": "Adjectives work like verbs: do not use 是 before them. In plain statements 很 usually goes in front, even when it doesn't mean \"very\".",
+       "pattern": [["Subject + 很 + adjective", "describing"], ["Subject + 不 + adjective", "negative"]],
+       "examples": [["我很累。", "Wǒ hěn lèi.", "I'm tired."], ["他不高兴。", "Tā bù gāoxìng.", "He's not happy."], ["你身体好吗？", "Nǐ shēntǐ hǎo ma?", "Are you well?"]]}
+    ],
+    "makan": [
+      {"title": "Wanting: 想 and 要", "explain": "想 + verb = would like to (soft). 要 + noun/verb = want (more direct; common when ordering).",
+       "pattern": [["想 + verb", "would like to ..."], ["要 + noun", "want something"]],
+       "examples": [["我想吃米饭。", "Wǒ xiǎng chī mǐfàn.", "I'd like to eat rice."], ["我要一杯茶。", "Wǒ yào yì bēi chá.", "I want a cup of tea."], ["你想喝什么？", "Nǐ xiǎng hē shénme?", "What would you like to drink?"]]}
+    ],
+    "rumah": [
+      {"title": "Where something is: 在", "explain": "在 + place says where someone or something is. Put location words like 里, 上 after the place.",
+       "pattern": [["Thing + 在 + place", "X is at/in place"], ["place + 里 / 上", "inside / on top"]],
+       "examples": [["我在家。", "Wǒ zài jiā.", "I'm at home."], ["书在桌子上。", "Shū zài zhuōzi shang.", "The book is on the table."], ["猫在房间里。", "Māo zài fángjiān li.", "The cat is in the room."]]},
+      {"title": "There is: 有", "explain": "Place + 有 + thing means \"there is ... in/at the place\". The negative is always 没有, never 不有.",
+       "pattern": [["Place + 有 + thing", "there is"], ["Place + 没有 + thing", "there isn't"]],
+       "examples": [["桌子上有一本书。", "Zhuōzi shang yǒu yì běn shū.", "There's a book on the table."], ["家里没有人。", "Jiā li méiyǒu rén.", "There's nobody at home."], ["你有电脑吗？", "Nǐ yǒu diànnǎo ma?", "Do you have a computer?"]]}
+    ],
+    "sekolah": [
+      {"title": "Learned ability: 会", "explain": "会 + verb means \"can\" for skills you have learned (languages, swimming, cooking).",
+       "pattern": [["会 + verb", "can (learned skill)"], ["不会 + verb", "can't"]],
+       "examples": [["我会说汉语。", "Wǒ huì shuō Hànyǔ.", "I can speak Chinese."], ["他不会开车。", "Tā bú huì kāichē.", "He can't drive."], ["你会写汉字吗？", "Nǐ huì xiě Hànzì ma?", "Can you write Chinese characters?"]]}
+    ],
+    "jalan": [
+      {"title": "Going and coming: 去 / 来", "explain": "去 + place = go there (away from the speaker). 来 + place = come here (toward the speaker). Add a time before the verb.",
+       "pattern": [["去 + place", "go to"], ["来 + place", "come to"]],
+       "examples": [["我去学校。", "Wǒ qù xuéxiào.", "I'm going to school."], ["你来我家吧。", "Nǐ lái wǒ jiā ba.", "Come to my place."], ["明天他去医院。", "Míngtiān tā qù yīyuàn.", "He's going to the hospital tomorrow."]]},
+      {"title": "How to do something: 怎么", "explain": "怎么 + verb asks how to do something. 怎么去 is how to ask for directions or transport.",
+       "pattern": [["怎么 + verb？", "how do you ...?"]],
+       "examples": [["去火车站怎么走？", "Qù huǒchēzhàn zěnme zǒu?", "How do I get to the train station?"], ["这个字怎么读？", "Zhège zì zěnme dú?", "How do you read this character?"], ["你怎么来学校？", "Nǐ zěnme lái xuéxiào?", "How do you get to school?"]]}
+    ],
+    "belanja": [
+      {"title": "Asking amounts: 多少 and 几", "explain": "几 asks about small numbers (usually under 10) and needs a measure word. 多少 is for any number; 多少钱 asks the price.",
+       "pattern": [["几 + measure word + noun？", "how many (small)"], ["多少 (+ noun)？", "how many / how much"], ["多少钱？", "how much does it cost?"]],
+       "examples": [["你有几个孩子？", "Nǐ yǒu jǐ ge háizi?", "How many children do you have?"], ["这个多少钱？", "Zhège duōshao qián?", "How much is this?"], ["一共三十块。", "Yígòng sānshí kuài.", "Thirty yuan in total."]]}
+    ],
+    "hobi": [
+      {"title": "Likes: 喜欢 + verb/noun", "explain": "喜欢 can take a noun or a whole activity. 不喜欢 for dislikes.",
+       "pattern": [["喜欢 + noun", "like something"], ["喜欢 + verb phrase", "like doing"]],
+       "examples": [["我喜欢音乐。", "Wǒ xǐhuan yīnyuè.", "I like music."], ["她喜欢看电影。", "Tā xǐhuan kàn diànyǐng.", "She likes watching films."], ["你喜欢做什么？", "Nǐ xǐhuan zuò shénme?", "What do you like doing?"]]}
+    ],
+    "alam": [
+      {"title": "Too / so: 太 … 了", "explain": "太 + adjective + 了 gives a strong exclamation: \"so ...!\" or \"too ...\".",
+       "pattern": [["太 + adjective + 了", "too / so ..."], ["不太 + adjective", "not very"]],
+       "examples": [["今天太热了！", "Jīntiān tài rè le!", "It's so hot today!"], ["这个太贵了。", "Zhège tài guì le.", "This is too expensive."], ["天气不太好。", "Tiānqì bú tài hǎo.", "The weather isn't very good."]]},
+      {"title": "How is it? 怎么样", "explain": "怎么样 at the end asks for an opinion or how something is.",
+       "pattern": [["… 怎么样？", "how is ...?"]],
+       "examples": [["今天天气怎么样？", "Jīntiān tiānqì zěnmeyàng?", "How's the weather today?"], ["这个菜怎么样？", "Zhège cài zěnmeyàng?", "How is this dish?"], ["我们明天去，怎么样？", "Wǒmen míngtiān qù, zěnmeyàng?", "Let's go tomorrow, how about it?"]]}
+    ],
+    "sifat": [
+      {"title": "And you? Questions with 呢", "explain": "After saying something about yourself, ask the same question back with \"you + 呢\".",
+       "pattern": [["… ，你呢？", "and you?"]],
+       "examples": [["我很好，你呢？", "Wǒ hěn hǎo, nǐ ne?", "I'm fine, and you?"], ["我喝茶，你呢？", "Wǒ hē chá, nǐ ne?", "I'll have tea, what about you?"], ["我的书呢？", "Wǒ de shū ne?", "Where's my book?"]]}
+    ],
+    "umum": [
+      {"title": "Completed actions with 了", "explain": "了 after the verb shows the action happened. The negative uses 没 + verb, without 了.",
+       "pattern": [["verb + 了", "did (completed)"], ["没 + verb", "didn't"]],
+       "examples": [["我买了一本书。", "Wǒ mǎi le yì běn shū.", "I bought a book."], ["他来了。", "Tā lái le.", "He has come."], ["我没看见他。", "Wǒ méi kànjiàn tā.", "I didn't see him."]]}
+    ],
+    "fungsi": [
+      {"title": "Also and all: 也 / 都", "explain": "也 (also) and 都 (all/both) are adverbs: they go after the subject and before the verb — never at the start or the end. Together: 也都.",
+       "pattern": [["Subject + 也 + verb", "also"], ["Subject + 都 + verb", "all / both"]],
+       "examples": [["我也是学生。", "Wǒ yě shì xuésheng.", "I'm a student too."], ["我们都喜欢中国菜。", "Wǒmen dōu xǐhuan Zhōngguó cài.", "We all like Chinese food."], ["他们也都来了。", "Tāmen yě dōu lái le.", "They all came too."]]},
+      {"title": "Joining nouns with 和", "explain": "和 joins nouns or pronouns (\"and\"). It does not join two sentences.",
+       "pattern": [["noun + 和 + noun", "A and B"]],
+       "examples": [["我和你", "wǒ hé nǐ", "you and me"], ["我喜欢苹果和香蕉。", "Wǒ xǐhuan píngguǒ hé xiāngjiāo.", "I like apples and bananas."], ["爸爸和妈妈都在家。", "Bàba hé māma dōu zài jiā.", "Dad and Mum are both at home."]]}
+    ]
+  },
+  "hsk2": {
+    "dasar": [
+      {"title": "Suggestions with 吧", "explain": "吧 at the end softens a sentence into a suggestion (\"let's\", \"why don't you\") or asks for confirmation.",
+       "pattern": [["我们 + verb + 吧", "let's ..."], ["Statement + 吧？", "..., right?"]],
+       "examples": [["我们走吧。", "Wǒmen zǒu ba.", "Let's go."], ["你休息一下吧。", "Nǐ xiūxi yíxià ba.", "Why don't you take a rest."], ["你是新同学吧？", "Nǐ shì xīn tóngxué ba?", "You're the new classmate, right?"]]},
+      {"title": "Asking someone to do something: 请 / 让", "explain": "请 + verb is a polite request. 让 + person + verb means \"let / make someone do\".",
+       "pattern": [["请 + verb", "please ..."], ["让 + person + verb", "let / have someone ..."]],
+       "examples": [["请坐。", "Qǐng zuò.", "Please sit down."], ["妈妈让我早点儿睡觉。", "Māma ràng wǒ zǎo diǎnr shuìjiào.", "Mum makes me go to bed early."], ["让我看看。", "Ràng wǒ kànkan.", "Let me have a look."]]}
+    ],
+    "waktu": [
+      {"title": "Before / after / when: 以前、以后、的时候", "explain": "These time phrases go after the event and before the main clause.",
+       "pattern": [["event + 以前", "before ..."], ["event + 以后", "after ..."], ["event + 的时候", "when ..."]],
+       "examples": [["吃饭以前要洗手。", "Chīfàn yǐqián yào xǐ shǒu.", "Wash your hands before eating."], ["下课以后我去图书馆。", "Xiàkè yǐhòu wǒ qù túshūguǎn.", "After class I go to the library."], ["我小的时候住在北京。", "Wǒ xiǎo de shíhou zhù zài Běijīng.", "When I was little I lived in Beijing."]]},
+      {"title": "Already: 已经 … 了", "explain": "已经 goes before the verb and 了 at the end to say something has already happened or a state has been reached.",
+       "pattern": [["已经 + verb/adjective + 了", "already ..."]],
+       "examples": [["他已经走了。", "Tā yǐjīng zǒu le.", "He has already left."], ["我已经吃饭了。", "Wǒ yǐjīng chīfàn le.", "I've already eaten."], ["已经十点了。", "Yǐjīng shí diǎn le.", "It's already ten o'clock."]]}
+    ],
+    "orang": [
+      {"title": "Comparing with 比", "explain": "A 比 B + adjective = A is more ... than B. Do not add 很 or 非常; to say \"much more\", add 多了 after the adjective.",
+       "pattern": [["A 比 B + adjective", "A is more ... than B"], ["A 比 B + adjective + 多了", "much more"], ["A 没有 B + adjective", "A is not as ... as B"]],
+       "examples": [["哥哥比我高。", "Gēge bǐ wǒ gāo.", "My older brother is taller than me."], ["今天比昨天冷多了。", "Jīntiān bǐ zuótiān lěng duō le.", "Today is much colder than yesterday."], ["我没有他忙。", "Wǒ méiyǒu tā máng.", "I'm not as busy as him."]]}
+    ],
+    "tubuh": [
+      {"title": "A bit: 有点儿 vs 一点儿", "explain": "有点儿 goes before an adjective, usually for something unwelcome. 一点儿 goes after an adjective (comparison) or before a noun (a little of).",
+       "pattern": [["有点儿 + adjective", "a bit (negative feeling)"], ["adjective + 一点儿", "a bit more ..."], ["一点儿 + noun", "a little ..."]],
+       "examples": [["我有点儿不舒服。", "Wǒ yǒudiǎnr bù shūfu.", "I'm feeling a bit unwell."], ["请说慢一点儿。", "Qǐng shuō màn yìdiǎnr.", "Please speak a bit more slowly."], ["喝一点儿水吧。", "Hē yìdiǎnr shuǐ ba.", "Drink a little water."]]}
+    ],
+    "makan": [
+      {"title": "Have you ever? 过", "explain": "过 after a verb talks about experience: something has happened at some time in the past. Negative: 没 + verb + 过.",
+       "pattern": [["verb + 过", "have done (ever)"], ["没 + verb + 过", "have never done"]],
+       "examples": [["我吃过北京烤鸭。", "Wǒ chī guo Běijīng kǎoyā.", "I have eaten Peking duck."], ["你去过上海吗？", "Nǐ qù guo Shànghǎi ma?", "Have you ever been to Shanghai?"], ["我没喝过这种茶。", "Wǒ méi hē guo zhè zhǒng chá.", "I've never had this kind of tea."]]}
+    ],
+    "rumah": [
+      {"title": "Ongoing state: verb + 着", "explain": "着 after a verb describes a lasting state (a door is open, a picture is hanging), or how something is done.",
+       "pattern": [["verb + 着", "state that continues"], ["place + verb + 着 + thing", "there is ... (state)"]],
+       "examples": [["门开着。", "Mén kāi zhe.", "The door is open."], ["墙上挂着一张画。", "Qiáng shang guà zhe yì zhāng huà.", "A picture is hanging on the wall."], ["他笑着说你好。", "Tā xiào zhe shuō nǐ hǎo.", "He said hello with a smile."]]}
+    ],
+    "sekolah": [
+      {"title": "In progress: 正在 … 呢", "explain": "正在 (or 在) before the verb says an action is happening right now; 呢 at the end is optional and sounds natural in speech.",
+       "pattern": [["正在 + verb (+ 呢)", "is doing right now"]],
+       "examples": [["我正在上课呢。", "Wǒ zhèngzài shàngkè ne.", "I'm in class right now."], ["他在看书。", "Tā zài kàn shū.", "He is reading."], ["你们正在做什么？", "Nǐmen zhèngzài zuò shénme?", "What are you doing?"]]}
+    ],
+    "jalan": [
+      {"title": "Distance with 离", "explain": "A 离 B 远/近 says how far A is from B.",
+       "pattern": [["A 离 B + 远 / 近", "A is far from / close to B"], ["A 离 B + 有 + distance", "A is ... from B"]],
+       "examples": [["我家离学校很近。", "Wǒ jiā lí xuéxiào hěn jìn.", "My home is close to the school."], ["机场离这儿远吗？", "Jīchǎng lí zhèr yuǎn ma?", "Is the airport far from here?"], ["这儿离车站有两公里。", "Zhèr lí chēzhàn yǒu liǎng gōnglǐ.", "It's two kilometres from here to the station."]]},
+      {"title": "From … to …: 从 … 到 …", "explain": "从 and 到 mark a starting point and an end point, in place or time.",
+       "pattern": [["从 A 到 B", "from A to B"]],
+       "examples": [["从这儿到那儿要十分钟。", "Cóng zhèr dào nàr yào shí fēnzhōng.", "It takes ten minutes from here to there."], ["我从九点到五点上班。", "Wǒ cóng jiǔ diǎn dào wǔ diǎn shàngbān.", "I work from nine to five."], ["他从北京来。", "Tā cóng Běijīng lái.", "He comes from Beijing."]]}
+    ],
+    "belanja": [
+      {"title": "Or: 还是 vs 或者", "explain": "还是 is \"or\" in questions (choose one). 或者 is \"or\" in statements (either is fine).",
+       "pattern": [["A 还是 B？", "A or B? (question)"], ["A 或者 B", "A or B (statement)"]],
+       "examples": [["你要红的还是白的？", "Nǐ yào hóng de háishi bái de?", "Do you want the red one or the white one?"], ["我们坐公共汽车或者打车吧。", "Wǒmen zuò gōnggòng qìchē huòzhě dǎchē ba.", "Let's take the bus or a taxi."], ["你喝咖啡还是喝茶？", "Nǐ hē kāfēi háishi hē chá?", "Coffee or tea?"]]}
+    ],
+    "hobi": [
+      {"title": "How well: verb + 得 + description", "explain": "得 after a verb introduces how well or how something is done. If there is an object, repeat the verb or put the object first.",
+       "pattern": [["verb + 得 + (很) adjective", "does ... (well/fast...)"], ["(verb) object + verb + 得 + adjective", "with an object"]],
+       "examples": [["她唱得很好。", "Tā chàng de hěn hǎo.", "She sings well."], ["他跑得非常快。", "Tā pǎo de fēicháng kuài.", "He runs very fast."], ["你汉语说得真好！", "Nǐ Hànyǔ shuō de zhēn hǎo!", "You speak Chinese really well!"]]}
+    ],
+    "alam": [
+      {"title": "About to happen: 要 … 了", "explain": "要 (or 快要) + verb + 了 says something is about to happen soon.",
+       "pattern": [["(快)要 + verb + 了", "about to ..."]],
+       "examples": [["要下雨了。", "Yào xià yǔ le.", "It's about to rain."], ["火车快要开了。", "Huǒchē kuài yào kāi le.", "The train is about to leave."], ["春天要来了。", "Chūntiān yào lái le.", "Spring is coming."]]},
+      {"title": "More and more: 越来越", "explain": "越来越 + adjective shows a gradual change.",
+       "pattern": [["越来越 + adjective", "more and more ..."]],
+       "examples": [["天气越来越冷了。", "Tiānqì yuè lái yuè lěng le.", "The weather is getting colder and colder."], ["他的汉语越来越好。", "Tā de Hànyǔ yuè lái yuè hǎo.", "His Chinese keeps getting better."], ["人越来越多了。", "Rén yuè lái yuè duō le.", "There are more and more people."]]}
+    ],
+    "sifat": [
+      {"title": "Both … and …: 又 … 又 …", "explain": "又 A 又 B links two qualities of the same thing (both positive or both negative).",
+       "pattern": [["又 + adjective + 又 + adjective", "both ... and ..."]],
+       "examples": [["这个苹果又大又甜。", "Zhège píngguǒ yòu dà yòu tián.", "This apple is big and sweet."], ["她又聪明又漂亮。", "Tā yòu cōngming yòu piàoliang.", "She is clever and pretty."], ["今天又冷又下雨。", "Jīntiān yòu lěng yòu xià yǔ.", "Today it's cold and raining."]]},
+      {"title": "The most: 最", "explain": "最 + adjective/verb means \"the most\".",
+       "pattern": [["最 + adjective", "the most ..."], ["最 + 喜欢 + …", "like ... best"]],
+       "examples": [["他是我们班最高的。", "Tā shì wǒmen bān zuì gāo de.", "He is the tallest in our class."], ["我最喜欢夏天。", "Wǒ zuì xǐhuan xiàtiān.", "I like summer best."], ["这是最好的办法。", "Zhè shì zuì hǎo de bànfǎ.", "This is the best way."]]}
+    ],
+    "umum": [
+      {"title": "Just a little: 看看 / verb + 一下", "explain": "Repeating a one-syllable verb (看看) or adding 一下 makes the action short and casual, and softens requests.",
+       "pattern": [["verb + verb", "do a little"], ["verb + 一下", "do briefly"]],
+       "examples": [["我看看。", "Wǒ kànkan.", "Let me take a look."], ["请等一下。", "Qǐng děng yíxià.", "Please wait a moment."], ["你试试这件衣服。", "Nǐ shìshi zhè jiàn yīfu.", "Try this on."]]}
+    ],
+    "fungsi": [
+      {"title": "Because … so …: 因为 … 所以 …", "explain": "Chinese often uses both halves of the pair. The reason comes first.",
+       "pattern": [["因为 reason，所以 result", "because ..., so ..."]],
+       "examples": [["因为下雨，所以我没去。", "Yīnwèi xià yǔ, suǒyǐ wǒ méi qù.", "Because it rained, I didn't go."], ["因为他病了，所以没来上课。", "Yīnwèi tā bìng le, suǒyǐ méi lái shàngkè.", "He was ill, so he didn't come to class."], ["因为很累，所以我早睡了。", "Yīnwèi hěn lèi, suǒyǐ wǒ zǎo shuì le.", "I was tired, so I went to bed early."]]},
+      {"title": "Although … but …: 虽然 … 但是 …", "explain": "虽然 opens the concession and 但是 (or 可是) gives the contrast. Both halves are normally used.",
+       "pattern": [["虽然 …，但是 …", "although ..., ..."]],
+       "examples": [["虽然很贵，但是很好吃。", "Suīrán hěn guì, dànshì hěn hǎochī.", "Although it's expensive, it's delicious."], ["虽然他很忙，但是每天都运动。", "Suīrán tā hěn máng, dànshì měitiān dōu yùndòng.", "Although he's busy, he exercises every day."], ["虽然下雪了，可是不冷。", "Suīrán xià xuě le, kěshì bù lěng.", "It's snowing, but it isn't cold."]]}
+    ]
+  }
+}
