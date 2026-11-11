@@ -409,6 +409,22 @@ html[data-theme="dark"] .hz.open{background:#4A3F14;color:#FFD966;box-shadow:0 0
 .ex-badge.nw{color:#A568CC}
 .ex-badge.hard{color:var(--red)}
 .ex-badge .eb-ic{font-size:13px}
+.ex-badge.again{color:#E08A00}
+/* new exercise types: fill / match / zh */
+.ex-blank{display:inline-block;min-width:2.6em;border-bottom:3px solid var(--text-light);margin:0 2px;color:var(--blue);text-align:center}
+.ex-mc-opt .mc-key{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border:2px solid var(--border);border-radius:6px;font-size:12px;margin-right:10px;color:var(--text-light)}
+.ex-match{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:520px;margin:6px auto 0}
+.ex-match-col{display:flex;flex-direction:column;gap:10px}
+.ex-match-btn{min-height:52px;padding:10px 12px;border:2px solid var(--border);border-bottom-width:4px;border-radius:12px;background:var(--card);color:var(--text);font-family:inherit;font-size:15px;font-weight:800;cursor:pointer;line-height:1.25}
+.ex-match-btn.hz{font-size:22px;font-weight:700}
+.ex-match-btn.sel{border-color:var(--blue);background:color-mix(in srgb,var(--blue) 12%,var(--card))}
+.ex-match-btn.done{opacity:.35;cursor:default;border-bottom-width:2px}
+.ex-match-btn.miss{border-color:var(--red);animation:mShake .3s}
+@keyframes mShake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.ex-zh-en{font-size:19px;font-weight:800;line-height:1.4}
+.ex-zh-input{width:100%;min-height:96px;padding:12px;border:2px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);font-size:20px;font-family:inherit;resize:vertical;box-sizing:border-box}
+.ex-zh-toggle{margin:10px auto 0;display:block;background:none;border:none;color:var(--blue);font-weight:900;font-size:13px;letter-spacing:.6px;cursor:pointer;font-family:inherit}
+.qb-meaning{display:block;font-size:13.5px;font-weight:700;margin-top:3px;opacity:.9}
 .ex-prompt{font-size:21px;font-weight:900;margin:2px 0 14px;color:var(--text)}
 .ex-bubble-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:18px}
 .ex-mascot{width:88px;height:88px;flex-shrink:0;object-fit:contain}
@@ -1065,6 +1081,7 @@ function renderExAnswer(){
 function renderExBank(){
   let q=S.qList[S.qIdx],box=document.getElementById('exBank');let h='';
   q.bank.forEach(function(t,i){let used=q.sel.includes(i);h+='<button class="ex-chip'+(used?' used':'')+'" '+(used?'disabled':'')+' onclick="tapBank('+i+')">'+exEsc(t)+'</button>';});
+  if(q.type==='zh')h+='<button class="ex-zh-toggle" onclick="toggleZhInput()">USE KEYBOARD</button>';
   box.innerHTML=h;
 }
 function tapBank(i){if(S.qDone)return;let q=S.qList[S.qIdx];q.sel.push(i);renderExAnswer();renderExBank();}
@@ -1207,7 +1224,10 @@ document.addEventListener('keydown',function(e){
   }
   if(S.screen!=='quiz'||document.getElementById('quizArea').className==='hidden')return;
   let band=document.getElementById('quizBand');
-  if(e.key==='Enter'){if(band.classList.contains('show'))nextQuizQ();else checkAns();}
+  let cq=S.qList[S.qIdx];
+  if(cq&&cq.type==='fill'&&!S.qDone&&/^[1-3]$/.test(e.key)){pickMC(+e.key-1);return;}
+  if(e.target&&e.target.id==='zhInput'&&e.key==='Enter'&&e.shiftKey)return;
+  if(e.key==='Enter'){if(e.target&&e.target.id==='zhInput')e.preventDefault();if(band.classList.contains('show'))nextQuizQ();else checkAns();}
 });
 
 // rail
@@ -1303,7 +1323,7 @@ function bumpSkill(id,skill){let p=S.prog[id+''];if(!p){p=S.prog[id+'']={l:0,c:0
 // ===== QUIZ: types + picker =====
 // Progressive mix: recognition (hanzi→pinyin, pinyin→hanzi, hanzi→meaning)
 // first, then sentence translation, then production (listen/speak/write).
-const Q_MIX=['hz2py','py2hz','hz2mn','bank','listen','hz2py','hz2mn','bank','speak','write'];
+const Q_MIX=['hz2py','py2hz','hz2mn','bank','listen','fill','match','zh','speak','write'];
 const MC_PROMPT={hz2py:'Choose the correct pinyin',py2hz:'Choose the correct hanzi',hz2mn:'What does this word mean?'};
 const MC_FIELD={hz2py:'pinyin',py2hz:'hanzi',hz2mn:'meaning'};
 function buildMC(v,t){
@@ -1320,6 +1340,9 @@ function buildQTyped(v,i,ft){
   let t=ft||Q_MIX[i%Q_MIX.length];
   if(t==='write'&&!writeCharFor(v))t='bank';
   if(MC_FIELD[t])return buildMC(v,t);
+  if(t==='fill')return buildFill(v)||buildMC(v,'hz2mn');
+  if(t==='match')return buildMatch(v)||buildMC(v,'hz2py');
+  if(t==='zh')return buildZh(v)||buildQTyped(v,0,'bank');
   let q=buildQ(v);q.type=t;
   if(t==='write')q.ch=writeCharFor(v);
   return q;
@@ -1331,6 +1354,7 @@ function startQuiz(topic,pool,forceType){
   if(!src.length){toast('No words for this practice yet');return;}
   let n=Math.min(10,src.length),sh=src.slice().sort(function(){return Math.random()-.5;}).slice(0,n);
   S.qList=sh.map(function(v,i){return buildQTyped(v,i,forceType);});
+  S.qBase=S.qList.length;
   S.qIdx=0;S.qRight=0;S.qWrong=0;S.wrongIds=[];S.qDone=false;S.qHearts=5;S.qRow=0;
   document.getElementById('quizPicker').className='hidden';
   document.getElementById('quizComplete').className='hidden';document.getElementById('reviewSection').className='hidden';
@@ -1373,17 +1397,24 @@ function resolveQ(ok,ansHtml){
     S.prog[id].c++;S.prog[id].l=Math.min(3,(S.prog[id].l||0)+.5);S.prog[id].t=new Date().toISOString();
     if(S.prog[id].l>=3&&!S.known[id]){S.known[id]=1;renderKnown();renderVocab();}
     band.className='quiz-band show good';ic.textContent='\u2713';
-    r.innerHTML='<b>'+(['Nice!','Awesome!','Great job!','Perfect!'][Math.floor(Math.random()*4)])+'</b> +10 XP';
+    r.innerHTML='<b>'+(['Nice!','Awesome!','Great job!','Perfect!'][Math.floor(Math.random()*4)])+'</b> +10 XP'+meaningLine(q);
     if(q.firstTry)perfectOverlay();
   }else{
     S.qWrong++;S.wrongIds.push(q.id);S.qRow=0;S.qHearts=Math.max(0,S.qHearts-1);renderHearts();sfx('incorrect.wav');
     S.prog[id].w++;
     let sk=SKILL_MISS[q.type];if(sk)S.prog[id][sk]=(S.prog[id][sk]||0)+1;
     band.className='quiz-band show bad';ic.textContent='\u2717';
-    r.innerHTML='Correct answer: '+(ansHtml||('<b>'+exEsc(q.ans.join(' '))+'</b>'));
-    if(S.qIdx+1<S.qList.length)S.qList.push(Object.assign({},q,{sel:[],firstTry:false}));
+    r.innerHTML='Correct answer: '+(ansHtml||('<b>'+exEsc(q.ans.join(q.type==='zh'?'':' '))+'</b>'))+meaningLine(q);
+    // Missed exercises come back at the end, flagged as PREVIOUS MISTAKE (fresh state).
+    if(S.qIdx+1<S.qList.length)S.qList.push(Object.assign({},q,{sel:[],firstTry:false,again:true,selMc:-1,matched:[],miss:0,pick:null,typed:false,input:''}));
   }
   saveState();
+}
+// "Meaning:" line under the result for exercises whose prompt isn't already English.
+function meaningLine(q){
+  if(q.type==='listen'||q.type==='fill')return '<span class="qb-meaning">Meaning: '+exEsc(q.sent[2])+'</span>';
+  if(q.type==='zh')return '<span class="qb-meaning">'+exEsc(q.sent[1])+'</span>';
+  return '';
 }
 
 // dispatcher soal
@@ -1391,16 +1422,21 @@ function showQ(){
   if(S.qIdx>=S.qList.length||S.qHearts<=0){finishQ();return;}
   S.qDone=false;let q=S.qList[S.qIdx];q.sel=q.sel||[];
   let bf=document.getElementById('quizBarFill'),bar=document.getElementById('quizBar'),rl=document.getElementById('rowLabel');
-  if(bf)bf.style.width=(S.qIdx/S.qList.length*100)+'%';
+  // Progress only moves on correct answers (a miss is re-queued, not skipped).
+  if(bf)bf.style.width=(Math.min(1,S.qRight/(S.qBase||S.qList.length))*100)+'%';
   let streak=S.qRow>=3;if(bar)bar.className='quiz-bar'+(streak?' streak':'');if(rl)rl.textContent=streak?S.qRow+' IN A ROW':'';
   let badge=document.getElementById('exBadge'),p=S.prog[q.id+''];
-  if(!p||(p.l===0&&p.c===0)){badge.className='ex-badge nw';badge.innerHTML='<span class="eb-ic">✦</span> NEW WORD';}
+  if(q.again){badge.className='ex-badge again';badge.innerHTML='<span class="eb-ic">↻</span> PREVIOUS MISTAKE';}
+  else if(!p||(p.l===0&&p.c===0)){badge.className='ex-badge nw';badge.innerHTML='<span class="eb-ic">✦</span> NEW WORD';}
   else if(p.w>0){badge.className='ex-badge hard';badge.innerHTML='<span class="eb-ic">⚑</span> HARD EXERCISE';}
   else{badge.className='ex-badge';badge.innerHTML='';}
   document.getElementById('quizBand').className='quiz-band';
   if(q.type==='speak'){renderSpeakQ(q);document.getElementById('exFoot').className='ex-foot hidden';}
   else if(q.type==='write'){renderWriteQ(q);document.getElementById('exFoot').className='ex-foot hidden';}
   else if(MC_FIELD[q.type]){renderMCQ(q);document.getElementById('exFoot').className='ex-foot';document.getElementById('checkBtn').disabled=true;}
+  else if(q.type==='fill'){renderFillQ(q);document.getElementById('exFoot').className='ex-foot';document.getElementById('checkBtn').disabled=true;}
+  else if(q.type==='match'){renderMatchQ(q);document.getElementById('exFoot').className='ex-foot hidden';}
+  else if(q.type==='zh'){renderZhQ(q);document.getElementById('exFoot').className='ex-foot';document.getElementById('checkBtn').disabled=true;}
   else{renderBankQ(q);document.getElementById('exFoot').className='ex-foot';document.getElementById('checkBtn').disabled=true;}
 }
 
@@ -1459,6 +1495,123 @@ function renderMCQ(q){
 }
 function pickMC(i){if(S.qDone)return;let q=S.qList[S.qIdx];q.selMc=i;document.querySelectorAll('#exBank .ex-mc-opt').forEach(function(b,j){b.className='ex-mc-opt'+(j===i?' sel':'');});document.getElementById('checkBtn').disabled=false;}
 
+// ===== NEW EXERCISE TYPES: fill / match / zh =====
+// Split a Chinese sentence into vocabulary words (longest match) + single characters, no punctuation.
+function segWords(sent){
+  let words=vocab.map(function(v){return v.hanzi;}).filter(function(w){return w.length>1;}).sort(function(a,b){return b.length-a.length;});
+  let out=[],i=0;
+  while(i<sent.length){
+    let ch=sent[i];
+    if(!/[一-鿿0-9A-Za-z]/.test(ch)){i++;continue;}
+    let m=null;for(let w of words){if(sent.startsWith(w,i)){m=w;break;}}
+    if(m){out.push(m);i+=m.length;}else{out.push(ch);i++;}
+  }
+  return out;
+}
+function randomOther(v,ok){
+  for(let t=0;t<200;t++){let w=vocab[Math.floor(Math.random()*vocab.length)];if(w.id!==v.id&&(!ok||ok(w)))return w;}
+  return null;
+}
+// Fill in the blank: the sentence with the target word removed, 3 options.
+function buildFill(v){
+  let s=(v.sentences||[]).find(function(x){return x[0].indexOf(v.hanzi)>=0&&x[0].length<=24;});
+  if(!s)return null;
+  let opts=[v.hanzi],tries=0;
+  while(opts.length<3&&tries<200){tries++;
+    let w=randomOther(v,function(w){return Math.abs(w.hanzi.length-v.hanzi.length)<=1&&s[0].indexOf(w.hanzi)<0;});
+    if(w&&opts.indexOf(w.hanzi)<0)opts.push(w.hanzi);}
+  if(opts.length<3)return null;
+  opts.sort(function(){return Math.random()-.5;});
+  return {id:v.id,word:v,sent:s,type:'fill',opts:opts,ansIdx:opts.indexOf(v.hanzi),selMc:-1,sel:[],firstTry:true};
+}
+function renderFillQ(q){
+  document.getElementById('exPrompt').textContent='Fill in the blank';
+  document.getElementById('exBubbleRow').style.display='';
+  document.getElementById('exAnswer').className='hidden';
+  document.getElementById('exSpeak').className='hidden';
+  document.getElementById('exWriteZone').className='hidden';
+  let i=q.sent[0].indexOf(q.word.hanzi);
+  document.getElementById('exSent').innerHTML=exEsc(q.sent[0].slice(0,i))+'<span class="ex-blank">＿＿</span>'+exEsc(q.sent[0].slice(i+q.word.hanzi.length));
+  document.getElementById('exPy').textContent='';
+  document.getElementById('exTts').onclick=function(){speak(q.sent[0]);};
+  let box=document.getElementById('exBank');box.className='ex-mc';
+  box.innerHTML=q.opts.map(function(o,k){return '<button class="ex-mc-opt'+(q.selMc===k?' sel':'')+'" onclick="pickMC('+k+')"><span class="mc-key">'+(k+1)+'</span>'+exEsc(o)+'</button>';}).join('');
+}
+// Match pairs: 5 meanings ↔ 5 hanzi; graded once when every pair is matched.
+function shortMeaning(m){return (m||'').split(/[;；,，(（•·\/]/)[0].replace(/^(to |a |an |the )/i,'').trim().slice(0,28);}
+function buildMatch(v){
+  let words=[v],seenM={},seenH={};seenM[shortMeaning(v.meaning)]=1;seenH[v.hanzi]=1;
+  for(let t=0;t<300&&words.length<5;t++){
+    let w=randomOther(v);if(!w)break;let m=shortMeaning(w.meaning);
+    if(!m||seenM[m]||seenH[w.hanzi])continue;seenM[m]=1;seenH[w.hanzi]=1;words.push(w);}
+  if(words.length<5)return null;
+  let sh=function(a){return a.slice().sort(function(){return Math.random()-.5;});};
+  return {id:v.id,word:v,sent:(v.sentences&&v.sentences[0])||[v.hanzi,v.pinyin,v.meaning],type:'match',pairs:words,
+    left:sh(words.map(function(w){return w.id;})),right:sh(words.map(function(w){return w.id;})),matched:[],miss:0,pick:null,sel:[],firstTry:true};
+}
+function renderMatchQ(q){
+  document.getElementById('exPrompt').textContent='Select the matching pairs';
+  document.getElementById('exBubbleRow').style.display='none';
+  document.getElementById('exAnswer').className='hidden';
+  document.getElementById('exSpeak').className='hidden';
+  document.getElementById('exWriteZone').className='hidden';
+  let byId={};q.pairs.forEach(function(w){byId[w.id]=w;});
+  let btn=function(side,id,label,cls){
+    let done=q.matched.indexOf(id)>=0,sel=q.pick&&q.pick.side===side&&q.pick.id===id;
+    return '<button class="ex-match-btn'+cls+(done?' done':'')+(sel?' sel':'')+'" '+(done?'disabled':'')+' data-side="'+side+'" data-id="'+id+'" onclick="pickMatch(\''+side+'\','+id+')">'+exEsc(label)+'</button>';
+  };
+  let box=document.getElementById('exBank');box.className='ex-match';
+  box.innerHTML='<div class="ex-match-col">'+q.left.map(function(id){return btn('L',id,shortMeaning(byId[id].meaning),'');}).join('')+'</div>'+
+    '<div class="ex-match-col">'+q.right.map(function(id){return btn('R',id,byId[id].hanzi,' hz');}).join('')+'</div>';
+}
+function pickMatch(side,id){
+  if(S.qDone)return;let q=S.qList[S.qIdx];
+  if(q.matched.indexOf(id)>=0)return;
+  if(side==='R'){let w=q.pairs.find(function(x){return x.id===id;});if(w)speak(w.hanzi);}
+  if(!q.pick||q.pick.side===side){q.pick={side:side,id:id};renderMatchQ(q);return;}
+  if(q.pick.id===id){q.matched.push(id);q.pick=null;renderMatchQ(q);
+    if(q.matched.length===q.pairs.length)resolveQ(q.miss===0,q.pairs.map(function(w){return '<b>'+exEsc(w.hanzi)+'</b> '+exEsc(shortMeaning(w.meaning));}).join(' · '));
+    return;}
+  q.miss++;let a=q.pick;q.pick=null;renderMatchQ(q);
+  document.querySelectorAll('#exBank .ex-match-btn').forEach(function(b){
+    if((b.dataset.side===a.side&&+b.dataset.id===a.id)||(b.dataset.side===side&&+b.dataset.id===id))b.classList.add('miss');});
+}
+// English → Chinese: word chips (default) or typing.
+function buildZh(v){
+  // First sentence (in random order) that splits into a manageable number of chips.
+  let cands=(v.sentences||[]).slice().sort(function(){return Math.random()-.5;});
+  let s=null,ans=null;
+  for(let c of cands){let a=segWords(c[0]);if(a.length>=2&&a.length<=14){s=c;ans=a;break;}}
+  if(!s)return null;
+  let pool=[],tries=0;
+  while(pool.length<3&&tries<80){tries++;
+    let w=randomOther(v);if(!w)break;let tk=segWords(pickSent(w)[0]);let t=tk[Math.floor(Math.random()*tk.length)];
+    if(t&&ans.indexOf(t)<0&&pool.indexOf(t)<0)pool.push(t);}
+  return {id:v.id,word:v,sent:s,type:'zh',ans:ans,bank:ans.concat(pool).sort(function(){return Math.random()-.5;}),sel:[],typed:false,input:'',firstTry:true};
+}
+function renderZhQ(q){
+  document.getElementById('exPrompt').textContent='Write this in Chinese';
+  document.getElementById('exBubbleRow').style.display='';
+  document.getElementById('exSpeak').className='hidden';
+  document.getElementById('exWriteZone').className='hidden';
+  document.getElementById('exSent').innerHTML='<span class="ex-zh-en">'+exEsc(q.sent[2])+'</span>';
+  document.getElementById('exPy').textContent='';
+  document.getElementById('exTts').onclick=function(){};
+  let ansBox=document.getElementById('exAnswer'),bank=document.getElementById('exBank');
+  if(q.typed){
+    ansBox.className='ex-answer';
+    ansBox.innerHTML='<textarea class="ex-zh-input" id="zhInput" placeholder="Type in Chinese" lang="zh-CN">'+exEsc(q.input||'')+'</textarea>';
+    bank.className='';bank.innerHTML='<button class="ex-zh-toggle" onclick="toggleZhInput()">USE WORD BANK</button>';
+    let inp=document.getElementById('zhInput');
+    inp.oninput=function(){q.input=inp.value;document.getElementById('checkBtn').disabled=!inp.value.trim();};
+    document.getElementById('checkBtn').disabled=!(q.input||'').trim();
+  }else{
+    ansBox.className='ex-answer';bank.className='ex-bank';
+    renderExAnswer();renderExBank();
+  }
+}
+function toggleZhInput(){if(S.qDone)return;let q=S.qList[S.qIdx];q.typed=!q.typed;q.sel=[];q.input='';renderZhQ(q);}
+
 let quizWriter=null;
 function renderWriteQ(q){
   document.getElementById('exPrompt').textContent='Write this character';
@@ -1485,8 +1638,17 @@ function renderWriteQ(q){
 
 function checkAns(){
   if(S.qDone)return;let q=S.qList[S.qIdx];
-  if(MC_FIELD[q.type]){
+  if(q.type==='zh'){
+    let zhN=function(s){return (s||'').replace(/[\s.,!?;:'"“”‘’。，、！？；：…（）()-]/g,'');};
+    let mine=q.typed?q.input:q.sel.map(function(i){return q.bank[i];}).join('');
+    if(!zhN(mine))return;
+    // Compare characters, not chip boundaries: 他们在 + 玩 equals 他们 + 在玩.
+    resolveQ(zhN(mine)===zhN(q.sent[0]),'<b>'+exEsc(q.sent[0])+'</b>');
+    return;
+  }
+  if(MC_FIELD[q.type]||q.type==='fill'){
     if(q.selMc<0)return;
+    if(q.type==='fill'){let fs=document.getElementById('exSent');if(fs)fs.innerHTML=segSentence(q.sent[0],q.word.hanzi);}
     let ok=q.selMc===q.ansIdx;
     document.querySelectorAll('#exBank .ex-mc-opt').forEach(function(b,j){
       b.disabled=true;
