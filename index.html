@@ -595,6 +595,60 @@ html[data-theme="dark"] .ex-chip.in-ans{color:var(--green)}
 .bdg-bar b{display:block;height:100%;border-radius:4px;background:var(--gold,#FFC800)}
 .bdg-t{font-size:11px;color:var(--text-light);overflow-wrap:anywhere}
 #badgeView{z-index:900}
+/* statistics: one green sequential ramp (light->dark in light mode, dark->bright in dark mode) */
+:root{--hm0:#EBEBEB;--hm1:#C6EFA0;--hm2:#8EDB4A;--hm3:#58CC02;--hm4:#3D8A01;--grid:#EBEBEB}
+html[data-theme="dark"]{--hm0:#22333B;--hm1:#24461A;--hm2:#3D7A12;--hm3:#58CC02;--hm4:#8EE04A;--grid:#2A3A42}
+.sx-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:14px}
+@media(min-width:560px){.sx-tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.sx-tile{border:2px solid var(--border);border-radius:12px;padding:8px 10px;min-width:0}
+.sx-tile .l{font-size:11px;font-weight:700;color:var(--text-light)}
+.sx-tile .v{font-size:20px;font-weight:900;color:var(--text)}
+.sx-sec{margin:16px 0 6px;font-size:13px;font-weight:900;color:var(--text)}
+.sx-sub{font-size:11px;color:var(--text-light);margin:-4px 0 8px}
+.sx-plot{position:relative;height:120px;margin-left:28px;border-bottom:1px solid var(--border-d)}
+.sx-grid{position:absolute;left:0;right:0;border-top:1px solid var(--grid);pointer-events:none}
+.sx-grid span{position:absolute;right:100%;margin-right:4px;top:-7px;font-size:10px;color:var(--text-light);font-variant-numeric:tabular-nums}
+.sx-goal{position:absolute;left:0;right:0;border-top:1px solid var(--text-light);pointer-events:none;opacity:.6}
+.sx-goal span{position:absolute;right:0;top:-15px;font-size:10px;font-weight:800;color:var(--text-light)}
+.sx-cols{position:absolute;inset:0;display:flex;align-items:flex-end;gap:2px}
+.sx-col{flex:1 1 0;height:100%;display:flex;align-items:flex-end;justify-content:center;min-width:0;cursor:default;outline:none}
+.sx-col i{display:block;width:100%;max-width:24px;border-radius:4px 4px 0 0;background:var(--hm3);min-height:0}
+.sx-col.today i{background:var(--hm4)}
+.sx-col:hover i,.sx-col:focus-visible i{filter:brightness(1.12)}
+.sx-col:focus-visible{box-shadow:inset 0 0 0 2px var(--blue)}
+.sx-col b{position:absolute;font-size:10px;font-weight:800;color:var(--text);margin-bottom:2px;line-height:1}
+.sx-fc .sx-col{position:relative}
+.sx-fc .sx-col i{background:var(--blue)}
+.sx-x{display:flex;justify-content:space-between;margin:4px 0 0 28px;font-size:10px;color:var(--text-light)}
+.sx-x.even span{flex:1 1 0;text-align:center}
+.sx-hm{display:flex;gap:6px;align-items:flex-start;overflow:hidden}
+.sx-hm-days{display:grid;grid-template-rows:repeat(7,12px);gap:3px;font-size:9px;color:var(--text-light);line-height:12px}
+.sx-hm-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,12px);grid-auto-columns:12px;gap:3px}
+.sx-hm-grid i{border-radius:3px;background:var(--hm0);outline:none}
+.sx-hm-grid i.l1{background:var(--hm1)}.sx-hm-grid i.l2{background:var(--hm2)}.sx-hm-grid i.l3{background:var(--hm3)}.sx-hm-grid i.l4{background:var(--hm4)}
+.sx-hm-grid i.fut{visibility:hidden}
+.sx-hm-grid i:hover,.sx-hm-grid i:focus-visible{box-shadow:0 0 0 2px var(--text)}
+.sx-leg{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-light);margin-top:6px;flex-wrap:wrap}
+.sx-leg i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.sx-seg{display:flex;gap:2px;height:8px;border-radius:999px;overflow:hidden;margin:4px 0 8px}
+.sx-seg i{display:block;height:100%}
+.sx-seg i:first-child{border-radius:999px 0 0 999px}.sx-seg i:last-child{border-radius:0 999px 999px 0}.sx-seg i:only-child{border-radius:999px}
+.sx-keys{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--text)}
+.sx-keys span{display:inline-flex;align-items:center;gap:5px}
+.sx-keys i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.sx-acc{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr) auto;gap:6px 8px;align-items:center;font-size:12px}
+.sx-acc .n{color:var(--text);overflow-wrap:anywhere}
+.sx-acc .tr{height:10px;position:relative}
+.sx-acc .tr i{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;background:var(--hm3)}
+.sx-acc .v{font-weight:800;color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}
+.sx-acc .v small{font-weight:600;color:var(--text-light)}
+.sx-empty{font-size:12px;color:var(--text-light);padding:6px 0}
+.sx-tbl summary{font-size:12px;font-weight:800;color:var(--blue-text);cursor:pointer;margin-top:8px}
+.sx-tbl table{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+.sx-tbl td,.sx-tbl th{padding:3px 6px;border-bottom:1px solid var(--border);text-align:left;font-variant-numeric:tabular-nums}
+.sx-tbl td+td,.sx-tbl th+th{text-align:right}
+#sxTip{position:fixed;z-index:950;pointer-events:none;background:var(--card);border:2px solid var(--border);border-radius:10px;padding:6px 10px;font-size:12px;color:var(--text-light);box-shadow:0 4px 14px rgba(0,0,0,.12);display:none;white-space:nowrap}
+#sxTip b{display:block;font-size:14px;color:var(--text)}
 .bv-ring{width:110px;height:110px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:54px;box-shadow:inset 0 -7px 0 rgba(0,0,0,.18);animation:sdPop .45s cubic-bezier(.34,1.56,.64,1)}
 .bv-kicker{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--text-light);margin-bottom:2px}
 .bv-tier{display:inline-block;font-size:12px;font-weight:900;color:#fff;border-radius:999px;padding:3px 10px;margin-bottom:8px}
@@ -919,6 +973,7 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
     <div id="dailyQuests"></div>
   </div>
   <div class="stats-grid" id="statsGrid"></div>
+  <div class="card" id="statsCard"><h3>📊 Statistics</h3><div id="statsCharts"></div></div>
   <div class="card"><h3>💪 Skill Practice</h3><div class="hub-grid" id="hubSkills"></div></div>
   <div class="card"><h3>📚 Story Collection</h3><div class="story-grid" id="storyGrid"></div></div>
   <div class="card">
@@ -1075,14 +1130,14 @@ function setSpeed(s){S.speed=s;document.getElementById('speedNorm').className=s=
 
 function initData(){let L=curLevel();vocab=L.vocab;WORD_TOPIC=L.topics;radicals=RADICALS_DATA;renderLevelUI();buildUnits();loadState();badgeBaseline();initTTS();cv=vocab.map((_,i)=>i);applyMode();renderVocab();renderStats();renderAch();renderLearnPath();renderRail();setupUI();setupHanzi();refreshSaveInfo();loadHW();if(S.screen==='quiz')renderQuizPicker();reappliedSession();}
 
-function saveState(){S.savedAt=new Date().toLocaleString();try{localStorage.setItem(storeKey(),JSON.stringify({p:S.prog,s:S.streak,l:S.last,x:S.xp,q:S.quizzes,a:S.ach,k:S.known,sc:S.screen,md:S.mode,vf:S.vf,kf:S.kf,wid:S.wid,sa:S.savedAt,st:S.st,ld:S.ld,pf:S.pf||0,cp:S.cp||{}}));}catch(e){}updateHUD();refreshSaveInfo();}
-function loadState(){try{let s=localStorage.getItem(storeKey());if(s){let p=JSON.parse(s);S.prog=p.p||{};S.streak=p.s||0;S.last=p.l||'';S.xp=p.x||0;S.quizzes=p.q||0;S.ach=p.a||{};S.known=(p.k&&typeof p.k==='object')?p.k:null;S.screen=p.sc||'learn';S.mode=p.md||S.mode;S.vf=p.vf||'belum';S.kf=p.kf||'belum';S.wid=(p.wid===undefined?null:p.wid);S.savedAt=p.sa||'';S.st=p.st||{};S.ld=p.ld||{};S.pf=p.pf||0;S.cp=p.cp||{};}else if(curLevel().local)seedFromOtherLevels();}catch(e){}if(!S.known)S.known=seedKnown();S.streak=streakNow();updateHUD();}
+function saveState(){S.savedAt=new Date().toLocaleString();try{localStorage.setItem(storeKey(),JSON.stringify({p:S.prog,s:S.streak,l:S.last,x:S.xp,q:S.quizzes,a:S.ach,k:S.known,sc:S.screen,md:S.mode,vf:S.vf,kf:S.kf,wid:S.wid,sa:S.savedAt,st:S.st,ld:S.ld,pf:S.pf||0,cp:S.cp||{},ty:S.ty||{}}));}catch(e){}updateHUD();refreshSaveInfo();}
+function loadState(){try{let s=localStorage.getItem(storeKey());if(s){let p=JSON.parse(s);S.prog=p.p||{};S.streak=p.s||0;S.last=p.l||'';S.xp=p.x||0;S.quizzes=p.q||0;S.ach=p.a||{};S.known=(p.k&&typeof p.k==='object')?p.k:null;S.screen=p.sc||'learn';S.mode=p.md||S.mode;S.vf=p.vf||'belum';S.kf=p.kf||'belum';S.wid=(p.wid===undefined?null:p.wid);S.savedAt=p.sa||'';S.st=p.st||{};S.ld=p.ld||{};S.pf=p.pf||0;S.cp=p.cp||{};S.ty=p.ty||{};}else if(curLevel().local)seedFromOtherLevels();}catch(e){}if(!S.known)S.known=seedKnown();S.streak=streakNow();updateHUD();}
 
 // SAVE / BACKUP
-function progressPayload(){return {v:2,app:storeKey(),at:new Date().toISOString(),p:S.prog,s:S.streak,l:S.last,x:S.xp,q:S.quizzes,a:S.ach,k:S.known,sc:S.screen,md:S.mode,vf:S.vf,kf:S.kf,wid:S.wid,st:S.st,ld:S.ld,pf:S.pf||0,cp:S.cp||{}};}
+function progressPayload(){return {v:2,app:storeKey(),at:new Date().toISOString(),p:S.prog,s:S.streak,l:S.last,x:S.xp,q:S.quizzes,a:S.ach,k:S.known,sc:S.screen,md:S.mode,vf:S.vf,kf:S.kf,wid:S.wid,st:S.st,ld:S.ld,pf:S.pf||0,cp:S.cp||{},ty:S.ty||{}};}
 function exportProgress(){saveState();let data=JSON.stringify(progressPayload());let name=LEVEL+'-progress-'+new Date().toISOString().slice(0,10)+'.json';try{let blob=new Blob([data],{type:'application/json'});let url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(url);a.remove();},1500);toast('Progress saved!');}catch(e){toast('Failed to save file');}refreshSaveInfo();}
 function reappliedSession(){let _ri=S.wid==null?-1:cv.findIndex(function(k){return vocab[k].id===S.wid;});showCard(_ri>=0?_ri:0);document.querySelectorAll('#fcModeSelect button').forEach(function(b){b.className=b.dataset.mode===S.mode?'active':'';});document.querySelectorAll('#vocabFilter button').forEach(function(b){b.className=b.dataset.vf===S.vf?'active':'';});document.querySelectorAll('#knownFilter button').forEach(function(b){b.className=b.dataset.kf===S.kf?'active':'';});renderKnown();if(S.screen&&S.screen!=='learn')switchScreen(S.screen);}
-function applyPayload(p){if(!p||typeof p!=='object')return false;S.prog=p.p||{};S.streak=p.s||0;S.last=p.l||S.last;S.xp=p.x||0;S.quizzes=p.q||0;S.ach=p.a||{};S.known=(p.k&&typeof p.k==='object')?p.k:seedKnown();if(p.sc)S.screen=p.sc;if(p.md)S.mode=p.md;if(p.vf)S.vf=p.vf;if(p.kf)S.kf=p.kf;if(p.wid!==undefined)S.wid=(p.wid===null?null:p.wid);if(p.st)S.st=p.st;if(p.ld)S.ld=p.ld;S.pf=p.pf||0;S.cp=p.cp||{};S.savedAt=new Date().toLocaleString();saveState();renderStats();renderAch();applyMode();renderVocab();reappliedSession();refreshSaveInfo();return true;}
+function applyPayload(p){if(!p||typeof p!=='object')return false;S.prog=p.p||{};S.streak=p.s||0;S.last=p.l||S.last;S.xp=p.x||0;S.quizzes=p.q||0;S.ach=p.a||{};S.known=(p.k&&typeof p.k==='object')?p.k:seedKnown();if(p.sc)S.screen=p.sc;if(p.md)S.mode=p.md;if(p.vf)S.vf=p.vf;if(p.kf)S.kf=p.kf;if(p.wid!==undefined)S.wid=(p.wid===null?null:p.wid);if(p.st)S.st=p.st;if(p.ld)S.ld=p.ld;S.pf=p.pf||0;S.cp=p.cp||{};S.ty=p.ty||{};S.savedAt=new Date().toLocaleString();saveState();renderStats();renderAch();applyMode();renderVocab();reappliedSession();refreshSaveInfo();return true;}
 function forceAppUpdate(){toast('Checking for updates...');let go=function(){setTimeout(function(){location.reload();},400);};try{if('serviceWorker' in navigator){navigator.serviceWorker.getRegistration().then(function(reg){if(!reg){go();return;}reg.update().then(function(){go();},function(){go();});}).catch(function(){go();});}else{go();}}catch(e){go();}}
 function importProgress(input){let f=input.files&&input.files[0];if(!f)return;let r=new FileReader();r.onload=function(){try{let p=JSON.parse(r.result);if(p&&p.app&&p.app!==storeKey()){toast('This file is for '+String(p.app).replace('khsk','HSK ').toUpperCase()+' — switch levels first');input.value='';return;}if(applyPayload(p))toast('Progress loaded!');else toast('Invalid file');}catch(e){toast('Couldn’t read file');}input.value='';};r.onerror=function(){toast('Failed to read file');input.value='';};r.readAsText(f);}
 function copyProgress(){let t=document.getElementById('saveBox');if(!t)return;t.focus();t.select();try{t.setSelectionRange(0,999999);}catch(e){}let ok=false;try{ok=document.execCommand('copy');}catch(e){}if(ok){toast('Backup copied!');}else if(navigator.clipboard){navigator.clipboard.writeText(t.value).then(function(){toast('Backup copied!');},function(){toast('Copy failed');});}else{toast('Press Ctrl+C to copy');}}
@@ -1257,7 +1312,7 @@ document.addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')
 function setupUI(){document.querySelectorAll('#levelSwitch button').forEach(b=>b.addEventListener('click',()=>switchLevel(b.dataset.lv)));document.querySelectorAll('#sideBar .sb-item,.bottom-nav button').forEach(b=>b.addEventListener('click',()=>switchScreen(b.dataset.screen)));document.querySelectorAll('#fcModeSelect button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#fcModeSelect button').forEach(x=>x.className='');b.className='active';S.mode=b.dataset.mode;applyMode();openSession('Practice • '+b.textContent.trim());}));document.getElementById('flashcard').addEventListener('click',function(e){if(e.target.closest('#playBtn')||e.target.closest('#fcSentences'))return;flipCard();});document.querySelectorAll('#knownFilter button').forEach(b=>b.addEventListener('click',()=>{S.kf=b.dataset.kf;document.querySelectorAll('#knownFilter button').forEach(x=>x.className=x===b?'active':'');renderKnown();saveState();}));document.querySelectorAll('#vocabFilter button').forEach(b=>b.addEventListener('click',()=>{S.vf=b.dataset.vf;document.querySelectorAll('#vocabFilter button').forEach(x=>x.className=x===b?'active':'');renderVocab();saveState();}));}
 
 function switchScreen(s){document.querySelectorAll('.screen').forEach(x=>x.className='screen');let tgt={learn:'screenLearn',vocab:'screenVocab',known:'screenKnown',quiz:'screenQuiz',radicals:'screenRadicals',progress:'screenProgress'}[s];let el=document.getElementById(tgt);if(el)el.className='screen active';document.querySelectorAll('.sb-item,.bottom-nav button').forEach(b=>b.className=(b.dataset.screen===s?(b.classList.contains('sb-item')?'sb-item active':'active'):(b.classList.contains('sb-item')?'sb-item':'')));if(s==='learn')renderLearnPath();if(s==='vocab')renderVocab();if(s==='radicals'){renderRadicals();renderHanziTab();}if(s==='known')renderKnown();if(s==='quiz')renderQuizPicker();if(s==='progress'){renderHub();renderStats();renderAch();refreshSaveInfo();let av=document.getElementById('appVersion');if(av)av.textContent='App version: '+APP_VERSION;}S.screen=s;saveState();}
-function resetProgress(){if(window.confirm('Delete all progress for this level — XP, streak, quiz results, and memorized words? This cannot be undone.')){localStorage.removeItem(storeKey());S.prog={};S.streak=0;S.xp=0;S.quizzes=0;S.ach={};S.pf=0;S.cp={};S.known=seedKnown();S.last=new Date().toDateString();S.streak=1;saveState();renderStats();renderAch();applyMode();renderLearnPath();renderVocab();toast('Reset!');refreshSaveInfo();}}
+function resetProgress(){if(window.confirm('Delete all progress for this level — XP, streak, quiz results, and memorized words? This cannot be undone.')){localStorage.removeItem(storeKey());S.prog={};S.streak=0;S.xp=0;S.quizzes=0;S.ach={};S.pf=0;S.cp={};S.ty={};S.known=seedKnown();S.last=new Date().toDateString();S.streak=1;saveState();renderStats();renderAch();applyMode();renderLearnPath();renderVocab();toast('Reset!');refreshSaveInfo();}}
 function toast(m){let e=document.getElementById('toast');e.textContent=m;e.className='toast show';setTimeout(()=>e.className='toast',2200);}
 
 // DARK MODE
@@ -1309,7 +1364,7 @@ function switchLevel(l){
   LEVEL=l;try{localStorage.setItem('khsk-level',l);}catch(e){}
   let L=curLevel();
   vocab=L.vocab;WORD_TOPIC=L.topics;
-  S.prog={};S.known=null;S.streak=0;S.last='';S.xp=0;S.quizzes=0;S.ach={};S.st={};S.ld={};S.pf=0;S.cp={};S.mode='unmem';S.vf='belum';S.kf='belum';S.wid=null;S.screen='learn';S.idx=0;S.qList=[];
+  S.prog={};S.known=null;S.streak=0;S.last='';S.xp=0;S.quizzes=0;S.ach={};S.st={};S.ld={};S.pf=0;S.cp={};S.ty={};S.mode='unmem';S.vf='belum';S.kf='belum';S.wid=null;S.screen='learn';S.idx=0;S.qList=[];
   buildUnits();loadState();cv=vocab.map((_,i)=>i);applyMode();
   renderVocab();renderStats();renderAch();renderLearnPath();renderRail();renderLevelUI();refreshSaveInfo();startQuiz();reappliedSession();
   toast('Switched to '+L.label+' • '+vocab.length+' words');
@@ -1517,7 +1572,7 @@ function resolveQ(ok,ansHtml){
   let band=document.getElementById('quizBand'),ic=document.getElementById('quizBandIc'),r=document.getElementById('quizResult');
   document.getElementById('exFoot').className='ex-foot hidden';
   let id=q.id+'';if(!S.prog[id])S.prog[id]={l:0,c:0,w:0,t:''};
-  srsGrade(q.id,ok?'good':'again'); // before the counters below change (seeding reads them)
+  srsGrade(q.id,ok?'good':'again');S.ty=S.ty||{};let tyc=S.ty[q.type]=S.ty[q.type]||[0,0];tyc[1]++;if(ok)tyc[0]++; // before the counters below change (seeding reads them)
   // reveal kalimat untuk tipe listen
   if(q.type==='listen'){let s=document.getElementById('exSent');if(s)s.innerHTML=segSentence(q.sent[0],q.word.hanzi);}
   if(ok){
@@ -2488,6 +2543,80 @@ function renderAch(){
   host.innerHTML='<div class="bdg-sum">'+earned+' of '+total+' badge levels earned</div><div class="bdg-grid">'+h+'</div>';
 }
 if(typeof loadStories==='function')loadStories();
+
+// ===== Statistics (Progress screen): XP history, activity heatmap, word status,
+// review forecast and accuracy per exercise type. XP history is global (DAILY.history);
+// word / review / accuracy data belong to the current level.
+const SX_TYPES={hz2py:'Hanzi → pinyin',py2hz:'Pinyin → hanzi',hz2mn:'Hanzi → meaning',mn2hz:'Meaning → hanzi',bank:'Build the answer',listen:'Listening',fill:'Fill the blank',match:'Match pairs',zh:'English → Chinese',speak:'Speaking',write:'Writing'};
+const SX_DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function sxFmtDay(ds){let d=new Date(ds+'T00:00:00');return SX_DOW[d.getDay()]+' '+d.getDate()+' '+d.toLocaleString('en',{month:'short'});}
+function sxNice(v){if(v<=5)return 5;let p=Math.pow(10,Math.floor(Math.log10(v))),f=v/p;return (f<=1?1:f<=2?2:f<=5?5:10)*p;}
+function sxLastDays(n){let t=todayStr(),out=[];for(let i=n-1;i>=0;i--)out.push(srsAddDays(t,-i));return out;}
+function statsData(){
+  let H=(DAILY&&DAILY.history)||{},days=sxLastDays(30),xp=days.map(function(d){return H[d]||0;});
+  let active=xp.filter(function(v){return v>0;}).length,sum=xp.reduce(function(a,b){return a+b;},0),best=Math.max.apply(null,xp);
+  let st={n:0,l:0,m:0};vocab.forEach(function(v){let l=wordLevel(v.id);if(l>=3)st.m++;else if(l>=1)st.l++;else st.n++;});
+  let t=todayStr(),fc=sxLastDays(7).map(function(_,i){return srsAddDays(t,i);}),due=fc.map(function(){return 0;});
+  Object.keys(S.prog).forEach(function(k){let s=S.prog[k]&&S.prog[k].s;if(!s||!s.d)return;let i=s.d<=t?0:dayDiff(t,s.d);if(i>=0&&i<7)due[i]++;});
+  let acc=Object.keys(S.ty||{}).filter(function(k){return S.ty[k][1]>0;}).map(function(k){let a=S.ty[k];return {k:k,name:SX_TYPES[k]||k,r:a[0],n:a[1],pct:Math.round(a[0]/a[1]*100)};});
+  acc.sort(function(a,b){return Object.keys(SX_TYPES).indexOf(a.k)-Object.keys(SX_TYPES).indexOf(b.k);});
+  return {days:days,xp:xp,sum:sum,avg:Math.round(sum/30),best:best,active:active,goal:(DAILY&&DAILY.goal)||30,st:st,fc:fc,due:due,acc:acc,H:H};
+}
+function sxCols(vals,labels,tips,opts){
+  // Column chart: hairline grid, columns <=24px with 4px rounded tops, optional goal line.
+  let max=sxNice(Math.max(1,Math.max.apply(null,vals),opts.goal||0)),h='<div class="sx-plot'+(opts.cls?' '+opts.cls:'')+'">';
+  [1,.5].forEach(function(f){h+='<div class="sx-grid" style="bottom:'+(f*100)+'%"><span>'+Math.round(max*f)+'</span></div>';});
+  if(opts.goal)h+='<div class="sx-goal" style="bottom:'+(opts.goal/max*100)+'%"></div>';
+  h+='<div class="sx-cols">';
+  vals.forEach(function(v,i){h+='<div class="sx-col'+(opts.today===i?' today':'')+'" tabindex="0" role="img" data-tip="'+v+'|'+tips[i]+'" aria-label="'+tips[i]+': '+v+' '+opts.unit+'"><i style="height:'+(v/max*100)+'%"></i>'+(opts.capLabels&&v?'<b style="bottom:'+(v/max*100)+'%">'+v+'</b>':'')+'</div>';});
+  h+='</div></div><div class="sx-x'+(opts.even?' even':'')+'">'+labels.map(function(l){return '<span>'+l+'</span>';}).join('')+'</div>';
+  return h;
+}
+function sxHeatLevel(v,goal){return v<=0?0:v<goal/2?1:v<goal?2:v<goal*2?3:4;}
+function sxHeatmap(H,goal){
+  // 16 weeks, columns = weeks (Mon..Sun), today in the last column.
+  let t=todayStr(),dow=(new Date(t+'T00:00:00').getDay()+6)%7,start=srsAddDays(t,-(15*7+dow)),h='<div class="sx-hm"><div class="sx-hm-days"><span></span><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span></div><div class="sx-hm-grid" role="img" aria-label="Daily activity, last 16 weeks">';
+  for(let i=0;i<16*7;i++){let d=srsAddDays(start,i);if(d>t){h+='<i class="fut"></i>';continue;}let v=H[d]||0;h+='<i class="l'+sxHeatLevel(v,goal)+'" tabindex="-1" data-tip="'+v+' XP|'+sxFmtDay(d)+'"></i>';}
+  h+='</div></div><div class="sx-leg">Less <i style="background:var(--hm0)"></i><i style="background:var(--hm1)"></i><i style="background:var(--hm2)"></i><i style="background:var(--hm3)"></i><i style="background:var(--hm4)"></i> More</div>';
+  return h;
+}
+function renderCharts(){
+  let host=document.getElementById('statsCharts');if(!host||!DAILY)return;
+  let D=statsData(),h='';
+  h+='<div class="sx-tiles">'
+    +'<div class="sx-tile"><div class="l">XP · last 30 days</div><div class="v" id="sxSum">'+D.sum.toLocaleString('en')+'</div></div>'
+    +'<div class="sx-tile"><div class="l">Daily average</div><div class="v">'+D.avg+'</div></div>'
+    +'<div class="sx-tile"><div class="l">Best day</div><div class="v">'+D.best+'</div></div>'
+    +'<div class="sx-tile"><div class="l">Active days</div><div class="v" id="sxActive">'+D.active+' / 30</div></div></div>';
+  h+='<div class="sx-sec">XP per day</div><div class="sx-sub">Last 30 days · all levels · grey line = daily goal ('+D.goal+' XP)</div>';
+  h+=sxCols(D.xp,[sxFmtDay(D.days[0]).replace(/^\w+ /,''),sxFmtDay(D.days[15]).replace(/^\w+ /,''),'Today'],D.days.map(sxFmtDay),{goal:D.goal,today:29,unit:'XP'});
+  h+='<details class="sx-tbl"><summary>Show as table</summary><table><thead><tr><th>Day</th><th>XP</th></tr></thead><tbody>'+D.days.slice().reverse().map(function(d,i){return '<tr><td>'+sxFmtDay(d)+'</td><td>'+D.xp[29-i]+'</td></tr>';}).join('')+'</tbody></table></details>';
+  h+='<div class="sx-sec">Activity</div><div class="sx-sub">Last 16 weeks · darker = more XP, the two darkest steps mean the daily goal was met</div>'+sxHeatmap(D.H,D.goal);
+  let tot=Math.max(1,D.st.n+D.st.l+D.st.m),parts=[['Memorized',D.st.m,'var(--hm4)'],['Learning',D.st.l,'var(--hm2)'],['New',D.st.n,'var(--hm0)']];
+  h+='<div class="sx-sec">Words · '+curLevel().label+'</div><div class="sx-seg" role="img" aria-label="'+parts.map(function(p){return p[0]+' '+p[1];}).join(', ')+'">'+parts.filter(function(p){return p[1]>0;}).map(function(p){return '<i style="width:'+(p[1]/tot*100)+'%;background:'+p[2]+'" data-tip="'+p[1]+' words|'+p[0]+' · '+Math.round(p[1]/tot*100)+'%"></i>';}).join('')+'</div>';
+  h+='<div class="sx-keys">'+parts.map(function(p){return '<span><i style="background:'+p[2]+'"></i>'+p[0]+' '+p[1]+'</span>';}).join('')+'</div>';
+  h+='<div class="sx-sec">Reviews due</div><div class="sx-sub">Next 7 days · Smart Review</div>';
+  h+=D.due.some(function(v){return v>0;})?sxCols(D.due,D.fc.map(function(d,i){return i?SX_DOW[new Date(d+'T00:00:00').getDay()]:'Today';}),D.fc.map(sxFmtDay),{unit:'words due',cls:'sx-fc',capLabels:true,even:true}):'<div class="sx-empty">No reviews scheduled yet — practise some words first.</div>';
+  h+='<div class="sx-sec">Accuracy by exercise</div><div class="sx-sub">'+curLevel().label+' · first tries and retries</div>';
+  h+=D.acc.length?'<div class="sx-acc">'+D.acc.map(function(a){return '<span class="n">'+a.name+'</span><span class="tr" role="img" aria-label="'+a.name+' '+a.pct+'%" data-tip="'+a.pct+'%|'+a.name+' · '+a.r+' of '+a.n+'"><i style="width:'+a.pct+'%"></i></span><span class="v">'+a.pct+'% <small>('+a.n+')</small></span>';}).join('')+'</div>':'<div class="sx-empty">Answer some quiz questions to see your accuracy.</div>';
+  host.innerHTML=h;
+}
+(function(){
+  // One shared tooltip for every chart mark (value first, label second; text only).
+  let tip=null;
+  function show(el,x,y){
+    if(!tip){tip=document.createElement('div');tip.id='sxTip';tip.setAttribute('role','tooltip');document.body.appendChild(tip);}
+    let p=el.dataset.tip.split('|');tip.textContent='';let b=document.createElement('b');b.textContent=p[0];tip.appendChild(b);tip.appendChild(document.createTextNode(p[1]||''));
+    tip.style.display='block';let w=tip.offsetWidth,hh=tip.offsetHeight;
+    tip.style.left=Math.max(8,Math.min(x-w/2,innerWidth-w-8))+'px';tip.style.top=Math.max(8,y-hh-12)+'px';
+  }
+  function hide(){if(tip)tip.style.display='none';}
+  document.addEventListener('pointerover',function(e){let el=e.target.closest&&e.target.closest('#statsCharts [data-tip]');if(!el)return;let r=el.getBoundingClientRect();show(el,r.left+r.width/2,r.top);});
+  document.addEventListener('pointerout',function(e){if(e.target.closest&&e.target.closest('#statsCharts [data-tip]'))hide();});
+  document.addEventListener('focusin',function(e){let el=e.target.closest&&e.target.closest('#statsCharts [data-tip]');if(!el){hide();return;}let r=el.getBoundingClientRect();show(el,r.left+r.width/2,r.top);});
+  window.addEventListener('scroll',hide,{passive:true});
+})();
+renderStats=(function(base){return function(){base();renderCharts();};})(renderStats);
 
 // ===== Checkpoints (end-of-unit test) & jump-ahead tests =====
 // Pass = finish the test with at least one heart left. Passing marks every lesson of the
