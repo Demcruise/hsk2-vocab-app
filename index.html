@@ -396,6 +396,8 @@ html[data-theme="dark"] .hz.open{background:#4A3F14;color:#FFD966;box-shadow:0 0
 .level-switch button.active{border-color:var(--green-d);background:var(--green-aa);color:#fff}
 .level-switch .lv-c{font-size:10px;font-weight:800;opacity:.75}
 .set-label{font-size:14px;font-weight:900;margin:4px 0 2px}
+.review-btn{margin-top:8px;width:100%;background:var(--card);color:var(--text-light);border:2px solid var(--border);border-bottom-width:4px}
+.review-btn.due{background:#A560E8;border-color:#7E3FC2;color:#fff}
 /* daily streak, goal & quests */
 #mHeader .mh-stats .st.off{filter:grayscale(1);opacity:.6}
 .streak-card .streak-sub{font-size:12px;font-weight:700;opacity:.9;margin-top:4px}
@@ -726,6 +728,7 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
       <button data-mode="mastered">⭐ Mastered</button>
     </div>
     <button class="btn sec practice-btn" onclick="openPractice()">▶ Start Free Practice</button>
+    <button class="btn practice-btn review-btn" id="reviewBtn" onclick="startReview()">🧠 Review</button>
   </div>
   <div id="learnPath"></div>
 </div>
@@ -999,7 +1002,7 @@ function forceAppUpdate(){toast('Checking for updates...');let go=function(){set
 function importProgress(input){let f=input.files&&input.files[0];if(!f)return;let r=new FileReader();r.onload=function(){try{let p=JSON.parse(r.result);if(p&&p.app&&p.app!==storeKey()){toast('This file is for '+String(p.app).replace('khsk','HSK ').toUpperCase()+' — switch levels first');input.value='';return;}if(applyPayload(p))toast('Progress loaded!');else toast('Invalid file');}catch(e){toast('Couldn’t read file');}input.value='';};r.onerror=function(){toast('Failed to read file');input.value='';};r.readAsText(f);}
 function copyProgress(){let t=document.getElementById('saveBox');if(!t)return;t.focus();t.select();try{t.setSelectionRange(0,999999);}catch(e){}let ok=false;try{ok=document.execCommand('copy');}catch(e){}if(ok){toast('Backup copied!');}else if(navigator.clipboard){navigator.clipboard.writeText(t.value).then(function(){toast('Backup copied!');},function(){toast('Copy failed');});}else{toast('Press Ctrl+C to copy');}}
 function refreshSaveInfo(){let el=document.getElementById('saveInfo');if(!el)return;let n=Object.keys(S.prog).length,m=Object.values(S.prog).filter(p=>p.l>=3).length;el.textContent=n+' words logged • '+m+' known • '+S.xp+' XP'+(S.savedAt?' • saved '+S.savedAt:'');let box=document.getElementById('saveBox');if(box)box.value=JSON.stringify(progressPayload());}
-function updateHUD(){S.streak=streakNow();let s1=document.getElementById('streakCount');if(s1)s1.textContent=S.streak;let ss=document.getElementById('streakSt');if(ss){ss.className='st'+(extendedToday()?'':' off');ss.title=extendedToday()?'Streak extended today':'Earn XP today to keep your streak';}let x1=document.getElementById('xpDisplay');if(x1)x1.textContent=S.xp;renderRail();}
+function updateHUD(){S.streak=streakNow();renderReviewBtn();let s1=document.getElementById('streakCount');if(s1)s1.textContent=S.streak;let ss=document.getElementById('streakSt');if(ss){ss.className='st'+(extendedToday()?'':' off');ss.title=extendedToday()?'Streak extended today':'Earn XP today to keep your streak';}let x1=document.getElementById('xpDisplay');if(x1)x1.textContent=S.xp;renderRail();}
 function addXP(n){S.xp+=n;dailyTrack('xp',n);saveState();toast('+'+n+' XP');}
 function wordLevel(id){let p=S.prog[id+''];return p?p.l:0;}
 function toggleKnown(id){id=id+'';if(S.known[id])delete S.known[id];else S.known[id]=1;saveState();if(S.mode==='unmem'||S.mode==='known'){applyMode();if(cv.length)showCard(Math.min(S.idx,cv.length-1));}renderKnown();renderVocab();updateHUD();}
@@ -1016,7 +1019,7 @@ function flipCard(){if(!cv.length)return;let v=vocab[cv[S.idx]];if(!S.showSenten
 function prevCard(){if(cv.length)showCard(S.idx-1);}
 function nextCard(){if(cv.length)showCard((S.idx+1)%cv.length);}
 
-function rateCard(l){if(!cv.length)return;let v=vocab[cv[S.idx]],id=v.id+'';if(!S.prog[id])S.prog[id]={l:0,c:0,w:0,t:''};let p=S.prog[id];if(l===1){p.l=Math.max(0,p.l-1);p.w++;toast('Will appear more often');}else if(l===2){p.l=Math.min(2,p.l+1);p.c++;addXP(5);sfx('correct.wav');}else{p.l=Math.min(3,p.l+1);p.c++;addXP(10);sfx('correct.wav');if(p.l>=3&&!S.known[id]){S.known[id]=1;renderKnown();renderVocab();}}p.t=new Date().toISOString();saveState();renderLearnPath();if(S.idx<cv.length-1)showCard(S.idx+1);else sessionComplete();}
+function rateCard(l){if(!cv.length)return;let v=vocab[cv[S.idx]],id=v.id+'';if(!S.prog[id])S.prog[id]={l:0,c:0,w:0,t:''};srsGrade(id,l===1?'again':l===2?'good':'easy');let p=S.prog[id];if(l===1){p.l=Math.max(0,p.l-1);p.w++;toast('Will appear more often');}else if(l===2){p.l=Math.min(2,p.l+1);p.c++;addXP(5);sfx('correct.wav');}else{p.l=Math.min(3,p.l+1);p.c++;addXP(10);sfx('correct.wav');if(p.l>=3&&!S.known[id]){S.known[id]=1;renderKnown();renderVocab();}}p.t=new Date().toISOString();saveState();renderLearnPath();if(S.idx<cv.length-1)showCard(S.idx+1);else sessionComplete();}
 let sessKey=null;
 function sessionComplete(){
   confetti();sfx('finish.mp3');dailyTrack('lessons');addXP(10);
@@ -1406,6 +1409,9 @@ function renderQuizPicker(){
   let tot=Object.values(S.prog).filter(function(p){return p.l>=3;}).length;
   let h='<div class="qp-title">Pick a practice</div><div class="qp-sub">Mixed exercises: recognition, translation, listening, speaking & writing</div><div class="qp-grid">';
   h+='<button class="qp-tile free" onclick="startQuiz()"><span class="qp-ic">⚡</span><span class="qp-mid"><span class="qp-name">Free Practice</span><span class="qp-meta">All '+vocab.length+' words • '+curLevel().label+'</span><span class="qp-bar"><i style="width:'+Math.round(tot/vocab.length*100)+'%"></i></span></span><span>▶</span></button>';
+  let nDue=dueWords().length,nWeak=weakWords().length;
+  h+='<button class="qp-tile" onclick="startReview()"><span class="qp-ic">🧠</span><span class="qp-mid"><span class="qp-name">Smart Review</span><span class="qp-meta">'+(nDue?nDue+' words due today':'All caught up')+'</span></span><span>▶</span></button>';
+  h+='<button class="qp-tile" onclick="startWeak()"><span class="qp-ic">🩹</span><span class="qp-mid"><span class="qp-name">Weak Words</span><span class="qp-meta">'+(nWeak?nWeak+' words you often miss':'None yet')+'</span></span><span>▶</span></button>';
   h+='<button class="qp-tile" onclick="startQuiz(null,null,\'listen\')"><span class="qp-ic">🎧</span><span class="qp-mid"><span class="qp-name">Listening Practice</span><span class="qp-meta">Hear & arrange the translation</span></span><span>▶</span></button>';
   h+='<button class="qp-tile" onclick="startQuiz(null,null,\'speak\')"><span class="qp-ic">🎤</span><span class="qp-mid"><span class="qp-name">Speaking Practice</span><span class="qp-meta">Say the sentences out loud</span></span><span>▶</span></button>';
   h+='<button class="qp-tile" onclick="startQuiz(null,null,\'write\')"><span class="qp-ic">✍️</span><span class="qp-mid"><span class="qp-name">Writing Practice</span><span class="qp-meta">Trace characters stroke by stroke</span></span><span>▶</span></button>';
@@ -1426,6 +1432,7 @@ function resolveQ(ok,ansHtml){
   let band=document.getElementById('quizBand'),ic=document.getElementById('quizBandIc'),r=document.getElementById('quizResult');
   document.getElementById('exFoot').className='ex-foot hidden';
   let id=q.id+'';if(!S.prog[id])S.prog[id]={l:0,c:0,w:0,t:''};
+  srsGrade(q.id,ok?'good':'again'); // before the counters below change (seeding reads them)
   // reveal kalimat untuk tipe listen
   if(q.type==='listen'){let s=document.getElementById('exSent');if(s)s.innerHTML=segSentence(q.sent[0],q.word.hanzi);}
   if(ok){
@@ -1706,7 +1713,7 @@ function checkAns(){
 // ===== HAFAL CEPAT =====
 function hafalCard(){
   if(!cv.length)return;let v=vocab[cv[S.idx]],id=v.id+'';
-  if(!S.prog[id])S.prog[id]={l:0,c:0,w:0,t:''};
+  if(!S.prog[id])S.prog[id]={l:0,c:0,w:0,t:''};srsGrade(id,'easy');
   S.prog[id].l=3;S.prog[id].t=new Date().toISOString();
   if(!S.known[id])S.known[id]=1;
   saveState();sfx('correct.wav');addXP(5);toast('✅ '+v.hanzi+' marked as known');
@@ -1831,7 +1838,10 @@ function mistakePool(){return vocab.filter(function(v){let p=S.prog[v.id+''];ret
 function renderHub(){
   let hs=document.getElementById('hubSkills');if(!hs)return;
   let mp=mistakePool();
+  let nDue=dueWords().length,nWeak=weakWords().length;
   let tiles=[
+    {ic:'🧠',n:'Review',c:nDue?nDue+' due':'caught up',cls:nDue?'hl':'',fn:startReview},
+    {ic:'🩹',n:'Weak words',c:nWeak+' words',fn:startWeak},
     {ic:'🔁',n:'Mistakes',c:mp.length+' words',cls:mp.length?'hl':'',fn:function(){if(!mp.length){toast('No mistakes 🎉');return;}startSkillQuiz(null,mp);}},
     {ic:'🎧',n:'Listening',c:skillMissCount('ml')+' missed',fn:function(){startSkillQuiz('listen');}},
     {ic:'🎤',n:'Speaking',c:skillMissCount('ms')+' missed',fn:function(){startSkillQuiz('speak');}},
@@ -2066,7 +2076,8 @@ const QUEST_POOL=[
   {id:'listen5',ic:'🎧',name:'Do 5 listening exercises',metric:'listen',target:5},
   {id:'speak3',ic:'🎤',name:'Do 3 speaking exercises',metric:'speak',target:3},
   {id:'write3',ic:'✍️',name:'Write 3 characters',metric:'write',target:3},
-  {id:'story1',ic:'📚',name:'Finish a story',metric:'stories',target:1}
+  {id:'story1',ic:'📚',name:'Finish a story',metric:'stories',target:1},
+  {id:'review10',ic:'🧠',name:'Review 10 due words',metric:'review',target:10}
 ];
 const QUEST_BONUS=5;
 function todayStr(d){d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
@@ -2150,6 +2161,64 @@ function renderDailyCard(){
   if(gp)gp.innerHTML=[10,20,30,50].map(function(g){return '<button class="'+(DAILY.goal===g?'active':'')+'" onclick="setDailyGoal('+g+')">'+g+' XP</button>';}).join('');
 }
 function setDailyGoal(g){if(!DAILY)return;DAILY.goal=g;saveDaily();renderRail();toast('Daily goal: '+g+' XP');}
+
+// ===== SRS: spaced repetition (SM-2 style). Scheduling is pure; UI lives below. =====
+// State per word in S.prog[id].s = {d: due day, i: interval days, e: ease, r: streak of good reviews,
+// x: lapses, rv: last review day, lg: last grade}. Days are local 'YYYY-MM-DD'.
+function srsAddDays(day,n){let d=new Date(day+'T00:00:00');d.setDate(d.getDate()+n);return todayStr(d);}
+function srsNext(st,grade,today){
+  st=Object.assign({i:0,e:2.5,r:0,x:0,d:today,rv:'',lg:''},st||{});
+  // One step per word per day: answering it right twice in one quiz must not jump it a week ahead.
+  if(grade!=='again'&&st.rv===today&&st.lg!=='again')return st;
+  if(grade==='again'){st.r=0;st.x++;st.i=0;st.e=Math.max(1.3,Math.round((st.e-0.2)*100)/100);st.d=today;}
+  else{
+    st.r++;
+    let i=st.r===1?(grade==='easy'?3:1):st.r===2?(grade==='easy'?6:3):Math.round(Math.max(1,st.i)*st.e*(grade==='easy'?1.3:1));
+    if(grade==='easy')st.e=Math.round((st.e+0.15)*100)/100;
+    st.i=Math.min(i,365);st.d=srsAddDays(today,st.i);
+  }
+  st.rv=today;st.lg=grade;return st;
+}
+// Words studied before SRS existed get a start state from their old level, spread over the
+// interval (by id) so existing learners don't wake up to hundreds of due words.
+function srsSeed(p,id,today){
+  if(!p)return null;if(p.s)return p.s;
+  let l=p.l||0;if(!(l>0||p.c>0||p.w>0))return null;
+  let i=l>=3?7:l>=2?3:1;
+  return {d:srsAddDays(today,(+id||0)%i),i:i,e:2.5,r:l>=3?3:l>=2?2:1,x:0,rv:'',lg:''};
+}
+function srsState(v,today){let p=S.prog[v.id+''];return p?(p.s||srsSeed(p,v.id,today)):null;}
+function srsGrade(id,grade){
+  let today=todayStr(),k=id+'';if(!S.prog[k])S.prog[k]={l:0,c:0,w:0,t:''};
+  let p=S.prog[k],before=p.s||srsSeed(p,id,today),wasDue=!!before&&before.d<=today&&before.rv!==today;
+  p.s=srsNext(before,grade,today);
+  if(wasDue)dailyTrack('review');
+}
+function dueWords(today){
+  today=today||todayStr();
+  return vocab.filter(function(v){let st=srsState(v,today);return st&&st.d<=today;})
+    .sort(function(a,b){let x=srsState(a,today),y=srsState(b,today);return x.d<y.d?-1:x.d>y.d?1:(y.x-x.x);});
+}
+function weakWords(){
+  return vocab.filter(function(v){let p=S.prog[v.id+''];if(!p)return false;return (p.s&&p.s.x>=2)||(p.w>=2&&p.w>p.c);})
+    .sort(function(a,b){let pa=S.prog[a.id+''],pb=S.prog[b.id+''];return ((pb.s&&pb.s.x)||0)-((pa.s&&pa.s.x)||0)||pb.w-pa.w;});
+}
+function startReview(){
+  let due=dueWords();
+  if(!due.length){toast('All caught up 🎉 Nothing to review today');return;}
+  startSkillQuiz(null,due.slice(0,10));
+}
+function startWeak(){
+  let w=weakWords();
+  if(!w.length){toast('No weak words yet 💪');return;}
+  startSkillQuiz(null,w.slice(0,10));
+}
+function renderReviewBtn(){
+  let b=document.getElementById('reviewBtn');if(!b)return;
+  let n=dueWords().length;
+  b.textContent=n?'🧠 Review · '+n+' due':'🧠 Review · all caught up';
+  b.className='btn practice-btn review-btn'+(n?' due':'');
+}
 loadDaily();
 
 initData();
