@@ -477,7 +477,8 @@ html[data-theme="dark"] .hz.open{background:#4A3F14;color:#FFD966;box-shadow:0 0
 .ex-tts{position:absolute;left:8px;top:10px;background:none;border:none;color:var(--blue);cursor:pointer;padding:2px}
 .ex-tts svg{width:18px;height:18px;display:block}
 .ex-sent{font-size:19px;font-weight:800;line-height:1.55;color:var(--text)}
-.ex-w{border-bottom:2px dotted transparent;padding-bottom:1px}
+.ex-w{border-bottom:2px dotted transparent;padding-bottom:1px;cursor:pointer}
+.ex-w:focus{outline:2px solid var(--blue);border-radius:3px;outline-offset:1px}
 .ex-w.nw{color:#A568CC;border-bottom-color:#A568CC}
 .ex-w.tgt{border-bottom-color:var(--text-light)}
 .ex-py{font-size:13px;font-weight:700;color:var(--blue-text);margin-top:4px}
@@ -745,6 +746,8 @@ html[data-theme="dark"]{--hm0:#22333B;--hm1:#24461A;--hm2:#3D7A12;--hm3:#58CC02;
 .lst-btn{width:72px;height:72px;border-radius:50%;border:none;background:var(--blue);color:#fff;font-size:30px;cursor:pointer;box-shadow:0 4px 0 #1899d6}
 .lst-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #1899d6}
 .lst-slow{background:none;border:2px solid var(--border);border-radius:99px;padding:6px 14px;font-size:13px;color:var(--text-light);cursor:pointer;font-family:inherit}
+.lst-skip{background:none;border:none;color:var(--text-light);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:underline dotted;margin-top:2px}
+.lst-skip:hover{color:var(--text)}
 
 /* unit banner quiz btn + book node */
 .ub-quiz{border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.15);color:#fff;border-radius:10px;padding:6px 10px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;min-height:40px}
@@ -1001,6 +1004,9 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
     <div class="set-label">🎯 Daily goal</div>
     <p class="save-note">XP to earn each day. Earning any XP keeps your streak going.</p>
     <div class="goal-pick" id="goalPick"></div>
+    <div class="set-label">🎧 Listening exercises</div>
+    <p class="save-note">Include audio questions in quizzes. Turn off when you can’t use sound.</p>
+    <div class="goal-pick"><button id="listenOn" onclick="setListen(1)">On</button><button id="listenOff" onclick="setListen(0)">Off</button></div>
     <button class="btn-danger" onclick="resetProgress()">🔄 Reset All Progress</button>
   </div>
   <div class="card">
@@ -1178,6 +1184,12 @@ function jumpToVocab(id){for(let k=0;k<vocab.length;k++)if(vocab[k].id===id){S.m
 // ===== WORD-BANK EXERCISE (gaya Duolingo "Translate this sentence") =====
 let exPinyin=true;try{exPinyin=localStorage.getItem('khsk-expinyin')!=='0';}catch(e){}
 function toggleExPinyin(){exPinyin=!exPinyin;try{localStorage.setItem('khsk-expinyin',exPinyin?'1':'0');}catch(e){}renderExPinyin();}
+let exListen=true;try{exListen=localStorage.getItem('khsk-exlisten')!=='0';}catch(e){}
+let noListen=false;
+function exListenOK(){return exListen&&!noListen;}
+function setListen(on){exListen=!!on;try{localStorage.setItem('khsk-exlisten',exListen?'1':'0');}catch(e){}renderListenToggle();}
+function renderListenToggle(){let on=document.getElementById('listenOn'),off=document.getElementById('listenOff');if(on)on.className=exListen?'active':'';if(off)off.className=exListen?'':'active';}
+function cantListen(){let q=S.qList&&S.qList[S.qIdx];if(!q||q.type!=='listen'||S.qDone)return;noListen=true;S.qList[S.qIdx]=buildQTyped(q.word,S.qIdx);toast('Listening exercises off for this session');showQ();}
 function renderExPinyin(){let t=document.getElementById('pyToggle');if(t)t.className='ex-py-toggle'+(exPinyin?' on':'');let py=document.getElementById('exPy');if(py)py.className='ex-py'+(exPinyin?'':' hidden');}
 
 function exTokens(s){return s.split(/\s+/).filter(Boolean);}
@@ -1205,7 +1217,8 @@ function segSentence(sent,target){
       let p=vw?S.prog[vw.id]:null;
       let isNew=!p||(p.l===0&&p.c===0&&p.w===0);
       let cls='ex-w'+(m===target?' tgt':(isNew?' nw':''));
-      out+='<span class="'+cls+'">'+exEsc(m)+'</span>';i+=m.length;
+      let gl=vw?', '+exEsc(vw.pinyin)+', '+exEsc((vw.meaning||'').replace(/"/g,'')):'';
+      out+='<span class="'+cls+'" tabindex="0" role="button" data-w="'+exEsc(m)+'" aria-label="'+exEsc(m)+gl+'">'+exEsc(m)+'</span>';i+=m.length;
     }else{out+=exEsc(sent[i]);i++;}
   }
   return out;
@@ -1304,9 +1317,17 @@ function renderStats(){let t=vocab.length,m=Object.values(S.prog).filter(p=>p.l>
 // HANZI TOOLTIP
 let hzTimer=null;
 function hzWrap(s){return s.replace(/[一-鿿]/g,function(c){let d=HANZI_DATA[c];return d?'<span class="hz" tabindex="0" role="button" data-hz="'+c+'" aria-label="'+c+', '+d[0]+', '+(d[1]||'').replace(/"/g,'')+'. Character details">'+c+'</span>':c;});}
-function hzShow(el){let ch=el.getAttribute('data-hz'),d=HANZI_DATA[ch],tip=document.getElementById('hzTip');if(!d||!tip)return;let h='<div class="hz-head">'+ch+'</div>';if(d[0])h+='<div class="hz-py">'+d[0]+'</div>';if(d[1])h+='<div class="hz-def">'+d[1]+'</div>';if(d[2])h+='<div class="hz-rad">Radical: '+d[2]+(d[3]?' ('+d[3]+')':'')+(d[4]?' — '+d[4]:'')+'</div>';tip.innerHTML=h;tip.style.display='block';let r=el.getBoundingClientRect(),tw=tip.offsetWidth,th=tip.offsetHeight,left=r.left+r.width/2-tw/2,top=r.top-th-8;left=Math.max(8,Math.min(left,window.innerWidth-tw-8));if(top<8)top=r.bottom+8;tip.style.left=left+'px';tip.style.top=top+'px';document.querySelectorAll('.hz.open').forEach(function(x){x.classList.remove('open');});el.classList.add('open');}
-function hzHide(){let tip=document.getElementById('hzTip');if(tip)tip.style.display='none';document.querySelectorAll('.hz.open').forEach(function(x){x.classList.remove('open');});}
-function setupHanzi(){document.addEventListener('mouseover',function(e){let el=e.target&&e.target.closest?e.target.closest('.hz'):null;if(el){clearTimeout(hzTimer);hzShow(el);}});document.addEventListener('mouseout',function(e){let el=e.target&&e.target.closest?e.target.closest('.hz'):null;if(el){clearTimeout(hzTimer);hzTimer=setTimeout(hzHide,140);}});document.addEventListener('click',function(e){let el=e.target&&e.target.closest?e.target.closest('.hz'):null;if(el){e.stopPropagation();if(el.classList.contains('open'))hzHide();else hzShow(el);}else if(!(e.target&&e.target.closest&&e.target.closest('#hzTip')))hzHide();},true);window.addEventListener('scroll',hzHide,true);document.addEventListener('focusin',function(e){let el=e.target&&e.target.closest?e.target.closest('.hz'):null;if(el)hzShow(el);});document.addEventListener('focusout',function(e){let el=e.target&&e.target.closest?e.target.closest('.hz'):null;if(!el)return;let tip=document.getElementById('hzTip');if(!tip||!tip.contains(e.relatedTarget))hzHide();});}
+function hzShow(el){let tip=document.getElementById('hzTip');if(!tip)return;let h='';
+  if(el.classList.contains('ex-w')){
+    let v=vocab.find(function(x){return x.hanzi===el.getAttribute('data-w');});if(!v)return;
+    h='<div class="hz-head">'+v.hanzi+'</div><div class="hz-py">'+exEsc(v.pinyin)+'</div><div class="hz-def">'+exEsc(v.meaning||'')+'</div>';
+  }else{
+    let ch=el.getAttribute('data-hz'),d=HANZI_DATA[ch];if(!d)return;
+    h='<div class="hz-head">'+ch+'</div>';if(d[0])h+='<div class="hz-py">'+d[0]+'</div>';if(d[1])h+='<div class="hz-def">'+d[1]+'</div>';if(d[2])h+='<div class="hz-rad">Radical: '+d[2]+(d[3]?' ('+d[3]+')':'')+(d[4]?' — '+d[4]:'')+'</div>';
+  }
+  tip.innerHTML=h;tip.style.display='block';let r=el.getBoundingClientRect(),tw=tip.offsetWidth,th=tip.offsetHeight,left=r.left+r.width/2-tw/2,top=r.top-th-8;left=Math.max(8,Math.min(left,window.innerWidth-tw-8));if(top<8)top=r.bottom+8;tip.style.left=left+'px';tip.style.top=top+'px';document.querySelectorAll('.hz.open,.ex-w.open').forEach(function(x){x.classList.remove('open');});el.classList.add('open');}
+function hzHide(){let tip=document.getElementById('hzTip');if(tip)tip.style.display='none';document.querySelectorAll('.hz.open,.ex-w.open').forEach(function(x){x.classList.remove('open');});}
+function setupHanzi(){document.addEventListener('mouseover',function(e){let el=e.target&&e.target.closest?e.target.closest('.hz,.ex-w'):null;if(el){clearTimeout(hzTimer);hzShow(el);}});document.addEventListener('mouseout',function(e){let el=e.target&&e.target.closest?e.target.closest('.hz,.ex-w'):null;if(el){clearTimeout(hzTimer);hzTimer=setTimeout(hzHide,140);}});document.addEventListener('click',function(e){let el=e.target&&e.target.closest?e.target.closest('.hz,.ex-w'):null;if(el){e.stopPropagation();if(el.classList.contains('open'))hzHide();else hzShow(el);}else if(!(e.target&&e.target.closest&&e.target.closest('#hzTip')))hzHide();},true);window.addEventListener('scroll',hzHide,true);document.addEventListener('focusin',function(e){let el=e.target&&e.target.closest?e.target.closest('.hz,.ex-w'):null;if(el)hzShow(el);});document.addEventListener('focusout',function(e){let el=e.target&&e.target.closest?e.target.closest('.hz,.ex-w'):null;if(!el)return;let tip=document.getElementById('hzTip');if(!tip||!tip.contains(e.relatedTarget))hzHide();});}
 document.addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')return;let el=e.target&&e.target.closest?e.target.closest('.vocab-item,.radical-card,.n-arr,.hz-word,.hz-act'):null;if(!el||el.tagName==='BUTTON')return;e.preventDefault();el.click();});
 
 function setupUI(){document.querySelectorAll('#levelSwitch button').forEach(b=>b.addEventListener('click',()=>switchLevel(b.dataset.lv)));document.querySelectorAll('#sideBar .sb-item,.bottom-nav button').forEach(b=>b.addEventListener('click',()=>switchScreen(b.dataset.screen)));document.querySelectorAll('#fcModeSelect button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#fcModeSelect button').forEach(x=>x.className='');b.className='active';S.mode=b.dataset.mode;applyMode();openSession('Practice • '+b.textContent.trim());}));document.getElementById('flashcard').addEventListener('click',function(e){if(e.target.closest('#playBtn')||e.target.closest('#fcSentences'))return;flipCard();});document.querySelectorAll('#knownFilter button').forEach(b=>b.addEventListener('click',()=>{S.kf=b.dataset.kf;document.querySelectorAll('#knownFilter button').forEach(x=>x.className=x===b?'active':'');renderKnown();saveState();}));document.querySelectorAll('#vocabFilter button').forEach(b=>b.addEventListener('click',()=>{S.vf=b.dataset.vf;document.querySelectorAll('#vocabFilter button').forEach(x=>x.className=x===b?'active':'');renderVocab();saveState();}));}
@@ -1514,6 +1535,7 @@ function buildMC(v,t){
 }
 function buildQTyped(v,i,ft){
   let t=ft||Q_MIX[i%Q_MIX.length];
+  if(!ft&&t==='listen'&&!exListenOK())t='bank';
   if(t==='write'&&!writeCharFor(v))t='bank';
   // Words without example sentences (unfinished local levels) can only do word-level exercises.
   if(!MC_FIELD[t]&&t!=='match'&&t!=='write'&&!(v.sentences&&v.sentences.length))t='hz2mn';
@@ -1634,7 +1656,7 @@ function renderBankQ(q){
   document.getElementById('exAnswer').className='ex-answer';
   document.getElementById('exBank').className='ex-bank';
   if(q.type==='listen'){
-    document.getElementById('exSent').innerHTML='<div class="ex-listen-big"><button class="lst-btn" id="lstPlay">🔊</button><button class="lst-slow" id="lstSlow">🐢 Slow</button></div>';
+    document.getElementById('exSent').innerHTML='<div class="ex-listen-big"><button class="lst-btn" id="lstPlay">🔊</button><button class="lst-slow" id="lstSlow">🐢 Slow</button><button class="lst-skip" onclick="cantListen()">I can’t listen now</button></div>';
     document.getElementById('exPy').textContent='';
     document.getElementById('lstPlay').onclick=function(){speak(q.sent[0]);};
     document.getElementById('lstSlow').onclick=function(){speakSlow(q.sent[0]);};
@@ -2107,7 +2129,21 @@ function stFinish(){
 // ===== OVERRIDES =====
 // tooltip hanzi diperkaya
 hzShow=function(el){
-  let ch=el.getAttribute('data-hz'),d=HANZI_DATA[ch],tip=document.getElementById('hzTip');if(!d||!tip)return;
+  let tip=document.getElementById('hzTip');if(!tip)return;
+  // Word gloss (exercise sentences): pinyin + meaning + listen/vocab actions.
+  if(el.classList.contains('ex-w')){
+    let v=vocab.find(function(x){return x.hanzi===el.getAttribute('data-w');});if(!v)return;
+    let wh='<div class="hz-head">'+v.hanzi+'</div><div class="hz-py">'+exEsc(v.pinyin)+'</div><div class="hz-def">'+exEsc(v.meaning||'')+'</div>';
+    wh+='<div class="hz-acts"><button class="hz-act" data-act="s">🔊 Listen</button><button class="hz-act" data-act="v">📖 Vocab</button></div>';
+    tip.innerHTML=wh;tip.style.display='block';
+    tip.onclick=function(e){let a=e.target.closest('.hz-act');if(a){e.stopPropagation();if(a.dataset.act==='s')speak(v.hanzi);else{hzHide();jumpToVocab(v.id);switchScreen('vocab');}}};
+    let wr=el.getBoundingClientRect(),ww=tip.offsetWidth,wh2=tip.offsetHeight,wleft=wr.left+wr.width/2-ww/2,wtop=wr.top-wh2-8;
+    wleft=Math.max(8,Math.min(wleft,window.innerWidth-ww-8));if(wtop<8)wtop=wr.bottom+8;
+    tip.style.left=wleft+'px';tip.style.top=wtop+'px';
+    document.querySelectorAll('.hz.open,.ex-w.open').forEach(function(x){x.classList.remove('open');});el.classList.add('open');
+    return;
+  }
+  let ch=el.getAttribute('data-hz'),d=HANZI_DATA[ch];if(!d)return;
   let h='<div class="hz-head">'+ch+'</div>';
   if(d[0])h+='<div class="hz-py">'+d[0]+'</div>';
   if(d[1])h+='<div class="hz-def">'+d[1]+'</div>';
@@ -2126,7 +2162,7 @@ hzShow=function(el){
   let r=el.getBoundingClientRect(),tw=tip.offsetWidth,th=tip.offsetHeight,left=r.left+r.width/2-tw/2,top=r.top-th-8;
   left=Math.max(8,Math.min(left,window.innerWidth-tw-8));if(top<8)top=r.bottom+8;
   tip.style.left=left+'px';tip.style.top=top+'px';
-  document.querySelectorAll('.hz.open').forEach(function(x){x.classList.remove('open');});el.classList.add('open');
+  document.querySelectorAll('.hz.open,.ex-w.open').forEach(function(x){x.classList.remove('open');});el.classList.add('open');
 };
 
 // learn path: tombol quiz di banner + node buku + long-press
@@ -2306,6 +2342,7 @@ function renderDailyCard(){
   if(sub)sub.textContent=(extendedToday()?'✓ Extended today':'Earn XP today to keep it')+' · Best: '+(DAILY.best||0)+((DAILY.best||0)===1?' day':' days');
   let gp=document.getElementById('goalPick');
   if(gp)gp.innerHTML=[10,20,30,50].map(function(g){return '<button class="'+(DAILY.goal===g?'active':'')+'" onclick="setDailyGoal('+g+')">'+g+' XP</button>';}).join('');
+  renderListenToggle();
 }
 function setDailyGoal(g){if(!DAILY)return;DAILY.goal=g;saveDaily();renderRail();toast('Daily goal: '+g+' XP');}
 

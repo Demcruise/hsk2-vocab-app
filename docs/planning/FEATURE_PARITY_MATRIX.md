@@ -20,7 +20,7 @@ Verdict legend: **✅ Equivalent** · **🟡 Partial** · **❌ Missing** · **�
 | Quests `/quests` | E-010 | Daily quests with countdown (`dqLeft`/`hoursLeftText`), daily goal, streak | 🟡 | Rotating quest set exists; no monthly meta-quest → badge chain |
 | Shop `/shop` | E-012 | None (no currency) | ❌ | Gems + Streak Freeze; freeze needs streak model — see backlog P1 |
 | Profile `/profile` | not observed | Progress screen: stats, badges gallery, achievements, save/restore | 🟡 | Public profile N/A (no accounts) |
-| Settings `/settings` | E-014 | Dark mode, pinyin display toggle, level picker, backup/restore | 🟡 | No lesson-experience toggles (listening exercise toggle, etc.) |
+| Settings `/settings` | E-014 | Dark mode, pinyin display toggle, listening-exercise toggle, level picker, backup/restore | ✅ | — |
 | Subscription `/settings/super` | E-012 | n/a | — | No ads by design |
 | Stories / Radio nodes | E-003 | 28 beat-based stories (14 × hsk1, 14 × hsk2), `assets/data/stories_*.json`; story completion tracked | 🟡 | No stories for local 2025 levels (content gap); no Radio |
 | Onboarding / placement | unavailable | None — level picker in Settings; Jump-ahead checkpoint tests act as placement | 🟡 | No first-run onboarding flow or placement quiz |
@@ -33,7 +33,7 @@ Verdict legend: **✅ Equivalent** · **🟡 Partial** · **❌ Missing** · **�
 | Translate EN→ZH (chips ↔ typing) | E-023, E-024 | `zh` (chip bank + `typed` free-input mode) | ✅ |
 | Fill in the blank (3 options) | E-022 | `fill` | ✅ |
 | Match pairs | E-025 | `match` | ✅ |
-| Tap what you hear | E-026 | `listen` (chip-arrange translation of audio via `renderBankQ`; slow voice via `speakSlow`) | 🟡 arranges translation, not heard transcript; no "can't listen now" |
+| Tap what you hear | E-026 | `listen` (chip-arrange translation of audio via `renderBankQ`; slow voice via `speakSlow`; "can't listen now" skip) | 🟡 arranges translation, not heard transcript |
 | Speaking | — | `speak` (Web Speech API + self-score fallback) | ✅ |
 | Character/writing | — | `write` (Hanzi Writer stroke-order) | ✅ |
 | Hanzi↔pinyin↔meaning drills | — | `hz2py`, `py2hz`, `hz2mn` (Kunkwan-specific) | ✅ extra |
@@ -45,13 +45,13 @@ Verdict legend: **✅ Equivalent** · **🟡 Partial** · **❌ Missing** · **�
 | CHECK disabled until answer | E-016 | ✅ | ✅ |
 | Enter shortcut | E-016 | ✅ | ✅ |
 | Correct/wrong bottom sheet + canonical/alt answer | E-020, E-021 | ✅ incl. "Alternative:" display | ✅ |
-| "Meaning:" reveal | E-021 | 🟡 (answer + pinyin shown; no separate gloss reveal) | 🟡 |
-| Per-word hover glosses | E-019 | ❌ | ❌ |
+| "Meaning:" reveal | E-021 | ✅ (`meaningLine` shows Meaning on listen/fill/zh results) | ✅ |
+| Per-word hover glosses | E-019 | ✅ word glosses on `.ex-w` spans (pinyin+meaning+actions) | ✅ |
 | "N IN A ROW" combo | E-027 | ✅ ("in a row" streak in quiz) | ✅ |
 | Wrong answer doesn't advance progress | E-016 | ✅ | ✅ |
 | Missed items re-queued as PREVIOUS MISTAKE | E-028 | ✅ label exists | ✅ |
 | Results: personalised headline + XP + accuracy | E-029 | ✅ XP + accuracy stats per exercise type | ✅ |
-| Quest progress screen after results | E-029 | 🟡 (quest state updates; no dedicated post-results quest card) | 🟡 |
+| Quest progress screen after results | E-029 | ✅ (`qdQuests` renders daily-quest card on results screen) | ✅ |
 
 ## Gamification & retention
 

@@ -7,29 +7,16 @@ Priority: **P0** learning-loop parity · **P1** retention/product depth · **P2*
 
 ## P0 — learning-loop parity
 
-### B-01 Per-word hover glosses in exercises
-- **Now**: exercises show sentence + full answer reveal; no per-word gloss.
-- **Expected**: hovering/tapping a word in the prompt shows its pinyin + meaning (Duolingo E-019).
-- **Missing**: word-level segmentation + tooltip per token.
-- **Deps**: `segWords()` exists (used by `zh` chips); pinyin/meaning lookup = vocab map.
-- **Strategy**: reuse `segWords` to wrap tokens in `.hz`-style spans; reuse existing hanzi tooltip (already proves per-char tooltip) extended to word + pinyin + meaning.
-- **Verify**: hover/focus shows gloss on `bank`/`fill`/`listen` prompts; keyboard-focusable; no layout shift.
+### B-01 Per-word hover glosses in exercises — ✅ DONE
+- Shipped: `segSentence` wraps vocab words as `.ex-w` spans with `data-w` + tabindex/role/aria-label; `hzShow` (overrides section) handles `.ex-w` → pinyin + meaning + Listen/Vocab actions in `#hzTip`. Hover, click and keyboard focus all work.
+- Verified: `tools/gloss_listen.test.js` (13 checks).
 
-### B-02 "Can't listen now" affordance on listening exercises
-- **Now**: `listen` requires arranging the translation chips of heard audio; no skip-without-audio path.
-- **Expected**: "I can't listen right now" swaps the item out without penalty (E-026).
-- **Missing**: skip affordance + replacement question.
-- **Deps**: quiz question pool.
-- **Strategy**: add link under TTS button → marks question `skipped`, re-queues a non-listen type at session end (like mistakes re-queue).
-- **Verify**: pressing it advances without penalty; session ends with a substitute; stats exclude skip.
+### B-02 "Can't listen now" affordance — ✅ DONE
+- Shipped: `.lst-skip` link on listen questions → `cantListen()` sets the session flag `noListen` and rebuilds the current question as a non-listen type (no penalty). All further mixed quizzes in the session exclude `listen`; dedicated 🎧 tile still forces it (explicit user choice).
+- Verified: `tools/gloss_listen.test.js`.
 
-### B-03 Post-results quest card
-- **Now**: results show XP + accuracy; quest state updates silently.
-- **Expected**: after results, a card shows each daily quest's progress delta (E-029).
-- **Missing**: UI surfacing of quest progress post-lesson.
-- **Deps**: existing daily-quest state (`DAILY`).
-- **Strategy**: read quest progress before/after session; render one card on results screen.
-- **Verify**: completing a lesson that satisfies a quest shows the quest card with updated count.
+### B-03 Post-results quest card — ✅ DONE (already shipped)
+- `finishQ` → `renderQuestList('qdQuests',true)` renders the daily-quest card (progress + countdown) on the results screen. No work needed.
 
 ### B-04 Onboarding + placement flow
 - **Now**: first visit → default HSK 2; level picker in Settings; jump-ahead checkpoint tests exist.
@@ -39,13 +26,9 @@ Priority: **P0** learning-loop parity · **P1** retention/product depth · **P2*
 - **Strategy**: `onboard` flag in storage; first run shows 3-step screen (goal → "new to Chinese?" → start level or take placement = existing jump test on unit 1).
 - **Verify**: fresh profile sees onboarding once; placement routes to correct unit; skip works.
 
-### B-05 Listening-exercise toggle in Settings
-- **Now**: dark mode, pinyin toggle, level picker in Settings.
-- **Expected**: a toggle to include/exclude listening exercises per lesson (E-014).
-- **Missing**: per-lesson-type enablement.
-- **Deps**: `Q_MIX` filtering; settings storage.
-- **Strategy**: settings checkbox → filter `listen` (and later `speak`) out of Q_MIX for the session.
-- **Verify**: with toggle off, no listen questions appear; persists across reload.
+### B-05 Listening-exercise toggle in Settings — ✅ DONE
+- Shipped: `exListen` (persisted `khsk-exlisten`, global like `expinyin`) with On/Off buttons in the Settings card; `buildQTyped` falls back `listen`→`bank` in mixed rotation only (forceType bypasses so the dedicated tile still works).
+- Verified: `tools/gloss_listen.test.js` — persists across reload.
 
 ## P1 — retention & product depth
 
