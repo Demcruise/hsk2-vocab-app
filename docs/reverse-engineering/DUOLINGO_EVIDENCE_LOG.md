@@ -65,9 +65,23 @@ Method: Brave 157 on Windows, **profile copy** in a separate `--user-data-dir` w
 | E-045 | Daily quest set (delta) | Observed: "Earn 30 XP", "Earn 15 Combo Bonus XP", "Score 90% or higher in 3 lessons" — the accuracy threshold is **90%** here, not the ≥80% recorded in E-010. Combo XP is a first-class quest metric. |
 | E-046 | Profile route | Nav profile link points to `/profile/{username}` (username deliberately not recorded). |
 | E-047 | Top bar (delta) | Streak 746, gems 3439, plus an unlabelled red badge counter (16) left of the streak — purpose unverified. |
+| E-048 | `/shop` | Super subscriber view: banner "You're learning on Super Duolingo — Say goodbye to ads and support our mission." Then **Power-Ups**: one item, *Streak Freeze*, "3 equipped", with an `Equipped` button rendered **disabled**. No gems pricing or purchase CTA is exposed to this account. |
+| E-049 | `/leaderboard` | Diamond League, "2 days" left. Table of 15 learners: rank, avatar, name, tenure badge ("1+ year", "2+ years", "4+ years"), weekly XP. Own row highlighted at rank 5 (331 XP). **Demotion Zone** separator sits after rank 12, i.e. ranks 13–15 are demotion candidates. Each row links to `/u/{id}?via=leagues`. Above the table: "Set your status" with a `Clear` link and a row of emoji buttons. Names deliberately not recorded. |
+| E-050 | `/placement` | Returns the site's **404** page ("Error 404 — Sorry, the page you were looking for doesn't exist"). No placement/onboarding route is reachable for an existing account; placement only exists inside the new-user flow. |
+| E-051 | Listen practice (exercise) | After `CONTINUE` on E-043, the first exercise is **"Tap what you hear"**: large play button + turtle (slow) button, a chip bank of *word-segmented* Chinese with pinyin above each chip (e.g. 哪里 / 在 / 上 / 先 / 吧 / 坐地铁 / 我们 / 衣服), `USE KEYBOARD` toggle, `CHECK` disabled until a chip is picked. Progress bar is violet here (not gold). |
+| E-052 | Radio session (deeper) | `/lesson/unit/28/level/2` renders a single full-screen card: microphone illustration, caption **"LUCY IS LISTENING"**, lesson chrome (quit ✕, settings ⚙, progress bar, hearts ∞). The DOM exposes **no play/continue control** — the session is audio-driven and advances on its own; the accessibility tree is just the caption. Audio content itself is not available to the agent. |
+| E-053 | Tooling limitation | Playwright's `click` times out on path-node and tab elements (strict-mode duplicates, and elements inside continuously animated containers fail actionability). DOM-level `click()` works for tabs, nodes and story controls, but the **Legendary Level `START`** button did not open a session in three attempts (popover closed / click swallowed). Unit-test and Legendary *sessions* therefore remain unobserved. |
 
 Screenshots retained outside the repo (`tools/shots/`, gitignored): `characters_hanzi3.png`, `character_practice3.png`, `story_player.png`, `story_beat.png`, `story_dialog.png`, `learn_legendary.png`, `learn_unitReview.png`, `learn_radio.png`, `radio_session.png`, `listen_session.png`, `more_menu2.png`.
 
 ## Still not observed
 
-Speaking exercises (none surfaced in the sampled sessions), hearts depletion (account has unlimited hearts via Super), onboarding/placement (existing account), friends/notifications (no entry point on web, E-044), conversation practice (heading rendered without an actionable control), profile detail page (skipped: personal data), unit test start (would consume real course progress).
+- **Speaking exercises** — none surfaced in the sampled sessions (listen, story, radio, hanzi, path nodes).
+- **Hearts depletion** — account has unlimited hearts (Super), so the out-of-hearts path cannot be reached.
+- **Onboarding / placement** — `/placement` is a 404 for this account (E-050); the flow only exists for a new user.
+- **Profile detail page** — skipped: personal data.
+- **Friends / notifications** — no entry point on web (E-044).
+- **Conversation practice** — heading rendered without an actionable control.
+- **Unit test / Legendary session** — popovers observed (E-039–E-041), but the session itself could not be started through the tooling (E-053).
+- **Mobile app (Android/iOS)** — untouched. No APK on disk, no device attached.
+- **Network/API behaviour** — deliberately not observed (read-only UI evidence only).
