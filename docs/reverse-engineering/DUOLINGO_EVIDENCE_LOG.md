@@ -77,6 +77,21 @@ Method: Brave 157 on Windows, **profile copy** in a separate `--user-data-dir` w
 
 Screenshots retained outside the repo (`tools/shots/`, gitignored): `characters_hanzi3.png`, `character_practice3.png`, `story_player.png`, `story_beat.png`, `story_dialog.png`, `learn_legendary.png`, `learn_unitReview.png`, `learn_radio.png`, `radio_session.png`, `listen_session.png`, `more_menu2.png`.
 
+## Documented, not observed (secondary sources)
+
+These are **not** observations of the product; they are Duolingo's own published descriptions, used
+only to close the gaps that this account cannot reach. Treat them as weaker evidence than E-IDs.
+
+| ID | Topic | What the source states | Source |
+|---|---|---|---|
+| D-001 | Video Call (Lily) | Max tier only, **mobile app only** (iOS/Android, app v13+), cannot be bought or used on web. Lives on the path and in the Practice Hub; five sessions per unit plus a dedicated tab. Courses listed in the current help page: English, French, Spanish, Italian, German, Portuguese (Chinese is **not** in that list; an older blog post mentions Chinese for Video Call — conflicting, unresolved). | https://www.duolingo.com/help/what-is-duolingo-max/ · https://blog.duolingo.com/video-call/ |
+| D-002 | Video Call behaviour | Lily opens the call, user can talk about anything, may ask her to repeat or slow down, no penalties, she adapts to level and does not correct grammar; transcript available after hanging up; AI feedback on accuracy/complexity. | https://blog.duolingo.com/duolingo-max/ |
+| D-003 | Speaking | Speaking exercises appear in lessons "from day one" (repeat, translate aloud, mini-dialogues); many writing exercises have an optional microphone to dictate instead of type; the Practice tab has speaking-only practice sets (free for all learners). Feedback is phoneme-level: correct words highlighted, problem sounds flagged, ~500 ms recognition lag. | https://blog.duolingo.com/covering-all-the-bases-duolingos-approach-to-speaking-skills/ · https://blog.duolingo.com/sneaky-pronunciation-practice/ |
+
+Consequence for this study: speaking and Video Call cannot be observed on a web + Super + Chinese
+account, no matter how much of the path is sampled (E-055, E-056 agree). The mechanics above are
+enough to spec our own version; the exact UI of those two flows stays unknown.
+
 ## Still not observed
 
 - **Speaking exercises** — none surfaced in the sampled sessions (listen, story, radio, hanzi, path nodes).
