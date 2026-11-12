@@ -19,7 +19,7 @@ const SRC = join(DIR, 'hsk2025.json');
 const OUT = join(DIR, `level-hsk${LEVEL}-2025.json`);
 // Minimum example sentences per word: 3 for levels 1-4, 2 from level 5 up (owner
 // decision 2026-11-11, to keep the hand-written volume manageable). MIN_SENT env overrides.
-const MAX_SENT = 10;
+const MAX_SENT = Number(process.env.MAX_SENT) || 10;
 const MIN_SENT = Number(process.env.MIN_SENT) || (parseInt(LEVEL, 10) >= 5 ? 2 : 3);
 
 if (!existsSync(SRC)) { console.error('Missing ' + SRC + ' — run tools/extract_local_hsk.mjs first.'); process.exit(1); }
