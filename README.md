@@ -6,7 +6,7 @@ An **HSK 3.0** vocabulary-learning app — **HSK 1 (300 words)** and **HSK 2 (77
 
 - **Level picker** — HSK 1 🐣 / HSK 2 🚀 buttons on the Learn screen (plus a header pill). Switching levels swaps all content & progress — never mixed.
 - **300 HSK 1 words** & **770 HSK 2 words** with hanzi, tone-marked pinyin, traditional forms, and meanings.
-- **10 example sentences per word** (3,000 HSK 1 + 7,700 HSK 2 sentences) with hanzi + pinyin + English translation.
+- **Example sentences per word** (3,000 HSK 1 + 2,310 HSK 2 sentences) with hanzi + pinyin + English translation.
 - **TTS audio** for words and every sentence, two speeds (normal / slow) via the browser's `speechSynthesis`.
 - **Per-hanzi tooltips** — tap/hover any character in an example sentence for pinyin, meaning, radical, stroke count, and related words.
 - **Radicals** — 149 explained entries for HSK 2; the HSK 1 radical list is derived automatically from the hanzi map.
