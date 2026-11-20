@@ -8,7 +8,7 @@
  * re-precached; normal `index.html` edits are picked up by the network-first
  * navigation handler.
  */
-const VERSION = 'v32';
+const VERSION = 'v35';
 const CACHE = `khsk2-${VERSION}`;
 
 const APP_SHELL = [
@@ -40,6 +40,7 @@ const APP_SHELL = [
   './assets/hw.json',
   './assets/data/stories_hsk1.json',
   './assets/data/stories_hsk2.json',
+  './assets/data/podcasts_hsk2.json',
   './assets/data/grammar.json',
 ];
 
