@@ -52,7 +52,7 @@ class QuizScreenState extends State<QuizScreen> {
   static const _newPurple = Color(0xFFA568CC);
 
   List<_Q> _qs = [];
-  int _idx = 0, _right = 0, _hearts = 5, _row = 0;
+  int _idx = 0, _right = 0, _row = 0;
   final List<int> _wrongIds = [];
   bool _answered = false;
   bool _lastCorrect = false;
@@ -147,7 +147,6 @@ class QuizScreenState extends State<QuizScreen> {
     setState(() {
       _idx = 0;
       _right = 0;
-      _hearts = 5;
       _row = 0;
       _wrongIds.clear();
       _answered = false;
@@ -193,7 +192,7 @@ class QuizScreenState extends State<QuizScreen> {
     setState(() => _qs[_idx].selMc = i);
   }
 
-  /// Unified grading for all exercise types — band, XP, hearts, re-queue,
+  /// Unified grading for all exercise types — band, XP, re-queue,
   /// per-skill mistake tracking.
   void _resolve(bool ok, {String? answerText}) {
     if (_answered || _done) return;
@@ -214,7 +213,6 @@ class QuizScreenState extends State<QuizScreen> {
           });
         }
       } else {
-        _hearts = math.max(0, _hearts - 1);
         _row = 0;
         _wrongIds.add(q.word.id);
         widget.sfx.play('incorrect.wav');
@@ -233,7 +231,7 @@ class QuizScreenState extends State<QuizScreen> {
   }
 
   void _next() {
-    if (_hearts <= 0 || _idx + 1 >= _qs.length) { _finish(); return; }
+    if (_idx + 1 >= _qs.length) { _finish(); return; }
     setState(() { _idx++; _answered = false; });
     _speakCurrent();
   }
@@ -728,8 +726,6 @@ class QuizScreenState extends State<QuizScreen> {
             _resultCard('TOTAL XP', '+$bonus', Duo.amber),
             const SizedBox(width: 10),
             _resultCard('ACCURACY', '$_right/${_qs.length}', Duo.blue),
-            const SizedBox(width: 10),
-            _resultCard('LIVES', '$_hearts', Duo.rose),
           ]),
           const SizedBox(height: 18),
           DuoButton(label: 'Retry quiz', icon: Icons.refresh_rounded, onTap: _start, wide: true),
