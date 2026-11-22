@@ -240,14 +240,16 @@ class ContentRepository {
   }
 
   /// Answer tokens + 3–4 distractor tokens from other words' sentences.
-  List<String> buildBank(List<String> answer, math.Random rnd) {
+  /// [scope] restricts distractor source words (e.g. a topic quiz's word list).
+  List<String> buildBank(List<String> answer, math.Random rnd, {List<VocabWord>? scope}) {
+    final src = scope ?? vocab;
     final ansN = answer.map(normAnswer).toSet();
     final pool = <String>[];
     final poolN = <String>{};
     var tries = 0;
     while (pool.length < 4 && tries < 80) {
       tries++;
-      final w = vocab[rnd.nextInt(vocab.length)];
+      final w = src[rnd.nextInt(src.length)];
       final s2 = pickExerciseSentence(w, rnd);
       final tk = enTokens(s2.en);
       final t = tk[rnd.nextInt(tk.length)];

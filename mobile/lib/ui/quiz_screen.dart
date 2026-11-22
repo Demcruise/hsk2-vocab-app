@@ -52,6 +52,7 @@ class QuizScreenState extends State<QuizScreen> {
   static const _newPurple = Color(0xFFA568CC);
 
   List<_Q> _qs = [];
+  List<VocabWord> _scope = const []; // distractor source (topic-filtered or all vocab)
   int _idx = 0, _right = 0, _row = 0;
   final List<int> _wrongIds = [];
   bool _answered = false;
@@ -108,7 +109,7 @@ class QuizScreenState extends State<QuizScreen> {
     var tries = 0;
     while (opts.length < 4 && tries < 80) {
       tries++;
-      final w = widget.content.vocab[rnd.nextInt(widget.content.vocab.length)];
+      final w = _scope[rnd.nextInt(_scope.length)];
       final o = val(w);
       if (!seen.contains(o)) { opts.add(o); seen.add(o); }
     }
@@ -123,6 +124,7 @@ class QuizScreenState extends State<QuizScreen> {
     if (widget.topic != null) {
       vocab = vocab.where((v) => v.topic == widget.topic).toList();
     }
+    _scope = widget.topic != null ? vocab : widget.content.vocab;
     final rnd = math.Random();
     final sh = [...vocab]..shuffle(rnd);
     _qs = sh.take(math.min(10, vocab.length)).toList().asMap().entries.map((e) {
@@ -141,7 +143,7 @@ class QuizScreenState extends State<QuizScreen> {
       }
       final s = widget.content.pickExerciseSentence(v, rnd);
       final ans = ContentRepository.enTokens(s.en);
-      return _Q(v, s, ans, widget.content.buildBank(ans, rnd), type: t, ch: ch);
+      return _Q(v, s, ans, widget.content.buildBank(ans, rnd, scope: _scope), type: t, ch: ch);
     }).toList();
     if (_qs.isEmpty) { _qs = []; }
     setState(() {
@@ -190,6 +192,61 @@ class QuizScreenState extends State<QuizScreen> {
   void _pickMc(int i) {
     if (_answered) return;
     setState(() => _qs[_idx].selMc = i);
+  }
+
+  /// Quiz settings sheet — pinyin hints on/off (never shown when pinyin is the answer).
+  void _openSettings() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 18, 20, 24),
+          child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Center(child: Text('⚙️ Quiz settings', style: duoFont(size: 16, weight: FontWeight.w900))),
+            const SizedBox(height: 14),
+            Text('拼音 PINYIN HINTS', style: duoFont(size: 12, weight: FontWeight.w900, color: Duo.textLight, spacing: 1)),
+            const SizedBox(height: 4),
+            Text('Show pinyin under hanzi during exercises. Never shown when pinyin is the answer.',
+                style: duoFont(size: 12, weight: FontWeight.w600, color: Duo.textLight)),
+            const SizedBox(height: 12),
+            Row(children: [
+              Expanded(child: _pyOpt(ctx, true, 'With pinyin')),
+              const SizedBox(width: 10),
+              Expanded(child: _pyOpt(ctx, false, 'No pinyin')),
+            ]),
+            const SizedBox(height: 14),
+            DuoButton(label: 'DONE', wide: true, onTap: () => Navigator.of(ctx).pop()),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  Widget _pyOpt(BuildContext ctx, bool on, String label) {
+    final active = widget.state.exPinyin == on;
+    final border = active ? Duo.greenDark : Theme.of(context).dividerColor;
+    return GestureDetector(
+      onTap: () {
+        widget.state.setExPinyin(on);
+        setState(() {});
+        Navigator.of(ctx).pop();
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          color: active ? Duo.greenLight : Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(12),
+          border: Border(
+            top: BorderSide(color: border, width: 2),
+            left: BorderSide(color: border, width: 2),
+            right: BorderSide(color: border, width: 2),
+            bottom: BorderSide(color: border, width: 4),
+          ),
+        ),
+        child: Center(child: Text(label, style: duoFont(size: 13, weight: FontWeight.w900, color: active ? Duo.greenDark : Duo.text))),
+      ),
+    );
   }
 
   /// Unified grading for all exercise types — band, XP, re-queue,
@@ -272,6 +329,11 @@ class QuizScreenState extends State<QuizScreen> {
             onTap: widget.onQuit,
             child: const Icon(Icons.close_rounded, size: 26, color: Duo.textLight),
           ),
+          const SizedBox(width: 10),
+          GestureDetector(
+            onTap: _openSettings,
+            child: const Icon(Icons.settings_rounded, size: 22, color: Duo.textLight),
+          ),
           const SizedBox(width: 12),
           Expanded(
             child: SizedBox(
@@ -292,30 +354,6 @@ class QuizScreenState extends State<QuizScreen> {
       ),
       Expanded(
         child: ListView(padding: const EdgeInsets.fromLTRB(16, 10, 16, 12), children: [
-          // pinyin toggle (kiri atas)
-          Align(
-            alignment: Alignment.centerLeft,
-            child: GestureDetector(
-              onTap: () => widget.state.toggleExPinyin(),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-                decoration: BoxDecoration(
-                  color: widget.state.exPinyin ? Duo.blueLight : Theme.of(context).cardColor,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border(
-                    top: BorderSide(color: widget.state.exPinyin ? Duo.blue : Theme.of(context).dividerColor, width: 2),
-                    left: BorderSide(color: widget.state.exPinyin ? Duo.blue : Theme.of(context).dividerColor, width: 2),
-                    right: BorderSide(color: widget.state.exPinyin ? Duo.blue : Theme.of(context).dividerColor, width: 2),
-                    bottom: BorderSide(color: widget.state.exPinyin ? Duo.blue : Theme.of(context).dividerColor, width: 4),
-                  ),
-                ),
-                child: Text('拼音',
-                    style: duoFont(size: 11, weight: FontWeight.w900,
-                        color: widget.state.exPinyin ? Duo.blueDark : Duo.textLight, spacing: .5)),
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
           // badge
           _badge(q),
           Text(switch (q.type) {
@@ -515,7 +553,8 @@ class QuizScreenState extends State<QuizScreen> {
         const SizedBox(width: 14),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(v.pinyin, style: duoFont(size: 15, weight: FontWeight.w800, color: Duo.blue)),
+            if (widget.state.exPinyin)
+              Text(v.pinyin, style: duoFont(size: 15, weight: FontWeight.w800, color: Duo.blue)),
             Text(v.meaning, style: duoFont(size: 13, weight: FontWeight.w700, color: Duo.textLight)),
           ]),
         ),

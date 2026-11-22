@@ -132,8 +132,8 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleExPinyin() {
-    exPinyin = !exPinyin;
+  void setExPinyin(bool v) {
+    exPinyin = v;
     _prefs?.setBool('khsk-expinyin', exPinyin);
     notifyListeners();
   }
