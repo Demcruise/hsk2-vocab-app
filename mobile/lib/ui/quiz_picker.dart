@@ -6,8 +6,8 @@ import '../data/services.dart';
 import 'duo.dart';
 import 'quiz_screen.dart';
 
-/// Quiz tab landing — pick "Latihan Bebas" (all words) or a topic unit,
-/// matching the learn path. Quiz launches as a fullscreen route.
+/// Quiz tab landing — practice per theme (unit) first, then free & skill drills.
+/// Quiz launches as a fullscreen route.
 class QuizPickerScreen extends StatelessWidget {
   final AppState state;
   final ContentRepository content;
@@ -35,11 +35,19 @@ class QuizPickerScreen extends StatelessWidget {
         final total = content.vocab.length;
         final mastered = state.masteredCount;
         return ListView(padding: const EdgeInsets.fromLTRB(16, 14, 16, 24), children: [
-          Text('Pick a practice', style: duoFont(size: 22, weight: FontWeight.w900)),
+          Text('Practice by theme', style: duoFont(size: 22, weight: FontWeight.w900)),
           const SizedBox(height: 2),
-          Text('Mixed practice: translate, listen, speak & write',
+          Text('Mixed exercises: translate, listen, speak & write',
               style: duoFont(size: 13, weight: FontWeight.w700, color: Duo.textLight)),
           const SizedBox(height: 14),
+          for (final u in content.units) ...[
+            _unitTile(context, u, dark),
+            const SizedBox(height: 10),
+          ],
+          const SizedBox(height: 4),
+          Text('MORE PRACTICE',
+              style: duoFont(size: 12, weight: FontWeight.w900, color: Duo.textLight, spacing: 1)),
+          const SizedBox(height: 10),
           _freeTile(context, mastered, total),
           const SizedBox(height: 10),
           Row(children: [
@@ -49,11 +57,6 @@ class QuizPickerScreen extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(child: _skillTile(context, '✍️', 'Writing', 'write')),
           ]),
-          const SizedBox(height: 10),
-          for (final u in content.units) ...[
-            _unitTile(context, u, dark),
-            const SizedBox(height: 10),
-          ],
         ]);
       },
     );
