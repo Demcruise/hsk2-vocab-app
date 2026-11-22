@@ -441,10 +441,7 @@ html[data-theme="dark"] .hz.open{background:#4A3F14;color:#FFD966;box-shadow:0 0
 /* ===== WORD-BANK EXERCISE (Duolingo) ===== */
 .ex-frame{display:flex;flex-direction:column;min-height:calc(100vh - 190px);min-height:calc(100dvh - 190px)}
 .ex-body{text-align:left;flex:1;display:flex;flex-direction:column}
-.ex-topline{display:flex;justify-content:flex-start;margin-bottom:6px}
-.ex-py-toggle{border:2px solid var(--border);border-bottom-width:4px;border-radius:10px;background:var(--card);padding:5px 12px;font-size:11px;font-weight:900;color:var(--text-light);cursor:pointer;letter-spacing:.5px;font-family:inherit}
-.ex-py-toggle.on{background:var(--blue-l);border-color:var(--blue);color:var(--blue-d)}
-.ex-py-toggle:active{transform:translateY(2px);border-bottom-width:2px}
+.ex-match-btn .mb-py{display:block;font-size:11px;font-weight:700;color:var(--blue-text);margin-top:2px}
 .ex-badge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:900;letter-spacing:.8px;margin-bottom:6px;min-height:20px}
 .ex-badge.nw{color:#A568CC}
 .ex-badge.hard{color:var(--red)}
@@ -909,13 +906,11 @@ try{var _t=localStorage.getItem('khsk2-theme');if(_t!=='dark'&&_t!=='light'){_t=
     <div class="quiz-frame ex-frame">
       <div class="quiz-top">
         <button class="icon-btn" onclick="quitQuiz()" title="Exit" aria-label="Exit quiz"><svg viewBox="0 0 24 24"><path d="M6.4 19 5 17.6l5.6-5.6L5 6.4 6.4 5l5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6z"/></svg></button>
+        <button class="icon-btn" onclick="openQSettings()" title="Quiz settings" aria-label="Quiz settings"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></button>
         <div class="quiz-bar" id="quizBar"><i id="quizBarFill" style="width:0%"></i><span class="ex-row-label" id="rowLabel"></span></div>
         <div class="ex-energy" id="exEnergy" title="Energy" role="img" aria-label="Unlimited energy"><svg viewBox="0 0 24 24" class="ex-bolt"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg><b>∞</b></div>
       </div>
       <div class="quiz-body ex-body">
-        <div class="ex-topline">
-          <button class="ex-py-toggle" id="pyToggle" onclick="toggleExPinyin()" title="Show/hide pinyin" aria-label="Show or hide pinyin">拼音</button>
-        </div>
         <div class="ex-badge" id="exBadge"></div>
         <div class="ex-prompt" id="exPrompt">Translate this sentence</div>
         <div class="ex-bubble-row" id="exBubbleRow">
@@ -1199,14 +1194,16 @@ function jumpToVocab(id){for(let k=0;k<vocab.length;k++)if(vocab[k].id===id){S.m
 
 // ===== WORD-BANK EXERCISE (gaya Duolingo "Translate this sentence") =====
 let exPinyin=true;try{exPinyin=localStorage.getItem('khsk-expinyin')!=='0';}catch(e){}
-function toggleExPinyin(){exPinyin=!exPinyin;try{localStorage.setItem('khsk-expinyin',exPinyin?'1':'0');}catch(e){}renderExPinyin();}
+function setExPinyin(on){exPinyin=!!on;try{localStorage.setItem('khsk-expinyin',exPinyin?'1':'0');}catch(e){}renderExPinyin();let q=S.qList&&S.qList[S.qIdx];if(q&&!S.qDone)showQ();}
+function openQSettings(){renderExPinyin();document.getElementById('quizSettings').className='sd open';}
+function closeQSettings(){document.getElementById('quizSettings').className='sd';}
 let exListen=true;try{exListen=localStorage.getItem('khsk-exlisten')!=='0';}catch(e){}
 let noListen=false;
 function exListenOK(){return exListen&&!noListen;}
 function setListen(on){exListen=!!on;try{localStorage.setItem('khsk-exlisten',exListen?'1':'0');}catch(e){}renderListenToggle();}
 function renderListenToggle(){let on=document.getElementById('listenOn'),off=document.getElementById('listenOff');if(on)on.className=exListen?'active':'';if(off)off.className=exListen?'':'active';}
 function cantListen(){let q=S.qList&&S.qList[S.qIdx];if(!q||q.type!=='listen'||S.qDone)return;noListen=true;S.qList[S.qIdx]=buildQTyped(q.word,S.qIdx);toast('Listening exercises off for this session');showQ();}
-function renderExPinyin(){let t=document.getElementById('pyToggle');if(t)t.className='ex-py-toggle'+(exPinyin?' on':'');let py=document.getElementById('exPy');if(py)py.className='ex-py'+(exPinyin?'':' hidden');}
+function renderExPinyin(){let py=document.getElementById('exPy');if(py)py.className='ex-py'+(exPinyin?'':' hidden');let on=document.getElementById('pyOn'),off=document.getElementById('pyOff');if(on)on.className=exPinyin?'active':'';if(off)off.className=exPinyin?'':'active';}
 
 function exTokens(s){return s.split(/\s+/).filter(Boolean);}
 function exNorm(s){return s.toLowerCase().replace(/[.,!?…'"()\-—;:]/g,'').replace(/\s+/g,' ').trim();}
@@ -1214,9 +1211,9 @@ function exEsc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>
 function pickSent(v){let ss=v.sentences||[];let ok=ss.filter(s=>{let n=exTokens(s[2]||'').length;return n>=3&&n<=12;});let pool=ok.length?ok:ss;return pool[Math.floor(Math.random()*pool.length)]||[v.hanzi,v.pinyin,v.meaning];}
 function buildQ(v){
   let s=pickSent(v);let ans=exTokens(s[2]);let ansN=ans.map(exNorm);
-  let pool=[],tries=0;
+  let pool=[],tries=0,P=S.qScope||vocab;
   while(pool.length<4&&tries<80){tries++;
-    let w=vocab[Math.floor(Math.random()*vocab.length)];let s2=pickSent(w);let tk=exTokens(s2[2]);let t=tk[Math.floor(Math.random()*tk.length)];
+    let w=P[Math.floor(Math.random()*P.length)];let s2=pickSent(w);let tk=exTokens(s2[2]);let t=tk[Math.floor(Math.random()*tk.length)];
     if(t&&t.length<=12&&!ansN.includes(exNorm(t))&&!pool.map(exNorm).includes(exNorm(t)))pool.push(t);}
   let bank=[...ans,...pool].sort(()=>Math.random()-.5);
   return {id:v.id,word:v,sent:s,ans:ans,bank:bank,sel:[],firstTry:true};
@@ -1541,9 +1538,9 @@ const MC_PROMPT={hz2py:'Choose the correct pinyin',py2hz:'Choose the correct han
 const MC_FIELD={hz2py:'pinyin',py2hz:'hanzi',hz2mn:'meaning'};
 function buildMC(v,t){
   let q=buildQ(v);q.type=t;
-  let field=MC_FIELD[t],ans=v[field],opts=[ans],seen=new Set([exNorm(ans)]),tries=0;
+  let field=MC_FIELD[t],ans=v[field],opts=[ans],seen=new Set([exNorm(ans)]),tries=0,P=S.qScope||vocab;
   while(opts.length<4&&tries<160){tries++;
-    let w=vocab[Math.floor(Math.random()*vocab.length)];if(w.id===v.id)continue;
+    let w=P[Math.floor(Math.random()*P.length)];if(w.id===v.id)continue;
     let o=w[field];if(!o||seen.has(exNorm(o)))continue;seen.add(exNorm(o));opts.push(o);}
   opts.sort(function(){return Math.random()-.5;});
   q.opts=opts;q.ansIdx=opts.indexOf(ans);q.selMc=-1;
@@ -1569,6 +1566,7 @@ function startQuiz(topic,pool,forceType,opts){
   let src=pool||vocab;
   if(topic)src=vocab.filter(function(v,i){return WORD_TOPIC[i]===topic;});
   if(!src.length){toast('No words for this practice yet');return;}
+  S.qScope=topic?src:null;
   let n=Math.min(opts.n||10,src.length),sh=src.slice().sort(function(){return Math.random()-.5;}).slice(0,n);
   S.qList=sh.map(function(v,i){return buildQTyped(v,i,forceType);});
   S.qBase=S.qList.length;
@@ -1664,11 +1662,11 @@ function showQ(){
   document.getElementById('quizBand').className='quiz-band';
   if(q.type==='speak'){renderSpeakQ(q);document.getElementById('exFoot').className='ex-foot hidden';}
   else if(q.type==='write'){renderWriteQ(q);document.getElementById('exFoot').className='ex-foot hidden';}
-  else if(MC_FIELD[q.type]){renderMCQ(q);document.getElementById('exFoot').className='ex-foot';document.getElementById('checkBtn').disabled=true;}
-  else if(q.type==='fill'){renderFillQ(q);document.getElementById('exFoot').className='ex-foot';document.getElementById('checkBtn').disabled=true;}
+  else if(MC_FIELD[q.type]){renderMCQ(q);document.getElementById('exFoot').className='ex-foot';document.getElementById('checkBtn').disabled=q.selMc<0;}
+  else if(q.type==='fill'){renderFillQ(q);document.getElementById('exFoot').className='ex-foot';document.getElementById('checkBtn').disabled=q.selMc<0;}
   else if(q.type==='match'){renderMatchQ(q);document.getElementById('exFoot').className='ex-foot hidden';}
-  else if(q.type==='zh'){renderZhQ(q);document.getElementById('exFoot').className='ex-foot';document.getElementById('checkBtn').disabled=true;}
-  else{renderBankQ(q);document.getElementById('exFoot').className='ex-foot';document.getElementById('checkBtn').disabled=true;}
+  else if(q.type==='zh'){renderZhQ(q);document.getElementById('exFoot').className='ex-foot';}
+  else{renderBankQ(q);document.getElementById('exFoot').className='ex-foot';}
 }
 
 // --- renderers per tipe ---
@@ -1740,7 +1738,8 @@ function segWords(sent){
   return out;
 }
 function randomOther(v,ok){
-  for(let t=0;t<200;t++){let w=vocab[Math.floor(Math.random()*vocab.length)];if(w.id!==v.id&&(!ok||ok(w)))return w;}
+  let P=S.qScope||vocab;
+  for(let t=0;t<200;t++){let w=P[Math.floor(Math.random()*P.length)];if(w.id!==v.id&&(!ok||ok(w)))return w;}
   return null;
 }
 // Fill in the blank: the sentence with the target word removed, 3 options.
@@ -1755,6 +1754,17 @@ function buildFill(v){
   opts.sort(function(){return Math.random()-.5;});
   return {id:v.id,word:v,sent:s,type:'fill',opts:opts,ansIdx:opts.indexOf(v.hanzi),selMc:-1,sel:[],firstTry:true};
 }
+// Fill-in-blank pinyin: whole sentence with the answer word's pinyin masked.
+// Hidden when the word's pinyin can't be found at a syllable boundary (tone sandhi etc).
+function fillPinyin(q){
+  if(!exPinyin)return '';
+  let s=q.sent[1],w=q.word.pinyin.toLowerCase(),L=s.toLowerCase(),i=-1;
+  for(let p=0;(p=L.indexOf(w,p))>=0;p++){
+    let b=p===0||L[p-1]===' ',e=p+w.length===L.length||/[\s.,!?;:'"’]/.test(L[p+w.length]);
+    if(b&&e){i=p;break;}
+  }
+  return i<0?'':s.slice(0,i)+'＿＿'+s.slice(i+w.length);
+}
 function renderFillQ(q){
   document.getElementById('exPrompt').textContent='Fill in the blank';
   document.getElementById('exBubbleRow').style.display='';
@@ -1763,7 +1773,7 @@ function renderFillQ(q){
   document.getElementById('exWriteZone').className='hidden';
   let i=q.sent[0].indexOf(q.word.hanzi);
   document.getElementById('exSent').innerHTML=exEsc(q.sent[0].slice(0,i))+'<span class="ex-blank">＿＿</span>'+exEsc(q.sent[0].slice(i+q.word.hanzi.length));
-  document.getElementById('exPy').textContent='';
+  document.getElementById('exPy').textContent=fillPinyin(q);
   document.getElementById('exTts').onclick=function(){speak(q.sent[0]);};
   let box=document.getElementById('exBank');box.className='ex-mc';
   box.innerHTML=q.opts.map(function(o,k){return '<button class="ex-mc-opt'+(q.selMc===k?' sel':'')+'" onclick="pickMC('+k+')"><span class="mc-key">'+(k+1)+'</span>'+exEsc(o)+'</button>';}).join('');
@@ -1789,7 +1799,8 @@ function renderMatchQ(q){
   let byId={};q.pairs.forEach(function(w){byId[w.id]=w;});
   let btn=function(side,id,label,cls){
     let done=q.matched.indexOf(id)>=0,sel=q.pick&&q.pick.side===side&&q.pick.id===id;
-    return '<button class="ex-match-btn'+cls+(done?' done':'')+(sel?' sel':'')+'" '+(done?'disabled':'')+' data-side="'+side+'" data-id="'+id+'" onclick="pickMatch(\''+side+'\','+id+')">'+exEsc(label)+'</button>';
+    let inner=exEsc(label)+(side==='R'&&exPinyin?'<span class="mb-py">'+exEsc(byId[id].pinyin)+'</span>':'');
+    return '<button class="ex-match-btn'+cls+(done?' done':'')+(sel?' sel':'')+'" '+(done?'disabled':'')+' data-side="'+side+'" data-id="'+id+'" onclick="pickMatch(\''+side+'\','+id+')">'+inner+'</button>';
   };
   let box=document.getElementById('exBank');box.className='ex-match';
   box.innerHTML='<div class="ex-match-col">'+q.left.map(function(id){return btn('L',id,shortMeaning(byId[id].meaning),'');}).join('')+'</div>'+
@@ -1817,7 +1828,7 @@ function buildZh(v){
   let pool=[],tries=0;
   while(pool.length<3&&tries<80){tries++;
     let w=randomOther(v);if(!w)break;let tk=segWords(pickSent(w)[0]);let t=tk[Math.floor(Math.random()*tk.length)];
-    if(t&&ans.indexOf(t)<0&&pool.indexOf(t)<0)pool.push(t);}
+    if(t&&ans.indexOf(t)<0&&pool.indexOf(t)<0){let w2=vocab.find(x=>x.hanzi===t);if(S.qScope&&w2&&S.qScope.indexOf(w2)<0)continue;pool.push(t);}}
   return {id:v.id,word:v,sent:s,type:'zh',ans:ans,bank:ans.concat(pool).sort(function(){return Math.random()-.5;}),sel:[],typed:false,input:'',firstTry:true};
 }
 function renderZhQ(q){
@@ -1848,7 +1859,7 @@ function renderWriteQ(q){
   document.getElementById('exPrompt').textContent='Write this character';
   document.getElementById('exBubbleRow').style.display='';
   document.getElementById('exSent').innerHTML='<span class="ex-w nw">'+exEsc(q.ch)+'</span> <span style="font-size:15px;color:var(--text-light)">from 「'+exEsc(q.word.hanzi)+'」 = '+exEsc(q.word.meaning)+'</span>';
-  document.getElementById('exPy').textContent=q.word.pinyin;
+  document.getElementById('exPy').textContent=exPinyin?q.word.pinyin:'';
   document.getElementById('exTts').onclick=function(){speak(q.ch);};
   document.getElementById('exAnswer').className='hidden';
   document.getElementById('exBank').className='hidden';
@@ -2829,6 +2840,7 @@ applyTheme(document.documentElement.dataset.theme==='dark'?'dark':'light');
 <!-- Unit guidebook overlay -->
 <div id="guideView" role="dialog" aria-label="Unit guidebook"><div class="wr-view-top"><button class="icon-btn" onclick="closeGuide()" title="Close" aria-label="Close guidebook"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button><b style="font-size:16px">📖 Guidebook</b></div><div class="gd-body" id="gdBody"></div></div>
 <div id="badgeView" class="sd" role="dialog" aria-modal="true" aria-labelledby="bvName"><div class="sd-card"><div class="bv-ring" id="bvRing"><span id="bvIcon" aria-hidden="true"></span></div><div class="bv-kicker">Badge unlocked!</div><h2 id="bvName"></h2><div class="bv-tier" id="bvTier"></div><p id="bvDesc"></p><button class="btn pri wide" id="bvBtn" onclick="nextBadge()">CONTINUE</button></div></div>
+<div id="quizSettings" class="sd" role="dialog" aria-modal="true" aria-labelledby="qsTitle"><div class="sd-card"><h2 id="qsTitle">⚙️ Quiz settings</h2><div class="set-label">拼音 Pinyin hints</div><p class="save-note">Show pinyin under hanzi during exercises. Never shown when pinyin is the answer.</p><div class="goal-pick" style="grid-template-columns:1fr 1fr"><button id="pyOn" onclick="setExPinyin(1)">With pinyin</button><button id="pyOff" onclick="setExPinyin(0)">No pinyin</button></div><button class="btn pri wide" onclick="closeQSettings()">DONE</button></div></div>
 <div id="examIntro" class="sd" role="dialog" aria-modal="true" aria-labelledby="eiTitle"><div class="sd-card"><div class="ei-ic" id="eiIcon" aria-hidden="true"></div><h2 id="eiTitle"></h2><p id="eiMsg"></p><div class="ei-meta" id="eiMeta"></div><button class="btn pri wide" id="eiStart">START</button><button class="btn wide mt-8" onclick="closeExamIntro()">NOT NOW</button></div></div>
 <div id="writeView"><div class="wr-view-top"><button class="icon-btn" onclick="closeWrite()" title="Close" aria-label="Close writing practice"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/></svg></button><div style="font-weight:800;color:var(--text)">Writing Practice</div></div><div class="wr-view-body" id="wrViewBody"></div></div>
 <!-- Speak overlay -->
